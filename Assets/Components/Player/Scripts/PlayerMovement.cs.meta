@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 8948f58c5e2f44542869e0c35af5c7a9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _slideLeftInput: {fileID: -6195904533131247468, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  - _slideRightInput: {fileID: 7261642757737378122, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  - _slideDownInput: {fileID: 7040659881675835329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  - _jumpInput: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  - _animator: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
