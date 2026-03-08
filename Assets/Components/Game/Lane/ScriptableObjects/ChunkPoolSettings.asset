@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d05dc6db2a9f88d48aefed212638c2b0, type: 3}
+  m_Name: ChunkPoolSettings
+  m_EditorClassIdentifier: Assembly-CSharp::PoolSettings
+  lstObject:
+  - {fileID: 3121056439101513457, guid: 6cccd89aedba6184aa0d5800758e0a2e, type: 3}
+  initialSize: 12
+  maxSize: 24
