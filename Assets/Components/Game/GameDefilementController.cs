@@ -2,16 +2,20 @@ using Assets.Components.Game;
 using Assets.Components.ObstacleGenerator;
 using Assets.Scripts.Core;
 using Assets.Scripts.Helpers;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class GameDefilementController : MonoBehaviour
 {
     [Header("Parameters")]
     [SerializeField] private ChunkSettings _settings;
-    [SerializeField] private Vector3 _leftLaneStartPos;
-    [SerializeField] private Vector3 _middleLaneStartPos;
-    [SerializeField] private Vector3 _rightLaneStartPos;
+    [SerializeField] private GameObject _leftLaneStartPoint;
+    [SerializeField] private GameObject _middleLaneStartPoint;
+    [SerializeField] private GameObject _rightLaneStartPoint;
+    [SerializeField] private float _chunkYPos = 0.5f;
 
     [Header("Components")]
     [SerializeField] private List<GameObject> _lstChunkPrefabs;
@@ -20,14 +24,11 @@ public class GameDefilementController : MonoBehaviour
 
     #region Unity Lifecycle
 
-    private void Awake()
-    {
-        UnityEvents.Instance.GenerateNewChunks.AddListener(SpawnChunkRow);
-    }
-
     private void Start()
     {
+        InitEvents();
         SpawnChunkRow();
+        StartCoroutine(ChunkGeneration());
     }
 
     private void Update()
@@ -37,12 +38,30 @@ public class GameDefilementController : MonoBehaviour
 
     private void OnDestroy()
     {
-        UnityEvents.Instance.GenerateNewChunks.RemoveListener(SpawnChunkRow);
+        RevokeEvents();
     }
 
     #endregion Unity Lifecycle
 
     #region Private Helpers
+
+    private IEnumerator ChunkGeneration()
+    {
+        while (true)
+        {
+            try
+            {
+                UnityEvents.Instance.GenerateNewChunks.Invoke();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error in chunk generation coroutine: {ex.Message}");
+                yield break;
+            }
+
+            yield return new WaitForSeconds(_settings.ChunkGenerationDelay);
+        }
+    }
 
     private void UpdateChunks()
     {
@@ -63,9 +82,9 @@ public class GameDefilementController : MonoBehaviour
 
     private void SpawnChunkRow()
     {
-        AddChunk(_leftLaneStartPos);
-        AddChunk(_middleLaneStartPos);
-        AddChunk(_rightLaneStartPos);
+        AddChunk(_leftLaneStartPoint.transform.position);
+        AddChunk(_middleLaneStartPoint.transform.position);
+        AddChunk(_rightLaneStartPoint.transform.position);
     }
 
     private void AddChunk(Vector3 position)
@@ -83,9 +102,23 @@ public class GameDefilementController : MonoBehaviour
             return;
 
         Chunk chunk = obj.GetComponent<Chunk>();
-        chunk.Spawn(position);
+        chunk.Spawn(new Vector3(position.x, _chunkYPos, position.z));
         _instancedChunks.Add(chunk);
     }
+
+    #region UnityEvents
+
+    private void InitEvents()
+    {
+        UnityEvents.Instance.GenerateNewChunks.AddListener(SpawnChunkRow);
+    }
+
+    private void RevokeEvents()
+    {
+        UnityEvents.Instance.GenerateNewChunks.RemoveListener(SpawnChunkRow);
+    }
+
+    #endregion UnityEvents
 
     #endregion Private Helpers
 }

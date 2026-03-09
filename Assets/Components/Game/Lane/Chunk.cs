@@ -7,24 +7,32 @@ namespace Assets.Components.ObstacleGenerator
     public class Chunk : MonoBehaviour, IPoolable
     {
         public ChunkSettings _chunkSettings;
+        [SerializeField] private bool isDefinedInScene = false;
 
         #region Unity Lifecycle
 
         private void Update()
         {
             transform.Translate(_chunkSettings.TranslationSpeed * Time.deltaTime * Vector3.back);
+            if(isDefinedInScene && IsBehindPlayer())
+            {
+                Destroy(gameObject);
+            }
         }
 
         private void OnDestroy()
         {
+            if(isDefinedInScene)
+                return;
+
             foreach (Transform child in transform)
             {
                 if (child.TryGetComponent<IPoolable>(out _))
                     ObjectPoolManager.Instance.Release(child.gameObject);
             }
 
-            ObjectPoolManager.Instance.Release(gameObject);
-            UnityEvents.Instance.GenerateNewChunks.Invoke();
+            if(ObjectPoolManager.Instance != null)
+                ObjectPoolManager.Instance.Release(gameObject);
         }
 
         #endregion Unity Lifecycle
