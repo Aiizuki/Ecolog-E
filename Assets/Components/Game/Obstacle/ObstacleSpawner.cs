@@ -38,6 +38,8 @@ namespace Assets.Components.Game.Obstacle
                 return;
 
             Obstacle obstacle = obj.GetComponent<Obstacle>();
+
+            obstacle.SetPool(this._obstaclePool);
             chunk.GiveObstacle(obstacle);
         }
     }

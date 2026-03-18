@@ -65,6 +65,8 @@ namespace Assets.Components.Game
             Pool.Push(instance);
         }
 
+        public GameObject GetPoolParent() => poolParent;
+
         #endregion
 
         #region Private Helpers

@@ -23,7 +23,7 @@ namespace Assets.Scripts.Core
         [HideInInspector] public UnityEvent GenerateNewChunks;
         [HideInInspector] public UnityEvent<Chunk> GenerateNewObstacles;
         [HideInInspector] public UnityEvent<Chunk> ChunkDestroyed;
-        [HideInInspector] public UnityEvent<Obstacle> ObstacleDestroyed;
+        [HideInInspector] public UnityEvent<Chunk> ObstacleDestroyed;
 
         #endregion InGame Events
 
@@ -51,7 +51,7 @@ namespace Assets.Scripts.Core
             GenerateNewChunks ??= new UnityEvent();
             GenerateNewObstacles ??= new UnityEvent<Chunk>();
             ChunkDestroyed ??= new UnityEvent<Chunk>();
-            ObstacleDestroyed ??= new UnityEvent<Obstacle>();
+            ObstacleDestroyed ??= new UnityEvent<Chunk>();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Assets.Components.Game.Obstacle;
 using Assets.Scripts.Core;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Assets.Components.ObstacleGenerator
 {
@@ -14,18 +15,14 @@ namespace Assets.Components.ObstacleGenerator
         private void Update()
         {
             transform.Translate(_chunkSettings.TranslationSpeed * Time.deltaTime * Vector3.back);
-            if (isDefinedInScene && IsBehindPlayer())
+            if (IsBehindPlayer())
             {
-                Destroy(gameObject);
+                if(isDefinedInScene)
+                    Destroy(gameObject);
+
+                UnityEvents.Instance.ChunkDestroyed.Invoke(this);
+                UnityEvents.Instance.ObstacleDestroyed.Invoke(this);
             }
-        }
-
-        private void OnDestroy()
-        {
-            if (isDefinedInScene)
-                return;
-
-            UnityEvents.Instance.ChunkDestroyed.Invoke(this);
         }
 
         #endregion Unity Lifecycle
@@ -43,8 +40,9 @@ namespace Assets.Components.ObstacleGenerator
 
         public void GiveObstacle(Obstacle obstacle)
         {
-            Debug.Log($"Obstacle {obstacle.name} given to chunk {name}");
-            // TODO : faire un spawn intelligent des obstacles
+            obstacle.transform.SetPositionAndRotation(this.transform.position, Quaternion.identity);
+            obstacle.transform.SetParent(this.transform);
+            obstacle.gameObject.SetActive(true);
         }
 
         #endregion Public Methods
