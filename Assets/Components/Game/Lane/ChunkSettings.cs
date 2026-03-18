@@ -10,8 +10,6 @@ public class ChunkSettings : ScriptableObject
     [Tooltip("Translation speed of chunks in m/s")]
     public float TranslationSpeed = 1f;
 
-    public List<Obstacle> ListObstacle;
-
     [Tooltip("Waiting time between two chunks generation")]
     public float ChunkGenerationDelay;
 }

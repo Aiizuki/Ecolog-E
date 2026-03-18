@@ -1,11 +1,11 @@
 using Assets.Components.Game;
+using Assets.Components.Game.Obstacle;
 using Assets.Components.ObstacleGenerator;
 using Assets.Scripts.Core;
 using Assets.Scripts.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using UnityEngine;
 
 public class GameDefilementController : MonoBehaviour
@@ -18,7 +18,7 @@ public class GameDefilementController : MonoBehaviour
     [SerializeField] private float _chunkYPos = 0.5f;
 
     [Header("Components")]
-    [SerializeField] private List<GameObject> _lstChunkPrefabs;
+    [SerializeField] private ObjectPoolManager _chunkPool;
 
     private readonly List<Chunk> _instancedChunks = new();
 
@@ -76,7 +76,7 @@ public class GameDefilementController : MonoBehaviour
         foreach (Chunk chunk in behindChunks)
         {
             _instancedChunks.Remove(chunk);
-            ObjectPoolManager.Instance.Release(chunk.gameObject);
+            _chunkPool.Release(chunk.gameObject);
         }
     }
 
@@ -89,14 +89,14 @@ public class GameDefilementController : MonoBehaviour
 
     private void AddChunk(Vector3 position)
     {
-        if (_lstChunkPrefabs.Count == 0)
+        if (_chunkPool.Pool.Count == 0)
         {
             Debug.LogError("No chunks in pool");
             return;
         }
 
-        GameObject prefab = RandomisationHelper.GetRandomItemFromList(_lstChunkPrefabs);
-        GameObject obj = ObjectPoolManager.Instance.Get(prefab);
+        GameObject prefab = RandomisationHelper.GetRandomItemFromStack(_chunkPool.Pool);
+        GameObject obj = _chunkPool.Get(prefab);
 
         if (obj == null)
             return;
@@ -106,19 +106,34 @@ public class GameDefilementController : MonoBehaviour
         _instancedChunks.Add(chunk);
     }
 
+    private void OnChunkDestroyed(Chunk chunk)
+    {
+        foreach (Transform child in chunk.transform)
+        {
+            if (child.TryGetComponent<Obstacle>(out Obstacle obstacle))
+                UnityEvents.Instance.ObstacleDestroyed.Invoke(obstacle);
+        }
+
+        if (_chunkPool != null)
+            _chunkPool.Release(chunk.gameObject);
+    }
+
+    #endregion Private Helpers
+    
     #region UnityEvents
 
     private void InitEvents()
     {
         UnityEvents.Instance.GenerateNewChunks.AddListener(SpawnChunkRow);
+        UnityEvents.Instance.ChunkDestroyed.AddListener(OnChunkDestroyed);
     }
 
     private void RevokeEvents()
     {
         UnityEvents.Instance.GenerateNewChunks.RemoveListener(SpawnChunkRow);
+        UnityEvents.Instance.ChunkDestroyed.RemoveListener(OnChunkDestroyed);
     }
 
     #endregion UnityEvents
 
-    #endregion Private Helpers
 }

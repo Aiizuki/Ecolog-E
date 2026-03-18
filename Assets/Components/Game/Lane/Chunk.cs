@@ -1,10 +1,10 @@
-﻿using Assets.Components.Game;
+﻿using Assets.Components.Game.Obstacle;
 using Assets.Scripts.Core;
 using UnityEngine;
 
 namespace Assets.Components.ObstacleGenerator
 {
-    public class Chunk : MonoBehaviour, IPoolable
+    public class Chunk : MonoBehaviour
     {
         public ChunkSettings _chunkSettings;
         [SerializeField] private bool isDefinedInScene = false;
@@ -14,7 +14,7 @@ namespace Assets.Components.ObstacleGenerator
         private void Update()
         {
             transform.Translate(_chunkSettings.TranslationSpeed * Time.deltaTime * Vector3.back);
-            if(isDefinedInScene && IsBehindPlayer())
+            if (isDefinedInScene && IsBehindPlayer())
             {
                 Destroy(gameObject);
             }
@@ -22,17 +22,10 @@ namespace Assets.Components.ObstacleGenerator
 
         private void OnDestroy()
         {
-            if(isDefinedInScene)
+            if (isDefinedInScene)
                 return;
 
-            foreach (Transform child in transform)
-            {
-                if (child.TryGetComponent<IPoolable>(out _))
-                    ObjectPoolManager.Instance.Release(child.gameObject);
-            }
-
-            if(ObjectPoolManager.Instance != null)
-                ObjectPoolManager.Instance.Release(gameObject);
+            UnityEvents.Instance.ChunkDestroyed.Invoke(this);
         }
 
         #endregion Unity Lifecycle
@@ -45,26 +38,15 @@ namespace Assets.Components.ObstacleGenerator
         public void Spawn(Vector3 position)
         {
             transform.position = position;
-            // TODO : génération des obstacles dans le chunk
+            UnityEvents.Instance.GenerateNewObstacles.Invoke(this);
+        }
+
+        public void GiveObstacle(Obstacle obstacle)
+        {
+            Debug.Log($"Obstacle {obstacle.name} given to chunk {name}");
+            // TODO : faire un spawn intelligent des obstacles
         }
 
         #endregion Public Methods
-
-        #region IPoolable
-
-        public void OnCreatedByPool() { }
-
-        public void OnGetFromPool()
-        {
-            transform.position = Vector3.zero;
-        }
-
-        public void OnReturnToPool()
-        {
-            // TODO : clean up obstacles in the chunk
-            // TODO : fire an event to spawn a new chunk si nécessaire
-        }
-
-        #endregion IPoolable
     }
 }

@@ -25,6 +25,9 @@ namespace Assets.Scripts.Helpers
         public static T GetRandomItemFromList<T>(List<T> list)
             => list[rng.Next(list.Count)];
 
+        public static T GetRandomItemFromStack<T>(Stack<T> stack)
+            => GetRandomItemFromList(new List<T>(stack));
+
         internal static bool RandomChooseBoolean()
             => rng.NextDouble() < 0.5;
     }

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Components.Game.Obstacle;
+using Assets.Components.ObstacleGenerator;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.Core
@@ -19,6 +21,9 @@ namespace Assets.Scripts.Core
         #region InGame Events
 
         [HideInInspector] public UnityEvent GenerateNewChunks;
+        [HideInInspector] public UnityEvent<Chunk> GenerateNewObstacles;
+        [HideInInspector] public UnityEvent<Chunk> ChunkDestroyed;
+        [HideInInspector] public UnityEvent<Obstacle> ObstacleDestroyed;
 
         #endregion InGame Events
 
@@ -44,6 +49,9 @@ namespace Assets.Scripts.Core
             NewGameEvent ??= new UnityEvent();
             GameOverTransitionEvent ??= new UnityEvent();
             GenerateNewChunks ??= new UnityEvent();
+            GenerateNewObstacles ??= new UnityEvent<Chunk>();
+            ChunkDestroyed ??= new UnityEvent<Chunk>();
+            ObstacleDestroyed ??= new UnityEvent<Obstacle>();
         }
     }
 }
