@@ -22,9 +22,9 @@ namespace Assets.Components.Game.Obstacle
 
         #endregion Unity Lifecycle
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag("Player"))
             {
                 Debug.Log("Player hit an obstacle!");
                 // TODO : add more logic here, such as reducing player health or triggering a game over.
@@ -47,8 +47,7 @@ namespace Assets.Components.Game.Obstacle
                 return;
             }
 
-            transform.SetParent(_pool.GetPoolParent().transform);
-            gameObject.SetActive(false);
+            _pool.Release(this.gameObject);
         }
 
         #endregion UnityEvents

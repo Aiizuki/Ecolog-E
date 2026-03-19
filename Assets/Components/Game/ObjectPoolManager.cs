@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Components.Game
@@ -35,6 +36,9 @@ namespace Assets.Components.Game
         /// </summary>
         public GameObject Get(GameObject prefab)
         {
+            if (Pool.Count <= 0)
+                Debug.LogWarning("Pool is empty but trying to get a GO !");
+
             GameObject instance = Pool.Count > 0
                 ? Pool.Pop()
                 : Instantiate(prefab);
@@ -60,14 +64,13 @@ namespace Assets.Components.Game
                 return;
             }
 
+            instance.transform.SetParent(poolParent.transform);
             instance.SetActive(false);
             _active.Remove(instance);
             Pool.Push(instance);
         }
 
-        public GameObject GetPoolParent() => poolParent;
-
-        #endregion
+        #endregion Public Methods
 
         #region Private Helpers
 
@@ -76,10 +79,9 @@ namespace Assets.Components.Game
             for (int i = 0; i < poolSettings.initialSize; i++)
             {
                 int index = i % poolSettings.lstObject.Count; // Permet de répartir les instances entre les différents types d'objets
-                GameObject instance = Instantiate(poolSettings.lstObject[index]);
-
-                instance.transform.SetParent(poolParent.transform);
+                GameObject instance = Instantiate(poolSettings.lstObject[index], poolParent.transform);
                 instance.SetActive(false);
+                Debug.Log($"Instanciated gameobject {instance.name}");
                 Pool.Push(instance);
             }
         }

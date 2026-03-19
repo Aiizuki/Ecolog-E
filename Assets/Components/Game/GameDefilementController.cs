@@ -11,24 +11,17 @@ namespace Assets.Components.Game
     public class GameDefilementController : MonoBehaviour
     {
         [Header("Parameters")]
-        [SerializeField] private ChunkSettings _settings;
-        [SerializeField] private GameObject _leftLaneStartPoint;
-        [SerializeField] private GameObject _middleLaneStartPoint;
-        [SerializeField] private GameObject _rightLaneStartPoint;
+        [SerializeField] private GameObject _startPoint;
         [SerializeField] private float _chunkYPos = 0.5f;
 
         [Header("Components")]
         [SerializeField] private ObjectPoolManager _chunkPool;
-
-        private readonly List<Chunk> _instancedChunks = new();
 
         #region Unity Lifecycle
 
         private void Start()
         {
             InitEvents();
-            SpawnChunkRow();
-            StartCoroutine(ChunkGeneration());
         }
 
         private void OnDestroy()
@@ -40,48 +33,8 @@ namespace Assets.Components.Game
 
         #region Private Helpers
 
-        private IEnumerator ChunkGeneration()
-        {
-            while (true)
-            {
-                try
-                {
-                    UnityEvents.Instance.GenerateNewChunks.Invoke();
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogError($"Error in chunk generation coroutine: {ex.Message}");
-                    yield break;
-                }
-
-                yield return new WaitForSeconds(_settings.ChunkGenerationDelay);
-            }
-        }
-
-        [Obsolete("Should be handled by each chunk itself")]
-        private void UpdateChunks()
-        {
-            List<Chunk> behindChunks = new();
-
-            foreach (Chunk chunk in _instancedChunks)
-            {
-                if (chunk.IsBehindPlayer())
-                    behindChunks.Add(chunk);
-            }
-
-            foreach (Chunk chunk in behindChunks)
-            {
-                _instancedChunks.Remove(chunk);
-                _chunkPool.Release(chunk.gameObject);
-            }
-        }
-
-        private void SpawnChunkRow()
-        {
-            AddChunk(_leftLaneStartPoint.transform.position);
-            AddChunk(_middleLaneStartPoint.transform.position);
-            AddChunk(_rightLaneStartPoint.transform.position);
-        }
+        private void SpawnChunk()
+            => AddChunk(_startPoint.transform.position);
 
         private void AddChunk(Vector3 position)
         {
@@ -99,13 +52,14 @@ namespace Assets.Components.Game
 
             Chunk chunk = obj.GetComponent<Chunk>();
             chunk.Spawn(new Vector3(position.x, _chunkYPos, position.z));
-            _instancedChunks.Add(chunk);
         }
 
         private void OnChunkDestroyed(Chunk chunk)
         {
-            if (_chunkPool != null)
+            if (_chunkPool != null && !chunk.IsDefinedInScene)
                 _chunkPool.Release(chunk.gameObject);
+
+            UnityEvents.Instance.GenerateNewChunk.Invoke();
         }
 
         #endregion Private Helpers
@@ -114,13 +68,13 @@ namespace Assets.Components.Game
 
         private void InitEvents()
         {
-            UnityEvents.Instance.GenerateNewChunks.AddListener(SpawnChunkRow);
+            UnityEvents.Instance.GenerateNewChunk.AddListener(SpawnChunk);
             UnityEvents.Instance.ChunkDestroyed.AddListener(OnChunkDestroyed);
         }
 
         private void RevokeEvents()
         {
-            UnityEvents.Instance.GenerateNewChunks.RemoveListener(SpawnChunkRow);
+            UnityEvents.Instance.GenerateNewChunk.RemoveListener(SpawnChunk);
             UnityEvents.Instance.ChunkDestroyed.RemoveListener(OnChunkDestroyed);
         }
 

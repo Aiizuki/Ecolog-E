@@ -1,6 +1,7 @@
 ﻿using Assets.Components.ObstacleGenerator;
 using Assets.Scripts.Core;
 using Assets.Scripts.Helpers;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Components.Game.Obstacle
@@ -31,16 +32,28 @@ namespace Assets.Components.Game.Obstacle
                 return;
             }
 
-            GameObject prefab = RandomisationHelper.GetRandomItemFromStack(_obstaclePool.Pool);
-            GameObject obj = _obstaclePool.Get(prefab);
-
-            if (obj == null)
+            if (chunk.GetNbLanes() == 0)
+            {
+                Debug.LogWarning("The given chunk has no lanes defined !");
                 return;
+            }
 
-            Obstacle obstacle = obj.GetComponent<Obstacle>();
+            List<Obstacle> lstObstacle = new();
+            for (int i = 1; i < chunk.GetNbLanes(); i++)
+            {
+                GameObject prefab = RandomisationHelper.GetRandomItemFromStack(_obstaclePool.Pool);
+                GameObject obj = _obstaclePool.Get(prefab);
 
-            obstacle.SetPool(this._obstaclePool);
-            chunk.GiveObstacle(obstacle);
+                if (obj == null)
+                    continue;
+
+                Obstacle obstacle = obj.GetComponent<Obstacle>();
+
+                obstacle.SetPool(this._obstaclePool);
+                lstObstacle.Add(obstacle);
+            }
+
+            chunk.GiveObstacle(lstObstacle);
         }
     }
 }

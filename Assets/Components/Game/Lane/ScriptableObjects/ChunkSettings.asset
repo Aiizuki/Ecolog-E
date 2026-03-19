@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15cd336f78fa444d96a99d91be0bebb, type: 3}
   m_Name: ChunkSettings
   m_EditorClassIdentifier: Assembly-CSharp::ChunkSettings
-  DeadZoneZIndex: -20
-  TranslationSpeed: 2
-  ListObstacle: []
-  ChunkGenerationDelay: 10
+  DeadZoneZIndex: -29.5
+  TranslationSpeed: 6
