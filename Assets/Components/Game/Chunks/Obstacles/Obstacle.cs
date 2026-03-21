@@ -11,12 +11,12 @@ namespace Assets.Components.Game.Chunks.Obstacles
 
 		private void Start()
 		{
-			UnityEvents.Instance.ObstacleDestroyed.AddListener(ReturnToPool);
+			UnityEvents.Instance.ObstacleDestroyedEvent.AddListener(ReturnToPool);
 		}
 
 		private void OnDestroy()
 		{
-			UnityEvents.Instance.ObstacleDestroyed.RemoveListener(ReturnToPool);
+			UnityEvents.Instance.ObstacleDestroyedEvent.RemoveListener(ReturnToPool);
 		}
 
 		#endregion Unity Lifecycle
@@ -25,8 +25,7 @@ namespace Assets.Components.Game.Chunks.Obstacles
 		{
 			if (other.gameObject.CompareTag("Player"))
 			{
-				Debug.Log("Player hit an obstacle!");
-				// TODO : add more logic here, such as reducing player health or triggering a game over.
+				UnityEvents.Instance.HealthLooseEvent.Invoke(null);
 			}
 		}
 

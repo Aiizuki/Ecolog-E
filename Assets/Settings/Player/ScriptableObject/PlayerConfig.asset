@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385aae8c57f11ef4b83fb4179c569eb1, type: 3}
+  m_Name: PlayerConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Settings.Player.PlayerConfig
+  MaxHealth: 100
+  MinHealth: 0
+  HealthLooseRatio: 2
+  HealthLooseRate: 1
+  HealthGainPerTrashCollect: 8
+  InvincibilityDuration: 1.5
+  lstDistanceCheckpoints: 00000000f4010000e8030000d0070000
+  lstDamagePerCheckpoints: 0f00000014000000190000001e000000

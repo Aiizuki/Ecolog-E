@@ -56,7 +56,7 @@ namespace Assets.Components.Game
 			if (_chunkPool != null && !chunk.IsDefinedInScene)
 				_chunkPool.Release(chunk.gameObject);
 
-			UnityEvents.Instance.GenerateNewChunk.Invoke();
+			UnityEvents.Instance.GenerateNewChunkEvent.Invoke();
 		}
 
 		#endregion Private Helpers
@@ -65,14 +65,14 @@ namespace Assets.Components.Game
 
 		private void InitEvents()
 		{
-			UnityEvents.Instance.GenerateNewChunk.AddListener(SpawnChunk);
-			UnityEvents.Instance.ChunkDestroyed.AddListener(OnChunkDestroyed);
+			UnityEvents.Instance.GenerateNewChunkEvent.AddListener(SpawnChunk);
+			UnityEvents.Instance.ChunkDestroyedEvent.AddListener(OnChunkDestroyed);
 		}
 
 		private void RevokeEvents()
 		{
-			UnityEvents.Instance.GenerateNewChunk.RemoveListener(SpawnChunk);
-			UnityEvents.Instance.ChunkDestroyed.RemoveListener(OnChunkDestroyed);
+			UnityEvents.Instance.GenerateNewChunkEvent.RemoveListener(SpawnChunk);
+			UnityEvents.Instance.ChunkDestroyedEvent.RemoveListener(OnChunkDestroyed);
 		}
 
 		#endregion UnityEvents

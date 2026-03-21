@@ -22,7 +22,7 @@ namespace Assets.Components.Game.Chunks
 		private void Start()
 		{
 			if (IsDefinedInScene)
-				UnityEvents.Instance.GenerateNewObstacles.Invoke(this);
+				UnityEvents.Instance.GenerateNewObstaclesEvent.Invoke(this);
 		}
 
 		private void Update()
@@ -35,8 +35,8 @@ namespace Assets.Components.Game.Chunks
 
 				_laneFull = null;
 
-				UnityEvents.Instance.ObstacleDestroyed.Invoke(this);
-				UnityEvents.Instance.ChunkDestroyed.Invoke(this);
+				UnityEvents.Instance.ObstacleDestroyedEvent.Invoke(this);
+				UnityEvents.Instance.ChunkDestroyedEvent.Invoke(this);
 			}
 		}
 
@@ -50,7 +50,7 @@ namespace Assets.Components.Game.Chunks
 		public void Spawn(Vector3 position)
 		{
 			transform.position = position;
-			UnityEvents.Instance.GenerateNewObstacles.Invoke(this);
+			UnityEvents.Instance.GenerateNewObstaclesEvent.Invoke(this);
 		}
 
 		public void GiveObstacle(List<Obstacle> lstObstacle)

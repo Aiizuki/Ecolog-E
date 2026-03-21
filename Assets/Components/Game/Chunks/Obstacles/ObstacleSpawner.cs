@@ -13,12 +13,12 @@ namespace Assets.Components.Game.Chunks.Obstacles
 
 		private void Start()
 		{
-			UnityEvents.Instance.GenerateNewObstacles.AddListener(SpawnObstacles);
+			UnityEvents.Instance.GenerateNewObstaclesEvent.AddListener(SpawnObstacles);
 		}
 
 		private void OnDestroy()
 		{
-			UnityEvents.Instance.GenerateNewObstacles.RemoveListener(SpawnObstacles);
+			UnityEvents.Instance.GenerateNewObstaclesEvent.RemoveListener(SpawnObstacles);
 		}
 
 		#endregion Unity Lifecycle

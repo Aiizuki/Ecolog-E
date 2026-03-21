@@ -19,10 +19,15 @@ namespace Assets.Scripts.Core
 
 		#region InGame Events
 
-		[HideInInspector] public UnityEvent GenerateNewChunk;
-		[HideInInspector] public UnityEvent<Chunk> GenerateNewObstacles;
-		[HideInInspector] public UnityEvent<Chunk> ChunkDestroyed;
-		[HideInInspector] public UnityEvent<Chunk> ObstacleDestroyed;
+		[HideInInspector] public UnityEvent GenerateNewChunkEvent;
+		[HideInInspector] public UnityEvent<Chunk> GenerateNewObstaclesEvent;
+		[HideInInspector] public UnityEvent<Chunk> ChunkDestroyedEvent;
+		[HideInInspector] public UnityEvent<Chunk> ObstacleDestroyedEvent;
+
+		[HideInInspector] public UnityEvent<int?> HealthGainEvent;
+		[HideInInspector] public UnityEvent<int?> HealthLooseEvent;
+		[HideInInspector] public UnityEvent CriticalHealthEvent;
+		[HideInInspector] public UnityEvent EndCriticalHealthEvent;
 
 		#endregion InGame Events
 
@@ -47,10 +52,16 @@ namespace Assets.Scripts.Core
 			ReturnToHomeEvent ??= new UnityEvent();
 			NewGameEvent ??= new UnityEvent();
 			GameOverTransitionEvent ??= new UnityEvent();
-			GenerateNewChunk ??= new UnityEvent();
-			GenerateNewObstacles ??= new UnityEvent<Chunk>();
-			ChunkDestroyed ??= new UnityEvent<Chunk>();
-			ObstacleDestroyed ??= new UnityEvent<Chunk>();
+
+			GenerateNewChunkEvent ??= new UnityEvent();
+			GenerateNewObstaclesEvent ??= new UnityEvent<Chunk>();
+			ChunkDestroyedEvent ??= new UnityEvent<Chunk>();
+			ObstacleDestroyedEvent ??= new UnityEvent<Chunk>();
+
+			HealthGainEvent ??= new UnityEvent<int?>();
+			HealthLooseEvent ??= new UnityEvent<int?>();
+			CriticalHealthEvent ??= new UnityEvent();
+			EndCriticalHealthEvent ??= new UnityEvent();
 		}
 	}
 }
