@@ -7,9 +7,9 @@ namespace Assets.Components.Game.Chunks.Lanes
 	{
 		private int _nbObstacleInLane = 0;
 
-		public void SpawnObstacle(Obstacle obstacle, int position)
+		public void SpawnObstacle(Obstacle obstacle, int position, float distanceBetweenObstacles)
 		{
-			position = position % (int)transform.localScale.z;
+			position = Mathf.FloorToInt((position * distanceBetweenObstacles) % transform.localScale.z);
 
 			if (position == 0)
 				return; // We avoid spawning at the very edge of the lane

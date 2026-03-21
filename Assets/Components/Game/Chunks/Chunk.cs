@@ -16,8 +16,19 @@ namespace Assets.Components.Game.Chunks
 		public bool IsDefinedInScene = false;
 
 		private List<Lane> _laneFull;
+		private Dictionary<int, float> _assoTimeWithDistance;
 
 		#region Unity Lifecycle
+
+		private void Awake()
+		{
+			if (_chunkSettings.LstTimeCheckpoints.Count != _chunkSettings.LstDitancesBetweenTwoObstacles.Count)
+				throw new UnityException("Checkpoints and DistancePerCheckpoint lists must have the same Length. Please fix the ChunkSetting");
+
+			_assoTimeWithDistance = _chunkSettings.LstTimeCheckpoints
+				.Zip(_chunkSettings.LstDitancesBetweenTwoObstacles, (key, value) => new { key, value })
+				.ToDictionary(x => x.key, x => x.value);
+		}
 
 		private void Start()
 		{
@@ -60,7 +71,7 @@ namespace Assets.Components.Game.Chunks
 			for (int i = 0; i < lstObstacle.Count; i++)
 			{
 				Lane lane = RandomisationHelper.GetRandomItemFromList(_lanes.FindAll(l => !_laneFull.Contains(l)).ToList());
-				lane.SpawnObstacle(lstObstacle[i], i);
+				lane.SpawnObstacle(lstObstacle[i], i, GetDistanceBetweenObstacles());
 				if (lane.IsFull())
 					_laneFull.Add(lane);
 			}
@@ -69,9 +80,15 @@ namespace Assets.Components.Game.Chunks
 		/// <summary>
 		/// Determine the number of <see cref="Obstacle"/> we need to assign to a chunk
 		/// </summary>
-		/// <remarks>This is the maximum amount, which assert that the smallest distance between each obstacle on a lane is 1m</remarks>
 		public float GetNbObstacle()
-			=> GetNbLanes() * GetLaneLength();
+		{
+			float distanceBetweenObstacles = GetDistanceBetweenObstacles();
+
+			int maxNbObstaclePerLane = Mathf.FloorToInt(GetLaneLength() / distanceBetweenObstacles);
+			Debug.Log($"Max obstacle per lane : {maxNbObstaclePerLane} (score : {StatsController.Score})");
+
+			return maxNbObstaclePerLane * GetNbLanes();
+		}
 
 		#endregion Public Methods
 
@@ -87,6 +104,19 @@ namespace Assets.Components.Game.Chunks
 			if (lane == null || lane.transform == null || lane.transform.localScale == null)
 				return 0;
 			return lane.transform.localScale.z;
+		}
+
+		private float GetDistanceBetweenObstacles()
+		{
+			foreach (int time in _assoTimeWithDistance.Keys)
+			{
+				if (StatsController.Score > time)
+					continue;
+
+				return _assoTimeWithDistance[time];
+			}
+
+			throw new UnityException("Distance between obstalces can't be null or less or equal to 0");
 		}
 
 		#endregion Private Methods
