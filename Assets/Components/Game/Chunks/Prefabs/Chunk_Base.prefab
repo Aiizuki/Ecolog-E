@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8610747946979456844}
   - component: {fileID: 3384693331454322402}
   - component: {fileID: 4846332223032716107}
+  - component: {fileID: 1237082869518279467}
   m_Layer: 3
   m_Name: Line_Left
   m_TagString: Untagged
@@ -28,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 797307477745513081}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.3333333, y: 0, z: 0}
-  m_LocalScale: {x: 0.33333334, y: 0.05, z: 3}
+  m_LocalPosition: {x: -25, y: 0, z: 0}
+  m_LocalScale: {x: 2.5, y: 0.05, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5933432696280083759}
@@ -113,6 +114,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1237082869518279467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797307477745513081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381365e796ae1564a864751e79c746ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.Chunks.Lanes.Lane
 --- !u!1 &3452497720558552595
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +138,7 @@ GameObject:
   - component: {fileID: 6018677368117773094}
   - component: {fileID: 721136870230217352}
   - component: {fileID: 7473873070626791201}
+  - component: {fileID: 6543252432731486041}
   m_Layer: 3
   m_Name: Line_Middle
   m_TagString: Untagged
@@ -142,7 +156,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.33333334, y: 0.05, z: 3}
+  m_LocalScale: {x: 2.5, y: 0.05, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5933432696280083759}
@@ -226,6 +240,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &6543252432731486041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3452497720558552595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381365e796ae1564a864751e79c746ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.Chunks.Lanes.Lane
 --- !u!1 &8412430471239706557
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +280,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1321112229112482927}
   - {fileID: 4831805031939146365}
@@ -274,11 +300,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.ObstacleGenerator.Chunk
   _chunkSettings: {fileID: 11400000, guid: 53200afe34d7d6f419ad7483fb57f6f5, type: 2}
-  IsDefinedInScene: 0
   _lanes:
-  - {fileID: 9129414246763595777}
-  - {fileID: 3452497720558552595}
-  - {fileID: 797307477745513081}
+  - {fileID: 3901496795397155677}
+  - {fileID: 6543252432731486041}
+  - {fileID: 1237082869518279467}
+  IsDefinedInScene: 0
 --- !u!1 &9129414246763595777
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,6 +317,7 @@ GameObject:
   - component: {fileID: 206372477089533236}
   - component: {fileID: 6582700973238738074}
   - component: {fileID: 3955016393829667123}
+  - component: {fileID: 3901496795397155677}
   m_Layer: 3
   m_Name: Line_Right
   m_TagString: Untagged
@@ -307,8 +334,8 @@ Transform:
   m_GameObject: {fileID: 9129414246763595777}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.3333333, y: 0, z: 0}
-  m_LocalScale: {x: 0.33333334, y: 0.05, z: 3}
+  m_LocalPosition: {x: 25, y: 0, z: 0}
+  m_LocalScale: {x: 2.5, y: 0.05, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5933432696280083759}
@@ -392,3 +419,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &3901496795397155677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9129414246763595777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381365e796ae1564a864751e79c746ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.Chunks.Lanes.Lane

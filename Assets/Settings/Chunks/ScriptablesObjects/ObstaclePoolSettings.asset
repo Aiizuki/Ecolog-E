@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d05dc6db2a9f88d48aefed212638c2b0, type: 3}
-  m_Name: ChunkPoolSettings
+  m_Name: ObstaclePoolSettings
   m_EditorClassIdentifier: Assembly-CSharp::PoolSettings
   lstObject:
-  - {fileID: 8412430471239706557, guid: 7a6b33353933c834da0cab5492eb3408, type: 3}
-  initialSize: 5
-  maxSize: 8
+  - {fileID: 6886741291294649447, guid: 7b941bd772f417740bbeff7e94c48498, type: 3}
+  initialSize: 180
+  maxSize: 200
