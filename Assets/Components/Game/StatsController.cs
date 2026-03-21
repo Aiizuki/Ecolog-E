@@ -8,7 +8,7 @@ namespace Assets.Components.Game
 
 		private void Update()
 		{
-			Score += Mathf.FloorToInt(Time.deltaTime);
+			Score += Mathf.FloorToInt(Time.deltaTime); // TODO : afficher le score à l'écran
 		}
 	}
 }

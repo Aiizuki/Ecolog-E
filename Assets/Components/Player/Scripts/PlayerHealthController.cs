@@ -40,6 +40,7 @@ namespace Assets.Components.Player.Scripts
 				// Réduction progressive de la santé
 				_health = Mathf.Max(0, _health - (_playerConfig.HealthLooseRatio / _playerConfig.HealthLooseRate) * Time.deltaTime);
 
+				// TODO : remplacer par un state de la state machine
 				if (_health < 0.30f * _playerConfig.MaxHealth)
 					UnityEvents.Instance.CriticalHealthEvent.Invoke();
 				else

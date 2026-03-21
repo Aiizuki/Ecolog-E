@@ -26,6 +26,8 @@ namespace Assets.Components.Game.Chunks.Obstacles
 			if (other.gameObject.CompareTag("Player"))
 			{
 				UnityEvents.Instance.HealthLooseEvent.Invoke(null);
+				// TODO : passer la state machine en mode invincible
+				_pool.Release(this.gameObject);
 			}
 		}
 
