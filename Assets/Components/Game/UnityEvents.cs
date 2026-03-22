@@ -1,4 +1,5 @@
 ﻿using Assets.Components.Game.Chunks;
+using Assets.Components.StateMachines.States;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,6 +29,8 @@ namespace Assets.Scripts.Core
 		[HideInInspector] public UnityEvent<int?> HealthLooseEvent;
 		[HideInInspector] public UnityEvent CriticalHealthEvent;
 		[HideInInspector] public UnityEvent EndCriticalHealthEvent;
+
+		[HideInInspector] public UnityEvent<State> OnStateChangedEvent;
 
 		#endregion InGame Events
 
@@ -62,6 +65,8 @@ namespace Assets.Scripts.Core
 			HealthLooseEvent ??= new UnityEvent<int?>();
 			CriticalHealthEvent ??= new UnityEvent();
 			EndCriticalHealthEvent ??= new UnityEvent();
+
+			OnStateChangedEvent ??= new UnityEvent<State>();
 		}
 	}
 }

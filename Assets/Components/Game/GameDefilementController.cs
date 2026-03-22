@@ -1,4 +1,5 @@
 using Assets.Components.Game.Chunks;
+using Assets.Components.StateMachines.States;
 using Assets.Scripts.Core;
 using Assets.Scripts.Helpers;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace Assets.Components.Game
 
 		[Header("Components")]
 		[SerializeField] private ObjectPoolManager _chunkPool;
+
+		private bool _inGameState;
 
 		#region Unity Lifecycle
 
@@ -35,6 +38,9 @@ namespace Assets.Components.Game
 
 		private void AddChunk(Vector3 position)
 		{
+			if (!_inGameState)
+				return;
+
 			if (_chunkPool.Pool.Count == 0)
 			{
 				Debug.LogError("No chunks in pool");
@@ -59,6 +65,11 @@ namespace Assets.Components.Game
 			UnityEvents.Instance.GenerateNewChunkEvent.Invoke();
 		}
 
+		private void HandleStateChanged(State newState)
+		{
+			_inGameState = newState is not GameOverState;
+		}
+
 		#endregion Private Helpers
 
 		#region UnityEvents
@@ -67,12 +78,14 @@ namespace Assets.Components.Game
 		{
 			UnityEvents.Instance.GenerateNewChunkEvent.AddListener(SpawnChunk);
 			UnityEvents.Instance.ChunkDestroyedEvent.AddListener(OnChunkDestroyed);
+			UnityEvents.Instance.OnStateChangedEvent.AddListener(HandleStateChanged);
 		}
 
 		private void RevokeEvents()
 		{
 			UnityEvents.Instance.GenerateNewChunkEvent.RemoveListener(SpawnChunk);
 			UnityEvents.Instance.ChunkDestroyedEvent.RemoveListener(OnChunkDestroyed);
+			UnityEvents.Instance.OnStateChangedEvent.RemoveListener(HandleStateChanged);
 		}
 
 		#endregion UnityEvents

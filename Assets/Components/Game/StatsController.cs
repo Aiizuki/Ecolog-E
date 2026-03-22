@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Core;
+using UnityEngine;
 
 namespace Assets.Components.Game
 {
@@ -6,9 +7,28 @@ namespace Assets.Components.Game
 	{
 		public static int Score;
 
-		private void Update()
+		private void Start()
 		{
-			Score += Mathf.FloorToInt(Time.deltaTime); // TODO : afficher le score à l'écran
+			UnityEvents.Instance.NewGameEvent.AddListener(ResetStats);
 		}
+
+		#region Static Helpers
+
+		public static void SetScore(int score)
+			=> Score = score;
+
+		public static int GetScore()
+			=> Score;
+
+		#endregion Static Helpers
+
+		#region Private Methods
+
+		private void ResetStats()
+		{
+			Score = 0;
+		}
+
+		#endregion Private Methods
 	}
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   DeadZoneZIndex: -285
   LstTimeCheckpoints: 000000000a000000140000001e000000
   LstDitancesBetweenTwoObstacles:
-  - 18
+  - 10
   - 14
   - 10
   - 8

@@ -85,8 +85,6 @@ namespace Assets.Components.Game.Chunks
 			float distanceBetweenObstacles = GetDistanceBetweenObstacles();
 
 			int maxNbObstaclePerLane = Mathf.FloorToInt(GetLaneLength() / distanceBetweenObstacles);
-			Debug.Log($"Max obstacle per lane : {maxNbObstaclePerLane} (score : {StatsController.Score})");
-
 			return maxNbObstaclePerLane * GetNbLanes();
 		}
 

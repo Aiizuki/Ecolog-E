@@ -1,4 +1,6 @@
 ﻿using Assets.Components.Game;
+using Assets.Components.StateMachines;
+using Assets.Components.StateMachines.States;
 using Assets.Scripts.Core;
 using Assets.Settings.Player;
 using System.Collections.Generic;
@@ -12,11 +14,13 @@ namespace Assets.Components.Player.Scripts
 	{
 		[SerializeField] private Image _playerHealthUI;
 		[SerializeField] private PlayerConfig _playerConfig;
+		[SerializeField] private GameStateController _gameStateController;
 
 		private float _health;
 		private Dictionary<int, int> _assoDistanceWithDamage;
 
-		// Use this for initialization
+		#region Unity Lifecycle
+
 		private void Start()
 		{
 			if (_playerConfig.lstDistanceCheckpoints.Count != _playerConfig.lstDamagePerCheckpoints.Count)
@@ -60,7 +64,10 @@ namespace Assets.Components.Player.Scripts
 		private void OnDestroy()
 		{
 			UnityEvents.Instance.HealthGainEvent.RemoveListener(Recover);
+			UnityEvents.Instance.HealthLooseEvent.RemoveListener(TakeDamage);
 		}
+
+		#endregion Unity Lifecycle
 
 		private void Recover(int? amount = 0)
 		{
@@ -72,6 +79,9 @@ namespace Assets.Components.Player.Scripts
 
 		private void TakeDamage(int? amount = 0)
 		{
+			if (_gameStateController.GetCurrentState() is InvincibleState)
+				return;
+
 			if (amount == null || amount <= 0)
 			{
 				foreach (int distance in _assoDistanceWithDamage.Keys)
@@ -86,6 +96,7 @@ namespace Assets.Components.Player.Scripts
 
 			_health = Mathf.Max(_playerConfig.MinHealth, _health - amount.Value);
 			Debug.Log($"Player lost {amount.Value} hp");
+			_gameStateController.ChangeState(typeof(InvincibleState));
 		}
 	}
 }

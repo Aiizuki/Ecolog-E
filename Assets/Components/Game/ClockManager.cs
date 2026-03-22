@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Core;
+﻿using Assets.Components.StateMachines;
+using Assets.Components.StateMachines.States;
+using Assets.Scripts.Core;
 using Assets.Settings.GameDefilement;
 using System.Collections;
 using UnityEngine;
@@ -8,6 +10,7 @@ namespace Assets.Components.Game
 	public class ClockManager : MonoBehaviour
 	{
 		[SerializeField] private GameTimerSettings _timerSettings;
+		[SerializeField] private GameStateController _gameStateController;
 
 		private static float _currentSpeed = 0f;
 
@@ -22,7 +25,7 @@ namespace Assets.Components.Game
 
 		private IEnumerator SpeedRoutine()
 		{
-			while (_currentSpeed < _timerSettings.MaxSpeed) // TODO : rajouter un state de la state machine (Ingame ?) pour ne pas que sa increase quand on joue pas
+			while (_currentSpeed < _timerSettings.MaxSpeed && _gameStateController.GetCurrentState() is not GameOverState)
 			{
 				yield return new WaitForSeconds(_timerSettings.SpeedIncreaseDelay);
 				_currentSpeed = Mathf.Min(_currentSpeed + _timerSettings.SpeedIncreaseRate, _timerSettings.MaxSpeed);

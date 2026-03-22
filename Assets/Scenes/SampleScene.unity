@@ -627,6 +627,7 @@ Transform:
   - {fileID: 334075605}
   - {fileID: 1528394301}
   - {fileID: 881442403}
+  - {fileID: 1348506391}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &594335076
@@ -1171,6 +1172,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1281136394}
   m_CullTransparentMesh: 1
+--- !u!1 &1348506390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1348506391}
+  - component: {fileID: 1348506392}
+  m_Layer: 0
+  m_Name: GameStateController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1348506391
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348506390}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 542761251}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1348506392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348506390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d5fb5f6c124714ba4c6924a3fc7cd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.StateMachines.GameStateController
 --- !u!1 &1421066339
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185,6 +1230,7 @@ GameObject:
   - component: {fileID: 1421066345}
   - component: {fileID: 1421066340}
   - component: {fileID: 1421066346}
+  - component: {fileID: 1421066347}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1379,6 +1425,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Player.Scripts.PlayerHealthController
   _playerHealthUI: {fileID: 1281136396}
   _playerConfig: {fileID: 11400000, guid: 96e6ff38ce422c148ab3804ac5083d26, type: 2}
+  _gameStateController: {fileID: 1348506392}
+--- !u!114 &1421066347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421066339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5643cf066af4a744a790aaab618d4e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Player.PlayerInvincibleController
+  _playerCollider: {fileID: 1421066345}
+  _playerConfig: {fileID: 11400000, guid: 96e6ff38ce422c148ab3804ac5083d26, type: 2}
+  _gameStateController: {fileID: 1348506392}
 --- !u!1 &1423236921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1652,6 +1714,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   EndCriticalHealthEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStateChangedEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1942599173
