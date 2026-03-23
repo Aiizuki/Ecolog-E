@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.Core;
+﻿using Assets.Components.Singletons;
 using TMPro;
 using UnityEngine;
 
-namespace Assets.Components.UI
+namespace Assets.Components.UI.Game
 {
 	public class ScoreUpdater : MonoBehaviour
 	{

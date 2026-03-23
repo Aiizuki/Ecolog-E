@@ -1,4 +1,4 @@
-using Assets.Scripts.Core;
+using Assets.Components.Singletons;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;

@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Core;
+﻿using Assets.Components.Singletons;
 using Assets.Scripts.Helpers;
 using System.Collections.Generic;
 using UnityEngine;

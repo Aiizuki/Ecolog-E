@@ -3,7 +3,7 @@ using Assets.Components.StateMachines.States;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.Scripts.Core
+namespace Assets.Components.Singletons
 {
 	/// <summary>
 	/// Regroups every Unity Event used in the game

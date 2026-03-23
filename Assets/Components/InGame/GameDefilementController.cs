@@ -1,6 +1,6 @@
 using Assets.Components.Game.Chunks;
+using Assets.Components.Singletons;
 using Assets.Components.StateMachines.States;
-using Assets.Scripts.Core;
 using Assets.Scripts.Helpers;
 using UnityEngine;
 

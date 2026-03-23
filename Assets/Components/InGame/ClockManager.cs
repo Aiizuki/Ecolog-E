@@ -1,5 +1,5 @@
-﻿using Assets.Components.StateMachines;
-using Assets.Scripts.Core;
+﻿using Assets.Components.Singletons;
+using Assets.Components.StateMachines;
 using Assets.Settings.GameDefilement;
 using System.Collections;
 using UnityEngine;

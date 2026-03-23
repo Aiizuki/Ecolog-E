@@ -1,6 +1,6 @@
 ﻿using Assets.Components.Game.Chunks.Lanes;
 using Assets.Components.Game.Chunks.Obstacles;
-using Assets.Scripts.Core;
+using Assets.Components.Singletons;
 using Assets.Scripts.Helpers;
 using System.Collections.Generic;
 using System.Linq;

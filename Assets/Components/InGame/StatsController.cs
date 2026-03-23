@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Core;
+﻿using Assets.Components.Singletons;
 using UnityEngine;
 
 namespace Assets.Components.Game

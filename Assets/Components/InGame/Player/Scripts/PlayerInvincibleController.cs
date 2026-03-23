@@ -1,11 +1,11 @@
-﻿using Assets.Components.StateMachines;
+﻿using Assets.Components.Singletons;
+using Assets.Components.StateMachines;
 using Assets.Components.StateMachines.States;
-using Assets.Scripts.Core;
 using Assets.Settings.Player;
 using System.Collections;
 using UnityEngine;
 
-namespace Assets.Components.Player
+namespace Assets.Components.InGame.Player.Scripts
 {
 	public class PlayerInvincibleController : MonoBehaviour
 	{

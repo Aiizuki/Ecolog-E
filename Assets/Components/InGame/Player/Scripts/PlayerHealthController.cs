@@ -1,14 +1,14 @@
 ﻿using Assets.Components.Game;
+using Assets.Components.Singletons;
 using Assets.Components.StateMachines;
 using Assets.Components.StateMachines.States;
-using Assets.Scripts.Core;
 using Assets.Settings.Player;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Components.Player.Scripts
+namespace Assets.Components.InGame.Player.Scripts
 {
 	public class PlayerHealthController : MonoBehaviour
 	{

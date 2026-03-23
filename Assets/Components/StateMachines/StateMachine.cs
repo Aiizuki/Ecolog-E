@@ -1,5 +1,5 @@
+using Assets.Components.Singletons;
 using Assets.Components.StateMachines.States;
-using Assets.Scripts.Core;
 using UnityEngine;
 
 namespace Assets.Components.StateMachines
