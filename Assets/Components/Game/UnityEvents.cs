@@ -12,11 +12,18 @@ namespace Assets.Scripts.Core
 	{
 		public static UnityEvents Instance { get; private set; }
 
-		[HideInInspector] public UnityEvent GameOverEvent;
-		[HideInInspector] public UnityEvent GameOverTransitionEvent;
-		[HideInInspector] public UnityEvent SpeedIncreaseEvent;
-		[HideInInspector] public UnityEvent ReturnToHomeEvent;
 		[HideInInspector] public UnityEvent NewGameEvent;
+		[HideInInspector] public UnityEvent GameOverEvent;
+		[HideInInspector] public UnityEvent GamePauseEvent;
+		[HideInInspector] public UnityEvent GameResumeEvent;
+
+		#region UI
+
+		[HideInInspector] public UnityEvent GameOverTransitionEvent;
+		[HideInInspector] public UnityEvent ReturnToHomeEvent;
+		[HideInInspector] public UnityEvent<int> ScoreUpdateEvent;
+
+		#endregion UI
 
 		#region InGame Events
 
@@ -31,6 +38,7 @@ namespace Assets.Scripts.Core
 		[HideInInspector] public UnityEvent EndCriticalHealthEvent;
 
 		[HideInInspector] public UnityEvent<State> OnStateChangedEvent;
+		[HideInInspector] public UnityEvent SpeedIncreaseEvent;
 
 		#endregion InGame Events
 
@@ -51,10 +59,15 @@ namespace Assets.Scripts.Core
 		private void InitializeEvents()
 		{
 			GameOverEvent ??= new UnityEvent();
-			SpeedIncreaseEvent ??= new UnityEvent();
-			ReturnToHomeEvent ??= new UnityEvent();
+
+			GameResumeEvent ??= new UnityEvent();
 			NewGameEvent ??= new UnityEvent();
+
+			SpeedIncreaseEvent ??= new UnityEvent();
+
 			GameOverTransitionEvent ??= new UnityEvent();
+			ReturnToHomeEvent ??= new UnityEvent();
+			ScoreUpdateEvent ??= new UnityEvent<int>();
 
 			GenerateNewChunkEvent ??= new UnityEvent();
 			GenerateNewObstaclesEvent ??= new UnityEvent<Chunk>();

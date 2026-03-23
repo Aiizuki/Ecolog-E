@@ -15,7 +15,10 @@ namespace Assets.Components.Game
 		#region Static Helpers
 
 		public static void SetScore(int score)
-			=> Score = score;
+		{
+			Score = score;
+			UnityEvents.Instance.ScoreUpdateEvent.Invoke(Score);
+		}
 
 		public static int GetScore()
 			=> Score;

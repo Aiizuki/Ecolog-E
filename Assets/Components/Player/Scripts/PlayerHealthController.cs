@@ -54,7 +54,7 @@ namespace Assets.Components.Player.Scripts
 				float scaleX = _health / _playerConfig.MaxHealth;
 				_playerHealthUI.transform.localScale = new Vector3(scaleX, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
 			}
-			else
+			else if (_gameStateController.GetCurrentState() is not GameOverState)
 			{
 				_playerHealthUI.transform.localScale = new Vector3(0f, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
 				UnityEvents.Instance.GameOverEvent.Invoke();

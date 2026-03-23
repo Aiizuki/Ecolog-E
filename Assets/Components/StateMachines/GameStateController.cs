@@ -10,6 +10,7 @@ namespace Assets.Components.StateMachines
 	{
 		private StateMachine _stateMachine;
 		private List<State> _lstAvailableStates;
+		private State _oldState;
 
 		#region Unity Lifecycle
 
@@ -32,6 +33,7 @@ namespace Assets.Components.StateMachines
 
 		public void ChangeState(Type newState)
 		{
+			_oldState = GetCurrentState();
 			switch (newState)
 			{
 				case var t when t == typeof(InvincibleState):
@@ -61,5 +63,8 @@ namespace Assets.Components.StateMachines
 
 		public State GetCurrentState()
 			=> _stateMachine.CurrentState;
+
+		public void RevertState()
+			=> ChangeState(_oldState.GetType());
 	}
 }

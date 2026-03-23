@@ -26,12 +26,10 @@ namespace Assets.Components.Player
 
 		private IEnumerator InvicibleRoutine()
 		{
-			State currentState = _gameStateController.GetCurrentState();
-
 			Debug.Log("Player is now invincible");
 			// TODO : faire une animation d'invincibilité
 			yield return new WaitForSeconds(_playerConfig.InvincibilityDuration);
-			_gameStateController.ChangeState(currentState.GetType());
+			_gameStateController.RevertState();
 			Debug.Log("Player is no more invincible");
 		}
 	}
