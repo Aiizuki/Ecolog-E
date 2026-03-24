@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PoolSettings
   lstObject:
   - {fileID: 8412430471239706557, guid: 7a6b33353933c834da0cab5492eb3408, type: 3}
-  initialSize: 3
-  maxSize: 8
+  initialSize: 2
+  maxSize: 5

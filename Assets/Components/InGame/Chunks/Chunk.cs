@@ -12,10 +12,9 @@ namespace Assets.Components.Game.Chunks
 	{
 		[SerializeField] private ChunkSettings _chunkSettings;
 		[SerializeField] private List<Lane> _lanes;
+		[SerializeField] private float _length;
 
 		public bool IsDefinedInScene = false;
-
-		private List<Lane> _laneFull;
 		private Dictionary<int, float> _assoTimeWithDistance;
 
 		#region Unity Lifecycle
@@ -44,8 +43,6 @@ namespace Assets.Components.Game.Chunks
 				if (IsDefinedInScene)
 					Destroy(gameObject);
 
-				_laneFull = null;
-
 				UnityEvents.Instance.ObstacleDestroyedEvent.Invoke(this);
 				UnityEvents.Instance.ChunkDestroyedEvent.Invoke(this);
 			}
@@ -58,35 +55,35 @@ namespace Assets.Components.Game.Chunks
 		public bool IsBehindPlayer()
 			=> _chunkSettings.DeadZoneZIndex >= transform.position.z;
 
-		public void Spawn(Vector3 position)
+		public void Spawn(Vector3 position, GameObject _chunkParent)
 		{
 			transform.position = position;
+			transform.SetParent(_chunkParent.transform, true);
+
 			UnityEvents.Instance.GenerateNewObstaclesEvent.Invoke(this);
 		}
 
 		public void GiveObstacle(List<Obstacle> lstObstacle)
 		{
-			_laneFull ??= new();
+			int maxObstacleLines = lstObstacle.Count / GetNbLanes();
+			int obstacleIndex = 0;
 
-			for (int i = 0; i < lstObstacle.Count; i++)
+			for (int i = 1; i <= maxObstacleLines; i++)
 			{
-				Lane lane = RandomisationHelper.GetRandomItemFromList(_lanes.FindAll(l => !_laneFull.Contains(l)).ToList());
-				lane.SpawnObstacle(lstObstacle[i], i, GetDistanceBetweenObstacles());
-				if (lane.IsFull())
-					_laneFull.Add(lane);
+				Lane laneA = RandomisationHelper.GetRandomItemFromList(_lanes);
+				Lane laneB = RandomisationHelper.GetRandomItemFromList(_lanes.FindAll(l => l != laneA));
+
+				laneA.SpawnObstacle(lstObstacle[obstacleIndex], i, GetDistanceBetweenObstacles());
+				laneB.SpawnObstacle(lstObstacle[obstacleIndex + 1], i, GetDistanceBetweenObstacles());
+				obstacleIndex += 2;
 			}
 		}
 
 		/// <summary>
 		/// Determine the number of <see cref="Obstacle"/> we need to assign to a chunk
 		/// </summary>
-		public float GetNbObstacle()
-		{
-			float distanceBetweenObstacles = GetDistanceBetweenObstacles();
-
-			int maxNbObstaclePerLane = Mathf.FloorToInt(GetLaneLength() / distanceBetweenObstacles);
-			return maxNbObstaclePerLane * GetNbLanes();
-		}
+		public int GetNbObstacle()
+			=> GetMaxObstaclePerLane() * GetNbLanes();
 
 		#endregion Public Methods
 
@@ -94,15 +91,6 @@ namespace Assets.Components.Game.Chunks
 
 		private int GetNbLanes()
 			=> _lanes.Count;
-
-		private float GetLaneLength()
-		{
-			Lane lane = _lanes.FirstOrDefault();
-
-			if (lane == null || lane.transform == null || lane.transform.localScale == null)
-				return 0;
-			return lane.transform.localScale.z;
-		}
 
 		private float GetDistanceBetweenObstacles()
 		{
@@ -115,6 +103,12 @@ namespace Assets.Components.Game.Chunks
 			}
 
 			throw new UnityException("Distance between obstalces can't be null or less or equal to 0");
+		}
+
+		private int GetMaxObstaclePerLane()
+		{
+			float distanceBetweenObstacles = GetDistanceBetweenObstacles();
+			return Mathf.FloorToInt(_length / distanceBetweenObstacles);
 		}
 
 		#endregion Private Methods

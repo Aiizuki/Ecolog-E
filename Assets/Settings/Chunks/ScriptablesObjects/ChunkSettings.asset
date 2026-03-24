@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15cd336f78fa444d96a99d91be0bebb, type: 3}
   m_Name: ChunkSettings
   m_EditorClassIdentifier: Assembly-CSharp::ChunkSettings
-  DeadZoneZIndex: -285
+  DeadZoneZIndex: -180
   LstTimeCheckpoints: 000000000a000000140000001e000000
   LstDitancesBetweenTwoObstacles:
-  - 10
+  - 18
   - 14
   - 10
   - 8

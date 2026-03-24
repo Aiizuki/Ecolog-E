@@ -22,6 +22,11 @@ namespace Assets.Components.StateMachines.States
 			}
 		}
 
+		public override void Exit()
+		{
+			UnityEvents.Instance.GameOverEvent.RemoveListener(HandleGameOver);
+		}
+
 		private void HandleGameOver()
 		{
 			GameOverState gameOverState = new GameOverState(stateMachine);

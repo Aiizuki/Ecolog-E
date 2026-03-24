@@ -11,6 +11,7 @@ namespace Assets.Components.Game
 		[Header("Parameters")]
 		[SerializeField] private GameObject _startPoint;
 		[SerializeField] private float _chunkYPos = 0.5f;
+		[SerializeField] private GameObject _chunkParent;
 
 		[Header("Components")]
 		[SerializeField] private ObjectPoolManager _chunkPool;
@@ -48,13 +49,13 @@ namespace Assets.Components.Game
 			}
 
 			GameObject prefab = RandomisationHelper.GetRandomItemFromStack(_chunkPool.Pool);
-			GameObject obj = _chunkPool.Get(prefab);
+			GameObject obj = _chunkPool.Get();
 
 			if (obj == null)
 				return;
 
 			Chunk chunk = obj.GetComponent<Chunk>();
-			chunk.Spawn(new Vector3(position.x, _chunkYPos, position.z));
+			chunk.Spawn(new Vector3(position.x, _chunkYPos, position.z), _chunkParent);
 		}
 
 		private void OnChunkDestroyed(Chunk chunk)

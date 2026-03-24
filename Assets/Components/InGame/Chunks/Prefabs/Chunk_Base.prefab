@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -25, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 0.05, z: 30}
+  m_LocalScale: {x: 2.5, y: 0.05, z: 18}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5933432696280083759}
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381365e796ae1564a864751e79c746ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.Chunks.Lanes.Lane
+  _length: 180
 --- !u!1 &3452497720558552595
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +157,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 0.05, z: 30}
+  m_LocalScale: {x: 2.5, y: 0.05, z: 18}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5933432696280083759}
@@ -252,6 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381365e796ae1564a864751e79c746ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.Chunks.Lanes.Lane
+  _length: 180
 --- !u!1 &8412430471239706557
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +306,7 @@ MonoBehaviour:
   - {fileID: 3901496795397155677}
   - {fileID: 6543252432731486041}
   - {fileID: 1237082869518279467}
+  _length: 180
   IsDefinedInScene: 0
 --- !u!1 &9129414246763595777
 GameObject:
@@ -335,7 +338,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 25, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 0.05, z: 30}
+  m_LocalScale: {x: 2.5, y: 0.05, z: 18}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5933432696280083759}
@@ -431,3 +434,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381365e796ae1564a864751e79c746ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.Chunks.Lanes.Lane
+  _length: 180

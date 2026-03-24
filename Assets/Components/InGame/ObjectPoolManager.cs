@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Helpers;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Components.Game
@@ -8,10 +9,11 @@ namespace Assets.Components.Game
 		[SerializeField] private PoolSettings poolSettings;
 		[SerializeField] private GameObject poolParent;
 
-		public readonly Stack<GameObject> Pool = new();
+		public Stack<GameObject> Pool = new();
 		private readonly HashSet<GameObject> _active = new();
 
 		private bool _isQuitting = false;
+		public int _poolSize = 0;
 
 		#region Unity Lifecycle
 
@@ -33,16 +35,21 @@ namespace Assets.Components.Game
 		/// Récupère une instance depuis le pool.
 		/// Si le pool est vide, une nouvelle instance est créée.
 		/// </summary>
-		public GameObject Get(GameObject prefab)
+		public GameObject Get(bool shuffle = false)
 		{
-			if (Pool.Count <= 0)
-				Debug.LogWarning("Pool is empty but trying to get a GO !");
+			if (Pool.Count == 0 && _poolSize <= poolSettings.maxSize)
+			{
+				AddRandomObjectToPool();
+				_poolSize++;
+			}
+			else if (Pool.Count == 0 && _poolSize >= poolSettings.maxSize)
+				throw new UnityException("Max pool size reached but still trying to instantiate new prefabs");
 
-			GameObject instance = Pool.Count > 0
-				? Pool.Pop()
-				: Instantiate(prefab);
+			if (shuffle)
+				Pool = RandomisationHelper.ShuffleStack(Pool);
 
-			instance.transform.SetParent(poolParent.transform);
+			GameObject instance = Pool.Pop();
+			instance.transform.SetParent(poolParent.transform, true);
 			instance.SetActive(true);
 			_active.Add(instance);
 			return instance;
@@ -63,7 +70,7 @@ namespace Assets.Components.Game
 				return;
 			}
 
-			instance.transform.SetParent(poolParent.transform);
+			instance.transform.SetParent(poolParent.transform, true);
 			instance.SetActive(false);
 			_active.Remove(instance);
 			Pool.Push(instance);
@@ -82,6 +89,16 @@ namespace Assets.Components.Game
 				instance.SetActive(false);
 				Pool.Push(instance);
 			}
+
+			_poolSize = poolSettings.initialSize;
+		}
+
+		private void AddRandomObjectToPool()
+		{
+			GameObject randomObject = RandomisationHelper.GetRandomItemFromList(poolSettings.lstObject);
+			GameObject instance = Instantiate(randomObject, poolParent.transform);
+			instance.SetActive(false);
+			Pool.Push(instance);
 		}
 
 		#endregion

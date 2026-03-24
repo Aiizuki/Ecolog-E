@@ -1,5 +1,4 @@
 ﻿using Assets.Components.Singletons;
-using Assets.Scripts.Helpers;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,17 +24,10 @@ namespace Assets.Components.Game.Chunks.Obstacles
 
 		private void SpawnObstacles(Chunk chunk)
 		{
-			if (_obstaclePool.Pool.Count == 0)
-			{
-				Debug.LogError("No obstacle in pool");
-				return;
-			}
-
 			List<Obstacle> lstObstacle = new();
-			for (int i = 1; i < chunk.GetNbObstacle(); i++)
+			for (int i = 0; i < chunk.GetNbObstacle(); i++)
 			{
-				GameObject prefab = RandomisationHelper.GetRandomItemFromStack(_obstaclePool.Pool);
-				GameObject obj = _obstaclePool.Get(prefab);
+				GameObject obj = _obstaclePool.Get(shuffle: true);
 
 				if (obj == null)
 					continue;
