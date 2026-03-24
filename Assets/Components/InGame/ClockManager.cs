@@ -39,6 +39,7 @@ namespace Assets.Components.Game
 				if (Mathf.FloorToInt(_timer) > _lastTick)
 				{
 					_lastTick = Mathf.FloorToInt(_timer);
+					StatsController.InGameTime = _lastTick;
 					StatsController.AddScore(Mathf.FloorToInt(_currentSpeed));
 				}
 			}

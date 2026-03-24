@@ -14,6 +14,7 @@ namespace Assets.Components.StateMachines.States
 		public override void Enter()
 		{
 			UnityEvents.Instance.GameOverEvent.AddListener(HandleGameOver);
+			UnityEvents.Instance.PlayRunAnimation.Invoke();
 
 			if (!_newGame)
 			{

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChunkSettings
   m_EditorClassIdentifier: Assembly-CSharp::ChunkSettings
   DeadZoneZIndex: -180
-  LstTimeCheckpoints: 000000000a000000140000001e000000
+  LstTimeCheckpoints: 000000003c000000b400000068010000
   LstDitancesBetweenTwoObstacles:
   - 18
   - 14

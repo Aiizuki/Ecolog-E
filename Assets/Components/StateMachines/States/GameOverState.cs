@@ -10,6 +10,7 @@ namespace Assets.Components.StateMachines.States
 
 		public override void Enter()
 		{
+			UnityEvents.Instance.PlayDeathAnimation.Invoke();
 			UnityEvents.Instance.GameOverEvent.Invoke();
 		}
 	}

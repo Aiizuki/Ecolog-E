@@ -42,6 +42,15 @@ namespace Assets.Components.Singletons
 
 		#endregion InGame Events
 
+		#region Player Animator
+
+		[HideInInspector] public UnityEvent PlayRunAnimation;
+		[HideInInspector] public UnityEvent<bool> PlayDodgeAnimation;
+		[HideInInspector] public UnityEvent PlayDeathAnimation;
+		[HideInInspector] public UnityEvent PlayJumpAnimation;
+
+		#endregion Player Animator
+
 		void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -80,6 +89,11 @@ namespace Assets.Components.Singletons
 			EndCriticalHealthEvent ??= new UnityEvent();
 
 			OnStateChangedEvent ??= new UnityEvent<State>();
+
+			PlayRunAnimation ??= new UnityEvent();
+			PlayDodgeAnimation ??= new UnityEvent<bool>();
+			PlayDeathAnimation ??= new UnityEvent();
+			PlayJumpAnimation ??= new UnityEvent();
 		}
 	}
 }

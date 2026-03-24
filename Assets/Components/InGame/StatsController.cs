@@ -6,6 +6,7 @@ namespace Assets.Components.Game
 	public class StatsController : MonoBehaviour
 	{
 		public static int Score;
+		public static int InGameTime;
 
 		private void Start()
 		{
@@ -19,9 +20,6 @@ namespace Assets.Components.Game
 			Score += score;
 			UnityEvents.Instance.ScoreUpdateEvent.Invoke(Score);
 		}
-
-		public static int GetScore()
-			=> Score;
 
 		#endregion Static Helpers
 

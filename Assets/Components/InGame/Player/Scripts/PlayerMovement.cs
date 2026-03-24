@@ -1,3 +1,4 @@
+using Assets.Components.Singletons;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -40,8 +41,8 @@ public class PlayerMovement : MonoBehaviour
 
 	private void OnEnable()
 	{
-		_slideLeftInput.action.performed += HandleSlideRight;
-		_slideRightInput.action.performed += HandleSlideLeft;
+		_slideLeftInput.action.performed += HandleSlideLeft;
+		_slideRightInput.action.performed += HandleSlideRight;
 		_slideDownInput.action.performed += HandleSlideDown;
 		_jumpInput.action.performed += HandleJump;
 	}
@@ -53,8 +54,8 @@ public class PlayerMovement : MonoBehaviour
 
 	private void OnDisable()
 	{
-		_slideLeftInput.action.performed -= HandleSlideRight;
-		_slideRightInput.action.performed -= HandleSlideLeft;
+		_slideLeftInput.action.performed -= HandleSlideLeft;
+		_slideRightInput.action.performed -= HandleSlideRight;
 		_slideDownInput.action.performed -= HandleSlideDown;
 		_jumpInput.action.performed -= HandleJump;
 	}
@@ -100,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
-	private void HandleSlideRight(InputAction.CallbackContext context)
+	private void HandleSlideLeft(InputAction.CallbackContext context)
 	{
 		if (_isSlidingHorizontally)
 		{
@@ -114,10 +115,11 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		_currentLaneIndex--;
+		UnityEvents.Instance.PlayDodgeAnimation.Invoke(true);
 		_slideHorizontalCoroutine = StartCoroutine(SlideCoroutine(_slideTarget[_currentLaneIndex]));
 	}
 
-	private void HandleSlideLeft(InputAction.CallbackContext context)
+	private void HandleSlideRight(InputAction.CallbackContext context)
 	{
 		if (_isSlidingHorizontally)
 		{
@@ -131,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		_currentLaneIndex++;
+		UnityEvents.Instance.PlayDodgeAnimation.Invoke(false);
 		_slideHorizontalCoroutine = StartCoroutine(SlideCoroutine(_slideTarget[_currentLaneIndex]));
 	}
 
@@ -141,6 +144,8 @@ public class PlayerMovement : MonoBehaviour
 	private IEnumerator JumpCoroutine()
 	{
 		_isJumping = true;
+		UnityEvents.Instance.PlayJumpAnimation.Invoke();
+
 		float jumpTimer = 0f;
 		float halfJumpDuration = _jumpDuration / 2f;
 

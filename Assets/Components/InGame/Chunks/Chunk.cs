@@ -94,12 +94,19 @@ namespace Assets.Components.Game.Chunks
 
 		private float GetDistanceBetweenObstacles()
 		{
+			if (StatsController.InGameTime > _assoTimeWithDistance.Keys.Last())
+				return _assoTimeWithDistance.Keys.Last();
+
+			int lastKey = _assoTimeWithDistance.Keys.First();
 			foreach (int time in _assoTimeWithDistance.Keys)
 			{
-				if (StatsController.Score > time)
+				if (StatsController.InGameTime > time)
+				{
+					lastKey = time;
 					continue;
+				}
 
-				return _assoTimeWithDistance[time];
+				return _assoTimeWithDistance[lastKey];
 			}
 
 			throw new UnityException("Distance between obstalces can't be null or less or equal to 0");
