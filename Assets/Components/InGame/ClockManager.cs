@@ -16,6 +16,7 @@ namespace Assets.Components.Game
 		private float _timer;
 
 		private bool _gamePause = false;
+		private int _lastTick;
 
 		#region Unity Lifecycle
 
@@ -35,7 +36,11 @@ namespace Assets.Components.Game
 			if (!_gamePause)
 			{
 				_timer += Time.deltaTime;
-				StatsController.SetScore(Mathf.FloorToInt(_timer));
+				if (Mathf.FloorToInt(_timer) > _lastTick)
+				{
+					_lastTick = Mathf.FloorToInt(_timer);
+					StatsController.AddScore(Mathf.FloorToInt(_currentSpeed));
+				}
 			}
 		}
 
