@@ -12,6 +12,7 @@ namespace Assets.Components.Game
 		[SerializeField] private GameStateController _gameStateController;
 
 		private static float _currentSpeed = 0f;
+
 		private Coroutine _speedRoutine;
 		private float _timer;
 
@@ -59,18 +60,20 @@ namespace Assets.Components.Game
 				yield return new WaitForSeconds(_timerSettings.SpeedIncreaseDelay);
 				_currentSpeed = Mathf.Min(_currentSpeed + _timerSettings.SpeedIncreaseRate, _timerSettings.MaxSpeed);
 				UnityEvents.Instance.SpeedIncreaseEvent.Invoke();
+				//Debug.Log($"[SpeedRoutine] currentSpeed={_currentSpeed} | maxSpeed={_timerSettings.MaxSpeed} | gamePause={_gamePause}");
 			}
 		}
 
 		private void ResumeRoutine()
 		{
-			_speedRoutine = StartCoroutine(SpeedRoutine());
-			_gamePause = true;
+			_speedRoutine ??= StartCoroutine(SpeedRoutine());
+			_gamePause = false;
 		}
 
 		private void PauseRoutine()
 		{
 			StopCoroutine(_speedRoutine);
+			_speedRoutine = null;
 			_gamePause = true;
 		}
 

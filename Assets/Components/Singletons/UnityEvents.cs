@@ -28,9 +28,9 @@ namespace Assets.Components.Singletons
 		#region InGame Events
 
 		[HideInInspector] public UnityEvent GenerateNewChunkEvent;
-		[HideInInspector] public UnityEvent<Chunk> GenerateNewObstaclesEvent;
+		[HideInInspector] public UnityEvent<Chunk> GenerateNewInteractibles;
 		[HideInInspector] public UnityEvent<Chunk> ChunkDestroyedEvent;
-		[HideInInspector] public UnityEvent<Chunk> ObstacleDestroyedEvent;
+		[HideInInspector] public UnityEvent<Chunk> InteractibleDestroyedEvent;
 
 		[HideInInspector] public UnityEvent<int?> HealthGainEvent;
 		[HideInInspector] public UnityEvent<int?> HealthLooseEvent;
@@ -79,9 +79,9 @@ namespace Assets.Components.Singletons
 			ScoreUpdateEvent ??= new UnityEvent<int>();
 
 			GenerateNewChunkEvent ??= new UnityEvent();
-			GenerateNewObstaclesEvent ??= new UnityEvent<Chunk>();
+			GenerateNewInteractibles ??= new UnityEvent<Chunk>();
 			ChunkDestroyedEvent ??= new UnityEvent<Chunk>();
-			ObstacleDestroyedEvent ??= new UnityEvent<Chunk>();
+			InteractibleDestroyedEvent ??= new UnityEvent<Chunk>();
 
 			HealthGainEvent ??= new UnityEvent<int?>();
 			HealthLooseEvent ??= new UnityEvent<int?>();

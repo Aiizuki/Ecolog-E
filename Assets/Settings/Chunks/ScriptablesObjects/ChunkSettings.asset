@@ -19,3 +19,7 @@ MonoBehaviour:
   - 14
   - 10
   - 8
+  MinDistanceBeforeObstacleSpawn: 28
+  DistanceBetweenCollectibles: 5
+  MaxCollectiblePerChunk: 6
+  MinDistanceBeforeCollectibleSpawn: 79

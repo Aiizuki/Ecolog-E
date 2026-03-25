@@ -1,15 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ChunkSettings", menuName = "Scriptable Objects/ChunkSettings")]
-public class ChunkSettings : ScriptableObject
+namespace Assets.Settings.Chunks
 {
-	[Header("General")]
-	public float DeadZoneZIndex;
+	[CreateAssetMenu(fileName = "ChunkSettings", menuName = "Scriptable Objects/ChunkSettings")]
+	public class ChunkSettings : ScriptableObject
+	{
+		[Header("General")]
+		public float DeadZoneZIndex;
 
-	[Header("Obstacle Generation")]
-	[Tooltip("List of key timeframes in seconds (after each key, we decrease the distance between two obstacles)")]
-	public List<int> LstTimeCheckpoints;
-	[Tooltip("Distances between two obstacles (in meters) depending on the upper keyframe")]
-	public List<float> LstDitancesBetweenTwoObstacles;
+		[Header("Obstacle Generation")]
+		[Tooltip("List of key timeframes in seconds (after each key, we decrease the distance between two obstacles)")]
+		public List<int> LstTimeCheckpoints;
+		[Tooltip("Distances between two obstacles (in meters) depending on the upper keyframe")]
+		public List<float> LstDitancesBetweenTwoObstacles;
+		[Tooltip("Distance (in meters) before starting spawning obstacles")]
+		public int MinDistanceBeforeObstacleSpawn;
+
+		[Header("Collectibles Settings")]
+		[Tooltip("Distances between two collectibles (in meters)")]
+		public float DistanceBetweenCollectibles;
+		[Tooltip("Max number of collectibles in each chunk (180m)")]
+		public int MaxCollectiblePerChunk;
+		[Tooltip("Distance (in meters) before starting spawning collectibles")]
+		public int MinDistanceBeforeCollectibleSpawn;
+	}
 }

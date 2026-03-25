@@ -787,9 +787,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 334075605}
-  - {fileID: 1528394301}
   - {fileID: 881442403}
   - {fileID: 1348506391}
+  - {fileID: 1528394301}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &594335076
@@ -1132,6 +1132,7 @@ Transform:
   m_Children:
   - {fileID: 51443130}
   - {fileID: 55734074}
+  - {fileID: 961530408}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &788875729
@@ -1316,8 +1317,9 @@ GameObject:
   - component: {fileID: 881442403}
   - component: {fileID: 881442405}
   - component: {fileID: 881442406}
+  - component: {fileID: 881442407}
   m_Layer: 0
-  m_Name: ObstacleSpawnController
+  m_Name: InteractibleSpawnController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1351,6 +1353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.Obstacle.ObstacleSpawner
   _obstaclePool: {fileID: 881442406}
+  _collectiblePool: {fileID: 881442407}
 --- !u!114 &881442406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1366,6 +1369,52 @@ MonoBehaviour:
   poolSettings: {fileID: 11400000, guid: 5874a09494f9f8f408eff0393382a886, type: 2}
   poolParent: {fileID: 55734073}
   _poolSize: 0
+--- !u!114 &881442407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881442402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b919a608d25d44fbc4d8e1e8c39659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.ObjectPoolManager
+  poolSettings: {fileID: 11400000, guid: 5709ec7c7c55360439585327b5f58212, type: 2}
+  poolParent: {fileID: 961530407}
+  _poolSize: 0
+--- !u!1 &961530407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 961530408}
+  m_Layer: 0
+  m_Name: CollectiblePool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &961530408
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961530407}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 759907779}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &991975728
 GameObject:
   m_ObjectHideFlags: 0
@@ -1675,7 +1724,7 @@ Transform:
   m_GameObject: {fileID: 1528394300}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00229, y: 0.5, z: -134.38174}
+  m_LocalPosition: {x: -0.002319336, y: 0.5, z: -134.38174}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1867,7 +1916,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1913453352}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cba1d140e29fa50469c7ef7a85ecc3ae, type: 3}
   m_Name: 
@@ -1911,13 +1960,13 @@ MonoBehaviour:
   GenerateNewChunkEvent:
     m_PersistentCalls:
       m_Calls: []
-  GenerateNewObstaclesEvent:
+  GenerateNewInteractibles:
     m_PersistentCalls:
       m_Calls: []
   ChunkDestroyedEvent:
     m_PersistentCalls:
       m_Calls: []
-  ObstacleDestroyedEvent:
+  InteractibleDestroyedEvent:
     m_PersistentCalls:
       m_Calls: []
   HealthGainEvent:

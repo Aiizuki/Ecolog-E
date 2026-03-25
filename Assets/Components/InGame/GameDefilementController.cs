@@ -1,7 +1,6 @@
 using Assets.Components.Game.Chunks;
 using Assets.Components.Singletons;
 using Assets.Components.StateMachines.States;
-using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Components.Game
@@ -47,8 +46,6 @@ namespace Assets.Components.Game
 				Debug.LogError("No chunks in pool");
 				return;
 			}
-
-			GameObject prefab = RandomisationHelper.GetRandomItemFromStack(_chunkPool.Pool);
 			GameObject obj = _chunkPool.Get();
 
 			if (obj == null)

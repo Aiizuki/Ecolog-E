@@ -12,7 +12,9 @@ namespace Assets.Components.StateMachines
 		{
 			Debug.Log("Changing state from: " + CurrentState?.GetType().Name + " to: " + newState.GetType().Name);
 
-			CurrentState?.Exit();
+			if (CurrentState != null)
+				CurrentState.Exit();
+
 			CurrentState = newState;
 			CurrentState.Enter();
 

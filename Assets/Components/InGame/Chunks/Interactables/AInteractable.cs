@@ -1,9 +1,11 @@
-﻿using Assets.Components.Singletons;
+﻿using Assets.Components.Game;
+using Assets.Components.Game.Chunks;
+using Assets.Components.Singletons;
 using UnityEngine;
 
-namespace Assets.Components.Game.Chunks.Obstacles
+namespace Assets.Components.InGame.Chunks.Interactables
 {
-	public class Obstacle : MonoBehaviour
+	public abstract class AInteractable : MonoBehaviour
 	{
 		public ObjectPoolManager _pool;
 
@@ -11,24 +13,15 @@ namespace Assets.Components.Game.Chunks.Obstacles
 
 		private void Start()
 		{
-			UnityEvents.Instance.ObstacleDestroyedEvent.AddListener(ReturnToPool);
+			UnityEvents.Instance.InteractibleDestroyedEvent.AddListener(ReturnToPool);
 		}
 
 		private void OnDestroy()
 		{
-			UnityEvents.Instance.ObstacleDestroyedEvent.RemoveListener(ReturnToPool);
+			UnityEvents.Instance.InteractibleDestroyedEvent.RemoveListener(ReturnToPool);
 		}
 
 		#endregion Unity Lifecycle
-
-		private void OnTriggerEnter(Collider other)
-		{
-			if (other.gameObject.CompareTag("Player"))
-			{
-				UnityEvents.Instance.HealthLooseEvent.Invoke(null);
-				_pool.Release(this.gameObject);
-			}
-		}
 
 		public void SetPool(ObjectPoolManager obstaclePool)
 			=> _pool = obstaclePool;

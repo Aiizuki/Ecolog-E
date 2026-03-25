@@ -1,24 +1,30 @@
-﻿using Assets.Components.Game.Chunks.Obstacles;
+﻿using Assets.Components.InGame.Chunks.Interactables;
 using UnityEngine;
 
 namespace Assets.Components.Game.Chunks.Lanes
 {
 	public class Lane : MonoBehaviour
 	{
-		public void SpawnObstacle(Obstacle obstacle, int position, float distanceBetweenObstacles)
+		public void SpawnInteractible(AInteractable interactible, int position)
 		{
-			float startZ = transform.position.z - (GetLaneLength() / 2);
-			float zPos = startZ + (position * distanceBetweenObstacles);
+			// position en local, centré sur le mesh
+			float localZ = -(GetLaneLength() / 2f) + position;
 
-			obstacle.transform.SetPositionAndRotation(new Vector3(transform.position.x, 2.5f, zPos), Quaternion.identity);
-			obstacle.transform.SetParent(this.transform, true);
-			obstacle.gameObject.SetActive(true);
+			interactible.transform.SetParent(this.transform, true);
+			interactible.transform.localPosition = new Vector3(0f, 0.5f, localZ / transform.localScale.z);
+			interactible.transform.localRotation = Quaternion.identity;
+			interactible.gameObject.SetActive(true);
 		}
 
 		private float GetLaneLength()
 		{
-			float meshUnit = GetComponent<Renderer>().localBounds.size.z;
-			return transform.localScale.z * meshUnit;
+			Renderer rend = GetComponent<Renderer>() ?? GetComponentInChildren<Renderer>();
+			if (rend == null)
+			{
+				Debug.LogError($"[Lane] {name} : aucun Renderer trouvé !");
+				return 0f;
+			}
+			return transform.localScale.z * rend.localBounds.size.z;
 		}
 	}
 }

@@ -26,6 +26,13 @@ namespace Assets.Scripts.Helpers
 		public static T GetRandomItemFromList<T>(List<T> list)
 			=> list[rng.Next(list.Count)];
 
+		public static T GetRandomItemFromList<T>(List<T> list, T exclude)
+		{
+			int idx = rng.Next(list.Count - 1);
+			T result = list[idx];
+			return result.Equals(exclude) ? list[list.Count - 1] : result;
+		}
+
 		public static T GetRandomItemFromStack<T>(Stack<T> stack)
 			=> GetRandomItemFromList(new List<T>(stack));
 
