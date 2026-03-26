@@ -3176,13 +3176,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8948f58c5e2f44542869e0c35af5c7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  _playerConfig: {fileID: 11400000, guid: 96e6ff38ce422c148ab3804ac5083d26, type: 2}
   _slideLeftInput: {fileID: -6195904533131247468, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _slideRightInput: {fileID: 7261642757737378122, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _slideDownInput: {fileID: 7040659881675835329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _jumpInput: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _jumpFloatingTime: 0.9
-  _jumpHeight: 3.6
-  _speedFallMultiplier: 3
   _jumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -3231,8 +3229,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _slideDuration: 0.12
-  _slideDown: 1.5
   _slideTarget:
   - {fileID: 522779672}
   - {fileID: 1423236922}

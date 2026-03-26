@@ -14,9 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Settings.Player.PlayerConfig
   MaxHealth: 100
   MinHealth: 0
-  HealthLooseRatio: 2
+  HealthLooseRatio: 2.5
   HealthLooseRate: 1
   HealthGainPerTrashCollect: 8
   InvincibilityDuration: 1.5
-  lstDistanceCheckpoints: 00000000f4010000e8030000d0070000
-  lstDamagePerCheckpoints: 0f00000014000000190000001e000000
+  lstDistanceCheckpoints: 00000000f4010000e8030000d0070000a00f0000
+  lstDamagePerCheckpoints: 0c0000001000000014000000190000001e000000
+  JumpFloatingTime: 0.9
+  JumpHeight: 3.6
+  SpeedFallMultiplier: 3
+  StrafeDuration: 0.12
+  SlideDown: 0.6

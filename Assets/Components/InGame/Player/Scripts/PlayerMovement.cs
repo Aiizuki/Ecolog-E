@@ -1,10 +1,13 @@
 using Assets.Components.Singletons;
+using Assets.Settings.Player;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+	[SerializeField] private PlayerConfig _playerConfig;
+
 	[Header("Inputs")]
 	[SerializeField] private InputActionReference _slideLeftInput;
 	[SerializeField] private InputActionReference _slideRightInput;
@@ -12,15 +15,10 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] private InputActionReference _jumpInput;
 
 	[Header("Jump parameters")]
-	[SerializeField, Tooltip("Duration of jump in seconds")] private float _jumpFloatingTime = 1f;
-	[SerializeField] private float _jumpHeight = 2f;
-	[SerializeField] private float _speedFallMultiplier = 2f;
 	[SerializeField] private AnimationCurve _jumpCurve;
 	[SerializeField] private AnimationCurve _fallCurve;
 
 	[Header("Slide parameters")]
-	[SerializeField] private float _slideDuration = 1f;
-	[SerializeField] private float _slideDown = 1.5f;
 	[SerializeField] private Transform[] _slideTarget;
 
 	[Header("Components")]
@@ -152,12 +150,12 @@ public class PlayerMovement : MonoBehaviour
 		{
 			jumpTimer += Time.deltaTime;
 			float normalizedTime = jumpTimer;
-			float targetHeight = _baseHeight + _jumpCurve.Evaluate(normalizedTime) * _jumpHeight;
+			float targetHeight = _baseHeight + _jumpCurve.Evaluate(normalizedTime) * _playerConfig.JumpHeight;
 			transform.position = new Vector3(transform.position.x, targetHeight, transform.position.z);
 			yield return null;
 		}
 
-		yield return new WaitForSeconds(_jumpFloatingTime);
+		yield return new WaitForSeconds(_playerConfig.JumpFloatingTime);
 		_fallCoroutine = StartCoroutine(FallCoroutine());
 		yield return _fallCoroutine;
 
@@ -188,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
 
 		float slideTimer = 0f;
 
-		while (slideTimer <= _slideDown)
+		while (slideTimer <= _playerConfig.SlideDown)
 		{
 			slideTimer += Time.deltaTime;
 			yield return null;
@@ -203,11 +201,11 @@ public class PlayerMovement : MonoBehaviour
 		_isSlidingHorizontally = true;
 		float slideTimer = 0f;
 
-		while (slideTimer < _slideDuration)
+		while (slideTimer < _playerConfig.StrafeDuration)
 		{
 			slideTimer += Time.deltaTime;
 
-			float normalizedTime = slideTimer / _slideDuration;
+			float normalizedTime = slideTimer / _playerConfig.StrafeDuration;
 			Vector3 targetPosition = new Vector3(target.position.x, transform.position.y, target.position.z);
 
 			transform.position = Vector3.Lerp(transform.position, targetPosition, normalizedTime);

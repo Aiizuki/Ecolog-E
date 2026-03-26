@@ -24,5 +24,16 @@ namespace Assets.Settings.Player
 		[Tooltip("List of each key distances, after each key the damages are increased")]
 		public List<int> lstDistanceCheckpoints;
 		public List<int> lstDamagePerCheckpoints;
+
+		[Header("Movement")]
+
+		[Header("Jump parameters")]
+		[Tooltip("In-air time (in seconds)")] public float JumpFloatingTime = 1f;
+		[Tooltip("Jump Height (in meters)")] public float JumpHeight = 2f;
+		[Tooltip("Speed fall multiplier")] public float SpeedFallMultiplier = 2f;
+
+		[Header("Slide parameters")]
+		[Tooltip("Strafe duration (in seconds)")] public float StrafeDuration = 0.12f;
+		[Tooltip("Slide duration (in seconds)")] public float SlideDown = 1.5f;
 	}
 }
