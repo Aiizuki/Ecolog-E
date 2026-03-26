@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ObstaclePoolSettings
   m_EditorClassIdentifier: Assembly-CSharp::PoolSettings
   lstObject:
-  - {fileID: 6886741291294649447, guid: 7b941bd772f417740bbeff7e94c48498, type: 3}
+  - {fileID: 930409103194724284, guid: 249dbb560eacb954c9f0df607c438441, type: 3}
   initialSize: 10
   maxSize: 203
