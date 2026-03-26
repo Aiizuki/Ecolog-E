@@ -3180,8 +3180,8 @@ MonoBehaviour:
   _slideRightInput: {fileID: 7261642757737378122, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _slideDownInput: {fileID: 7040659881675835329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _jumpInput: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _jumpDuration: 0.9
-  _jumpHeight: 4
+  _jumpFloatingTime: 0.9
+  _jumpHeight: 3.6
   _speedFallMultiplier: 3
   _jumpCurve:
     serializedVersion: 2

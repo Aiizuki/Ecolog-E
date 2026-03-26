@@ -16,9 +16,9 @@ MonoBehaviour:
   LstTimeCheckpoints: 000000003c000000b400000068010000
   LstDitancesBetweenTwoObstacles:
   - 18
-  - 14
+  - 16
+  - 13
   - 10
-  - 8
   MinDistanceBeforeObstacleSpawn: 28
   DistanceBetweenCollectibles: 5
   MaxCollectiblePerChunk: 6

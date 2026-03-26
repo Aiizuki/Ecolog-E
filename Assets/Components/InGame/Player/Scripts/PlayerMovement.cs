@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] private InputActionReference _jumpInput;
 
 	[Header("Jump parameters")]
-	[SerializeField, Tooltip("Duration of jump in seconds")] private float _jumpDuration = 1f;
+	[SerializeField, Tooltip("Duration of jump in seconds")] private float _jumpFloatingTime = 1f;
 	[SerializeField] private float _jumpHeight = 2f;
 	[SerializeField] private float _speedFallMultiplier = 2f;
 	[SerializeField] private AnimationCurve _jumpCurve;
@@ -147,17 +147,17 @@ public class PlayerMovement : MonoBehaviour
 		UnityEvents.Instance.PlayJumpAnimation.Invoke();
 
 		float jumpTimer = 0f;
-		float halfJumpDuration = _jumpDuration / 2f;
 
-		while (jumpTimer < halfJumpDuration)
+		while (jumpTimer < 1f)
 		{
 			jumpTimer += Time.deltaTime;
-			float normalizedTime = jumpTimer / halfJumpDuration;
+			float normalizedTime = jumpTimer;
 			float targetHeight = _baseHeight + _jumpCurve.Evaluate(normalizedTime) * _jumpHeight;
 			transform.position = new Vector3(transform.position.x, targetHeight, transform.position.z);
 			yield return null;
 		}
 
+		yield return new WaitForSeconds(_jumpFloatingTime);
 		_fallCoroutine = StartCoroutine(FallCoroutine());
 		yield return _fallCoroutine;
 
@@ -167,13 +167,12 @@ public class PlayerMovement : MonoBehaviour
 	private IEnumerator FallCoroutine(bool speedFall = false)
 	{
 		float timer = 0f;
-		float halfFallDuration = (_jumpDuration / 2f) / (speedFall ? _speedFallMultiplier : 1f);
 		float startHeight = transform.position.y;
 
-		while (timer < halfFallDuration)
+		while (timer < 1f)
 		{
 			timer += Time.deltaTime;
-			float normalizedTime = timer / halfFallDuration;
+			float normalizedTime = timer;
 			float targetHeight = _baseHeight + _fallCurve.Evaluate(normalizedTime) * (startHeight - _baseHeight);
 			transform.position = new Vector3(transform.position.x, targetHeight, transform.position.z);
 			yield return null;
