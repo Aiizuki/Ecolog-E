@@ -2,7 +2,7 @@
 - Project name: Ecolog-E
 - Unity version: Unity 6000.3.6f1
 - Active game object:
-  - Name: Player
-  - Tag: Player
-  - Layer: Default
+  - Name: CloseButton
+  - Tag: Untagged
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

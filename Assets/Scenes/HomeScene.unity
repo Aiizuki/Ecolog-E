@@ -189,13 +189,13 @@ MonoBehaviour:
   GenerateNewChunkEvent:
     m_PersistentCalls:
       m_Calls: []
-  GenerateNewObstaclesEvent:
+  GenerateNewInteractibles:
     m_PersistentCalls:
       m_Calls: []
   ChunkDestroyedEvent:
     m_PersistentCalls:
       m_Calls: []
-  ObstacleDestroyedEvent:
+  InteractibleDestroyedEvent:
     m_PersistentCalls:
       m_Calls: []
   HealthGainEvent:
@@ -213,7 +213,25 @@ MonoBehaviour:
   OnStateChangedEvent:
     m_PersistentCalls:
       m_Calls: []
+  PlayRunAnimation:
+    m_PersistentCalls:
+      m_Calls: []
+  PlayDodgeAnimation:
+    m_PersistentCalls:
+      m_Calls: []
+  PlayDeathAnimation:
+    m_PersistentCalls:
+      m_Calls: []
+  PlayJumpAnimation:
+    m_PersistentCalls:
+      m_Calls: []
+  PlaySlideAnimation:
+    m_PersistentCalls:
+      m_Calls: []
   SpeedIncreaseEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  NotifyDeathAnimationFinishedEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &808582066
@@ -1510,7 +1528,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8477597035762931548}
         m_TargetAssemblyTypeName: ButtonsManager, Assembly-CSharp
-        m_MethodName: FireReturnToHomeEvent
+        m_MethodName: PlayButtonClickSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2056,7 +2074,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Options
+  m_text: Options (W.I.P)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

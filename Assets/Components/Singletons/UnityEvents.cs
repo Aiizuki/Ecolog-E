@@ -49,6 +49,7 @@ namespace Assets.Components.Singletons
 		[HideInInspector] public UnityEvent PlayJumpAnimation;
 		[HideInInspector] public UnityEvent PlaySlideAnimation;
 		[HideInInspector] public UnityEvent<float> SpeedIncreaseEvent;
+		[HideInInspector] public UnityEvent NotifyDeathAnimationFinishedEvent;
 
 		#endregion Player Animator
 
@@ -95,6 +96,7 @@ namespace Assets.Components.Singletons
 			PlayJumpAnimation ??= new UnityEvent();
 			PlaySlideAnimation ??= new UnityEvent();
 			SpeedIncreaseEvent ??= new UnityEvent<float>();
+			NotifyDeathAnimationFinishedEvent ??= new UnityEvent();
 		}
 	}
 }

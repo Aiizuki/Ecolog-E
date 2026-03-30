@@ -65,4 +65,10 @@ public class PlayerAnimationController : MonoBehaviour
 		=> _animator.SetFloat("Speed", speed);
 
 	#endregion Unity Events
+
+	/// <summary>
+	/// Called in the animator when the death animation is complete (in A_Pose)
+	/// </summary>
+	public void FireDeathAnimationDone()
+		=> UnityEvents.Instance.NotifyDeathAnimationFinishedEvent.Invoke();
 }

@@ -28,6 +28,7 @@ namespace Assets.Components.Game.Chunks
 		[SerializeField] private ChunkMatrix _matrice;
 
 		private Dictionary<int, float> _assoTimeWithDistance;
+		private bool _gameOver = false;
 
 		#region Unity Lifecycle
 
@@ -49,8 +50,11 @@ namespace Assets.Components.Game.Chunks
 
 		private void Start()
 		{
+			_gameOver = false;
 			if (IsDefinedInScene)
 				UnityEvents.Instance.GenerateNewInteractibles.Invoke(this);
+
+			UnityEvents.Instance.GameOverEvent.AddListener(Stop);
 		}
 
 		private void OnDisable()
@@ -60,6 +64,9 @@ namespace Assets.Components.Game.Chunks
 
 		private void Update()
 		{
+			if (_gameOver)
+				return;
+
 			transform.Translate(ClockManager.GetSpeed() * Time.deltaTime * Vector3.back);
 			if (IsBehindPlayer())
 			{
@@ -69,6 +76,11 @@ namespace Assets.Components.Game.Chunks
 				UnityEvents.Instance.InteractibleDestroyedEvent.Invoke(this);
 				UnityEvents.Instance.ChunkDestroyedEvent.Invoke(this);
 			}
+		}
+
+		private void OnDestroy()
+		{
+			UnityEvents.Instance.GameOverEvent.RemoveListener(Stop);
 		}
 
 		#endregion Unity Lifecycle
@@ -187,6 +199,9 @@ namespace Assets.Components.Game.Chunks
 
 		private int GetNbLanes()
 			=> _lanes.Count;
+
+		private void Stop()
+			=> _gameOver = true;
 
 		#region Obstacle Counting
 

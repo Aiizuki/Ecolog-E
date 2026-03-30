@@ -96,7 +96,11 @@ namespace Assets.Components.InGame.Player.Scripts
 
 			_health = Mathf.Max(_playerConfig.MinHealth, _health - amount.Value);
 			Debug.Log($"Player lost {amount.Value} hp");
-			_gameStateController.ChangeState(typeof(InvincibleState));
+
+			if (_health <= _playerConfig.MinHealth)
+				_gameStateController.ChangeState(typeof(GameOverState));
+			else
+				_gameStateController.ChangeState(typeof(InvincibleState));
 		}
 	}
 }
