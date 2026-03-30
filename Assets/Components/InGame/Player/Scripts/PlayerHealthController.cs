@@ -57,7 +57,7 @@ namespace Assets.Components.InGame.Player.Scripts
 			else if (_gameStateController.GetCurrentState() is not GameOverState)
 			{
 				_playerHealthUI.transform.localScale = new Vector3(0f, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
-				UnityEvents.Instance.GameOverEvent.Invoke();
+				_gameStateController.ChangeState(typeof(GameOverState));
 			}
 		}
 
