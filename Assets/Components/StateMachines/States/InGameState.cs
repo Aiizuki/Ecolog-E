@@ -13,7 +13,6 @@ namespace Assets.Components.StateMachines.States
 
 		public override void Enter()
 		{
-			UnityEvents.Instance.GameOverEvent.AddListener(HandleGameOver);
 			UnityEvents.Instance.PlayRunAnimation.Invoke();
 
 			if (!_newGame)
@@ -21,17 +20,6 @@ namespace Assets.Components.StateMachines.States
 				UnityEvents.Instance.GameResumeEvent.Invoke();
 				_newGame = true;
 			}
-		}
-
-		public override void Exit()
-		{
-			UnityEvents.Instance.GameOverEvent.RemoveListener(HandleGameOver);
-		}
-
-		private void HandleGameOver()
-		{
-			GameOverState gameOverState = new GameOverState(stateMachine);
-			stateMachine.ChangeState(gameOverState);
 		}
 	}
 }
