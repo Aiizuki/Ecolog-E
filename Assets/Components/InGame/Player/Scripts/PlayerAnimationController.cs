@@ -27,6 +27,8 @@ public class PlayerAnimationController : MonoBehaviour
 		UnityEvents.Instance.PlayDodgeAnimation.AddListener(PlayDodgeAnimation);
 		UnityEvents.Instance.PlayDeathAnimation.AddListener(PlayDeathAnimation);
 		UnityEvents.Instance.PlayJumpAnimation.AddListener(PlayJumpAnimation);
+		UnityEvents.Instance.PlaySlideAnimation.AddListener(PlaySlideAnimation);
+		UnityEvents.Instance.SpeedIncreaseEvent.AddListener(ChangeSpeedAnimation);
 	}
 
 	private void RevokeEvents()
@@ -35,6 +37,8 @@ public class PlayerAnimationController : MonoBehaviour
 		UnityEvents.Instance.PlayDodgeAnimation.RemoveListener(PlayDodgeAnimation);
 		UnityEvents.Instance.PlayDeathAnimation.RemoveListener(PlayDeathAnimation);
 		UnityEvents.Instance.PlayJumpAnimation.RemoveListener(PlayJumpAnimation);
+		UnityEvents.Instance.PlaySlideAnimation.RemoveListener(PlaySlideAnimation);
+		UnityEvents.Instance.SpeedIncreaseEvent.RemoveListener(ChangeSpeedAnimation);
 	}
 
 	private void PlayRunAnimation()
@@ -53,6 +57,12 @@ public class PlayerAnimationController : MonoBehaviour
 
 	private void PlayJumpAnimation()
 		=> _animator.SetTrigger("Jump");
+
+	private void PlaySlideAnimation()
+		=> _animator.SetTrigger("Slide");
+
+	private void ChangeSpeedAnimation(float speed)
+		=> _animator.SetFloat("Speed", speed);
 
 	#endregion Unity Events
 }

@@ -59,7 +59,7 @@ namespace Assets.Components.Game
 			{
 				yield return new WaitForSeconds(_timerSettings.SpeedIncreaseDelay);
 				_currentSpeed = Mathf.Min(_currentSpeed + _timerSettings.SpeedIncreaseRate, _timerSettings.MaxSpeed);
-				UnityEvents.Instance.SpeedIncreaseEvent.Invoke();
+				UnityEvents.Instance.SpeedIncreaseEvent.Invoke(_currentSpeed);
 				//Debug.Log($"[SpeedRoutine] currentSpeed={_currentSpeed} | maxSpeed={_timerSettings.MaxSpeed} | gamePause={_gamePause}");
 			}
 		}

@@ -143,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		_isJumping = true;
 		UnityEvents.Instance.PlayJumpAnimation.Invoke();
+		_animator.SetBool("IsGrounded", false);
 
 		float jumpTimer = 0f;
 
@@ -159,6 +160,7 @@ public class PlayerMovement : MonoBehaviour
 		_fallCoroutine = StartCoroutine(FallCoroutine());
 		yield return _fallCoroutine;
 
+		_animator.SetBool("IsGrounded", true);
 		_isJumping = false;
 	}
 
@@ -182,7 +184,7 @@ public class PlayerMovement : MonoBehaviour
 	private IEnumerator SlideDownCoroutine()
 	{
 		_isSlidingDown = true;
-		//_animator.SetBool("IsSlidingDown", true);
+		UnityEvents.Instance.PlaySlideAnimation.Invoke();
 
 		float slideTimer = 0f;
 
@@ -193,7 +195,6 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		_isSlidingDown = false;
-		//_animator.SetBool("IsSlidingDown", false);
 	}
 
 	private IEnumerator SlideCoroutine(Transform target)

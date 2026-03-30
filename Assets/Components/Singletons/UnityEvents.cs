@@ -38,7 +38,6 @@ namespace Assets.Components.Singletons
 		[HideInInspector] public UnityEvent EndCriticalHealthEvent;
 
 		[HideInInspector] public UnityEvent<State> OnStateChangedEvent;
-		[HideInInspector] public UnityEvent SpeedIncreaseEvent;
 
 		#endregion InGame Events
 
@@ -48,6 +47,8 @@ namespace Assets.Components.Singletons
 		[HideInInspector] public UnityEvent<bool> PlayDodgeAnimation;
 		[HideInInspector] public UnityEvent PlayDeathAnimation;
 		[HideInInspector] public UnityEvent PlayJumpAnimation;
+		[HideInInspector] public UnityEvent PlaySlideAnimation;
+		[HideInInspector] public UnityEvent<float> SpeedIncreaseEvent;
 
 		#endregion Player Animator
 
@@ -72,8 +73,6 @@ namespace Assets.Components.Singletons
 			GameResumeEvent ??= new UnityEvent();
 			NewGameEvent ??= new UnityEvent();
 
-			SpeedIncreaseEvent ??= new UnityEvent();
-
 			GameOverTransitionEvent ??= new UnityEvent();
 			ReturnToHomeEvent ??= new UnityEvent();
 			ScoreUpdateEvent ??= new UnityEvent<int>();
@@ -94,6 +93,8 @@ namespace Assets.Components.Singletons
 			PlayDodgeAnimation ??= new UnityEvent<bool>();
 			PlayDeathAnimation ??= new UnityEvent();
 			PlayJumpAnimation ??= new UnityEvent();
+			PlaySlideAnimation ??= new UnityEvent();
+			SpeedIncreaseEvent ??= new UnityEvent<float>();
 		}
 	}
 }
