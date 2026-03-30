@@ -1,4 +1,5 @@
 using Assets.Components.Singletons;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 
 public class PlayerAnimationController : MonoBehaviour
@@ -29,6 +30,7 @@ public class PlayerAnimationController : MonoBehaviour
 		UnityEvents.Instance.PlayJumpAnimation.AddListener(PlayJumpAnimation);
 		UnityEvents.Instance.PlaySlideAnimation.AddListener(PlaySlideAnimation);
 		UnityEvents.Instance.SpeedIncreaseEvent.AddListener(ChangeSpeedAnimation);
+		UnityEvents.Instance.HealthLooseEvent.AddListener(PlayHitAnimation);
 	}
 
 	private void RevokeEvents()
@@ -39,6 +41,7 @@ public class PlayerAnimationController : MonoBehaviour
 		UnityEvents.Instance.PlayJumpAnimation.RemoveListener(PlayJumpAnimation);
 		UnityEvents.Instance.PlaySlideAnimation.RemoveListener(PlaySlideAnimation);
 		UnityEvents.Instance.SpeedIncreaseEvent.RemoveListener(ChangeSpeedAnimation);
+		UnityEvents.Instance.HealthLooseEvent.RemoveListener(PlayHitAnimation);
 	}
 
 	private void PlayRunAnimation()
@@ -63,6 +66,13 @@ public class PlayerAnimationController : MonoBehaviour
 
 	private void ChangeSpeedAnimation(float speed)
 		=> _animator.SetFloat("Speed", speed);
+
+	private void PlayHitAnimation(int? _)
+	{
+		float random = RandomisationHelper.RandomChooseBoolean() ? 1f : 0f;
+		_animator.SetFloat("HitRandomizer", random);
+		_animator.SetTrigger("Hit");
+	}
 
 	#endregion Unity Events
 
