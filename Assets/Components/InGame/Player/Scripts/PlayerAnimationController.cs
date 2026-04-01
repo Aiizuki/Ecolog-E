@@ -28,7 +28,7 @@ public class PlayerAnimationController : MonoBehaviour
 		UnityEvents.Instance.PlayDodgeAnimation.AddListener(PlayDodgeAnimation);
 		UnityEvents.Instance.PlayDeathAnimation.AddListener(PlayDeathAnimation);
 		UnityEvents.Instance.PlayJumpAnimation.AddListener(PlayJumpAnimation);
-		UnityEvents.Instance.PlaySlideAnimation.AddListener(PlaySlideAnimation);
+		UnityEvents.Instance.PlayCrouchAnimation.AddListener(PlaySlideAnimation);
 		UnityEvents.Instance.SpeedIncreaseEvent.AddListener(ChangeSpeedAnimation);
 		UnityEvents.Instance.HealthLooseEvent.AddListener(PlayHitAnimation);
 	}
@@ -39,7 +39,7 @@ public class PlayerAnimationController : MonoBehaviour
 		UnityEvents.Instance.PlayDodgeAnimation.RemoveListener(PlayDodgeAnimation);
 		UnityEvents.Instance.PlayDeathAnimation.RemoveListener(PlayDeathAnimation);
 		UnityEvents.Instance.PlayJumpAnimation.RemoveListener(PlayJumpAnimation);
-		UnityEvents.Instance.PlaySlideAnimation.RemoveListener(PlaySlideAnimation);
+		UnityEvents.Instance.PlayCrouchAnimation.RemoveListener(PlaySlideAnimation);
 		UnityEvents.Instance.SpeedIncreaseEvent.RemoveListener(ChangeSpeedAnimation);
 		UnityEvents.Instance.HealthLooseEvent.RemoveListener(PlayHitAnimation);
 	}

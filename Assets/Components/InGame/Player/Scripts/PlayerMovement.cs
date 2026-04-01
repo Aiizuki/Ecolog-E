@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 		else
 		{
-			_slideVerticalCoroutine = StartCoroutine(SlideDownCoroutine());
+			_slideVerticalCoroutine = StartCoroutine(CrouchCoroutine());
 		}
 	}
 
@@ -114,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
 
 		_currentLaneIndex--;
 		UnityEvents.Instance.PlayDodgeAnimation.Invoke(true);
-		_slideHorizontalCoroutine = StartCoroutine(SlideCoroutine(_slideTarget[_currentLaneIndex]));
+		_slideHorizontalCoroutine = StartCoroutine(StrafeCoroutine(_slideTarget[_currentLaneIndex]));
 	}
 
 	private void HandleSlideRight(InputAction.CallbackContext context)
@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
 
 		_currentLaneIndex++;
 		UnityEvents.Instance.PlayDodgeAnimation.Invoke(false);
-		_slideHorizontalCoroutine = StartCoroutine(SlideCoroutine(_slideTarget[_currentLaneIndex]));
+		_slideHorizontalCoroutine = StartCoroutine(StrafeCoroutine(_slideTarget[_currentLaneIndex]));
 	}
 
 	#endregion Input Actions
@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
 
 		float jumpTimer = 0f;
 
-		while (jumpTimer < 1f)
+		while (jumpTimer < 0.5f)
 		{
 			jumpTimer += Time.deltaTime;
 			float normalizedTime = jumpTimer;
@@ -169,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
 		float timer = 0f;
 		float startHeight = transform.position.y;
 
-		while (timer < 1f)
+		while (timer < 0.5f)
 		{
 			timer += Time.deltaTime;
 			float normalizedTime = timer;
@@ -181,23 +181,19 @@ public class PlayerMovement : MonoBehaviour
 		transform.position = new Vector3(transform.position.x, _baseHeight, transform.position.z);
 	}
 
-	private IEnumerator SlideDownCoroutine()
+	private IEnumerator CrouchCoroutine()
 	{
 		_isSlidingDown = true;
-		UnityEvents.Instance.PlaySlideAnimation.Invoke();
+		_animator.SetBool("Crouch", true);
 
-		float slideTimer = 0f;
-
-		while (slideTimer <= _playerConfig.SlideDown)
-		{
-			slideTimer += Time.deltaTime;
-			yield return null;
-		}
+		UnityEvents.Instance.PlayCrouchAnimation.Invoke();
+		yield return new WaitForSeconds(_playerConfig.CrouchDurantion);
 
 		_isSlidingDown = false;
+		_animator.SetBool("Crouch", false);
 	}
 
-	private IEnumerator SlideCoroutine(Transform target)
+	private IEnumerator StrafeCoroutine(Transform target)
 	{
 		_isSlidingHorizontally = true;
 		float slideTimer = 0f;

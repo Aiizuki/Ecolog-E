@@ -47,7 +47,7 @@ namespace Assets.Components.Singletons
 		[HideInInspector] public UnityEvent<bool> PlayDodgeAnimation;
 		[HideInInspector] public UnityEvent PlayDeathAnimation;
 		[HideInInspector] public UnityEvent PlayJumpAnimation;
-		[HideInInspector] public UnityEvent PlaySlideAnimation;
+		[HideInInspector] public UnityEvent PlayCrouchAnimation;
 		[HideInInspector] public UnityEvent<float> SpeedIncreaseEvent;
 		[HideInInspector] public UnityEvent NotifyDeathAnimationFinishedEvent;
 
@@ -94,7 +94,7 @@ namespace Assets.Components.Singletons
 			PlayDodgeAnimation ??= new UnityEvent<bool>();
 			PlayDeathAnimation ??= new UnityEvent();
 			PlayJumpAnimation ??= new UnityEvent();
-			PlaySlideAnimation ??= new UnityEvent();
+			PlayCrouchAnimation ??= new UnityEvent();
 			SpeedIncreaseEvent ??= new UnityEvent<float>();
 			NotifyDeathAnimationFinishedEvent ??= new UnityEvent();
 		}

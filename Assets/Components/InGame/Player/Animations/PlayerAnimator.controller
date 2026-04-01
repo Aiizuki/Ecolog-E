@@ -107,7 +107,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: IsSliding
+    m_ConditionEvent: Crouch
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 0}
@@ -264,12 +264,12 @@ AnimatorStateMachine:
   - first: {fileID: -1182798602629610352}
     second:
     - {fileID: 6427411592160330233}
-  - first: {fileID: -850289528210663915}
-    second:
-    - {fileID: 1962427280558421936}
   - first: {fileID: 344316687143342076}
     second:
     - {fileID: -963557608861378043}
+  - first: {fileID: -850289528210663915}
+    second:
+    - {fileID: 1962427280558421936}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 260, y: -130, z: 0}
   m_EntryPosition: {x: 0, y: 180, z: 0}
@@ -451,7 +451,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: IsSliding
+  - m_Name: Crouch
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0

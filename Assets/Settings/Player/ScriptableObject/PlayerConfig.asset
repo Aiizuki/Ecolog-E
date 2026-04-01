@@ -21,7 +21,7 @@ MonoBehaviour:
   lstDistanceCheckpoints: 00000000f4010000e8030000d0070000a00f0000
   lstDamagePerCheckpoints: 0c0000001000000014000000190000001e000000
   JumpFloatingTime: 0.9
-  JumpHeight: 3.6
+  JumpHeight: 5
   SpeedFallMultiplier: 3
   StrafeDuration: 0.12
-  SlideDown: 0.6
+  CrouchDurantion: 1

@@ -34,6 +34,6 @@ namespace Assets.Settings.Player
 
 		[Header("Slide parameters")]
 		[Tooltip("Strafe duration (in seconds)")] public float StrafeDuration = 0.12f;
-		[Tooltip("Slide duration (in seconds)")] public float SlideDown = 1.5f;
+		[Tooltip("Crouch duration (in seconds)")] public float CrouchDurantion = 1.5f;
 	}
 }
