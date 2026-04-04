@@ -15,3 +15,5 @@ MonoBehaviour:
   ThrowingInterval: 3
   ProjectileLifetime: 3
   ProjectileSpeed: 10
+  LstDistanceCheckpoints: 00000000d0070000a00f0000
+  LstProjectileDamageByDistance: 0a0000000f00000014000000

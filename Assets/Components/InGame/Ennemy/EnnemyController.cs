@@ -1,3 +1,4 @@
+using Assets.Components.Game;
 using Assets.Components.Game.Chunks;
 using Assets.Components.InGame.Chunks.Interactables;
 using Assets.Components.Singletons;
@@ -5,6 +6,7 @@ using Assets.Scripts.Helpers;
 using Assets.Settings.GameDefilement;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Components.InGame.Ennemy
@@ -19,6 +21,7 @@ namespace Assets.Components.InGame.Ennemy
 
 		private bool _isPlaying = true;
 		private Chunk _chunkParent;
+		private Dictionary<int, int> _assoCheckpointWithProjectileDamage;
 
 		#region Unity Lifecycle
 
@@ -26,6 +29,10 @@ namespace Assets.Components.InGame.Ennemy
 		{
 			InitEvents();
 			_playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+			_assoCheckpointWithProjectileDamage = _ennemySettings.LstDistanceCheckpoints
+				.Zip(_ennemySettings.LstProjectileDamageByDistance, (key, value) => new { key, value })
+				.ToDictionary(x => x.key, x => x.value);
 		}
 
 		private void OnDestroy()
@@ -62,7 +69,34 @@ namespace Assets.Components.InGame.Ennemy
 		private void ThrowProjectile(Vector3 position)
 		{
 			ProjectileController projectile = Instantiate(RandomisationHelper.GetRandomItemFromList(_lstProjectile), transform);
-			projectile.LaunchTowards(position, _ennemySettings.ProjectileSpeed, _ennemySettings.ProjectileLifetime);
+			projectile.LaunchTowards(position, _ennemySettings.ProjectileSpeed, _ennemySettings.ProjectileLifetime, GetProjectileDamage());
+		}
+
+		private int GetProjectileDamage()
+		{
+			if (_assoCheckpointWithProjectileDamage is null)
+			{
+				_assoCheckpointWithProjectileDamage = _ennemySettings.LstDistanceCheckpoints
+					.Zip(_ennemySettings.LstProjectileDamageByDistance, (key, value) => new { key, value })
+					.ToDictionary(x => x.key, x => x.value);
+			}
+
+			if (StatsController.Score > _assoCheckpointWithProjectileDamage.Keys.Last())
+				return _assoCheckpointWithProjectileDamage.Values.Last();
+
+			int lastKey = _assoCheckpointWithProjectileDamage.Keys.First();
+			foreach (int score in _assoCheckpointWithProjectileDamage.Keys)
+			{
+				if (StatsController.Score > score)
+				{
+					lastKey = score;
+					continue;
+				}
+
+				return _assoCheckpointWithProjectileDamage[lastKey];
+			}
+
+			throw new UnityException("Projectile damages can't be null or less or equal to 0");
 		}
 
 		#region Unity Events

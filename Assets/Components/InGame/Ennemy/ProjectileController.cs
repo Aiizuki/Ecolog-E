@@ -1,3 +1,4 @@
+using Assets.Components.Singletons;
 using UnityEngine;
 
 namespace Assets.Components.InGame.Ennemy
@@ -9,12 +10,14 @@ namespace Assets.Components.InGame.Ennemy
 		private float _timer;
 		private float _speed;
 		private float _lifetime;
+		private int _damage;
 
-		public void LaunchTowards(Vector3 position, float speed, float lifetime)
+		public void LaunchTowards(Vector3 position, float speed, float lifetime, int damage)
 		{
 			_targetPosition = position;
 			_speed = speed;
 			_lifetime = lifetime;
+			_damage = damage;
 		}
 
 		#region Unity Lifecycle
@@ -32,6 +35,14 @@ namespace Assets.Components.InGame.Ennemy
 			if (_timer > _lifetime)
 			{
 				Destroy(gameObject);
+			}
+		}
+		private void OnTriggerEnter(Collider other)
+		{
+			if (other.gameObject.CompareTag("Player"))
+			{
+				UnityEvents.Instance.HealthLooseEvent.Invoke(_damage);
+				Destroy(this.gameObject);
 			}
 		}
 
