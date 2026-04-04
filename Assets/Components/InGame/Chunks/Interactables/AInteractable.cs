@@ -28,7 +28,7 @@ namespace Assets.Components.InGame.Chunks.Interactables
 
 		#region UnityEvents
 
-		private void ReturnToPool(Chunk chunkParent)
+		protected void ReturnToPool(Chunk chunkParent)
 		{
 			if (transform.parent != chunkParent.transform)
 				return;

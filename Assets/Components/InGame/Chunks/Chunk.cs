@@ -3,6 +3,7 @@ using Assets.Components.InGame.Chunks;
 using Assets.Components.InGame.Chunks.Interactables;
 using Assets.Components.InGame.Chunks.Interactables.Collectibles;
 using Assets.Components.InGame.Chunks.Interactables.Obstacles;
+using Assets.Components.InGame.Ennemy;
 using Assets.Components.Singletons;
 using Assets.Scripts.Helpers;
 using Assets.Settings.Chunks;
@@ -28,6 +29,7 @@ namespace Assets.Components.Game.Chunks
 		[SerializeField] private ChunkMatrix _matrice;
 
 		private Dictionary<int, float> _assoTimeWithDistance;
+		private Dictionary<int, float> _assoCheckpointWithDistanceBetweenEnnemies;
 		private bool _gameOver = false;
 
 		#region Unity Lifecycle
@@ -39,6 +41,10 @@ namespace Assets.Components.Game.Chunks
 
 			_assoTimeWithDistance = _chunkSettings.LstTimeCheckpoints
 				.Zip(_chunkSettings.LstDitancesBetweenTwoObstacles, (key, value) => new { key, value })
+				.ToDictionary(x => x.key, x => x.value);
+
+			_assoCheckpointWithDistanceBetweenEnnemies = _chunkSettings.LstDistanceCheckpoints
+				.Zip(_chunkSettings.LstDitancesBetweenTwoEnnemies, (key, value) => new { key, value })
 				.ToDictionary(x => x.key, x => x.value);
 		}
 
@@ -107,6 +113,17 @@ namespace Assets.Components.Game.Chunks
 			GenerateObstacles(obstacles);
 			GenerateCollectiblePath(collectibles);
 			// TODO: GenerateSuperCollectibles(superCollectibles);
+		}
+
+		public void SpawnEnnemies(EnnemyController? ennemy)
+		{
+			if (ennemy == null)
+				return;
+
+			List<Lane> lstSideLanes = new() { _lanes.First(), _lanes.Last() };
+			Lane sideLane = RandomisationHelper.GetRandomItemFromList(lstSideLanes);
+
+			sideLane.SpawnEnnemy(ennemy);
 		}
 
 		private void GenerateObstacles(List<Obstacle> lstObstacles)
@@ -195,8 +212,6 @@ namespace Assets.Components.Game.Chunks
 
 		#endregion Lane Generation
 
-		#region Private Methods
-
 		private int GetNbLanes()
 			=> _lanes.Count;
 
@@ -258,6 +273,28 @@ namespace Assets.Components.Game.Chunks
 
 		#endregion Collectible Counting
 
-		#endregion Private Methods
+		#region Ennemy Counting
+
+		public float GetDistanceBetweenEnnemies(bool getMaxNb = false)
+		{
+			if (StatsController.Score > _assoCheckpointWithDistanceBetweenEnnemies.Keys.Last() || getMaxNb)
+				return _assoCheckpointWithDistanceBetweenEnnemies.Values.Last();
+
+			int lastKey = _assoCheckpointWithDistanceBetweenEnnemies.Keys.First();
+			foreach (int score in _assoCheckpointWithDistanceBetweenEnnemies.Keys)
+			{
+				if (StatsController.Score > score)
+				{
+					lastKey = score;
+					continue;
+				}
+
+				return _assoCheckpointWithDistanceBetweenEnnemies[lastKey];
+			}
+
+			throw new UnityException("Distance between ennemies can't be null or less or equal to 0");
+		}
+
+		#endregion Ennemy Counting
 	}
 }

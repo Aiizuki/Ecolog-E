@@ -23,3 +23,10 @@ MonoBehaviour:
   DistanceBetweenCollectibles: 5
   MaxCollectiblePerChunk: 6
   MinDistanceBeforeCollectibleSpawn: 79
+  LstDistanceCheckpoints: 00000000e8030000d0070000a00f0000
+  LstDitancesBetweenTwoEnnemies:
+  - 1000
+  - 800
+  - 500
+  - 300
+  MinDistanceBeforeEnnemySpawn: 50

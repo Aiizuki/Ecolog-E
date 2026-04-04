@@ -2,6 +2,7 @@
 using Assets.Components.Game.Chunks;
 using Assets.Components.InGame.Chunks.Interactables.Collectibles;
 using Assets.Components.InGame.Chunks.Interactables.Obstacles;
+using Assets.Components.InGame.Ennemy;
 using Assets.Components.Singletons;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,9 @@ namespace Assets.Components.InGame.Chunks.Interactables
 	{
 		[SerializeField] private ObjectPoolManager _obstaclePool;
 		[SerializeField] private ObjectPoolManager _collectiblePool;
+		[SerializeField] private ObjectPoolManager _ennemyPool;
+
+		private float _lastEnnemySpawnZPos;
 
 		#region Unity Lifecycle
 
@@ -33,6 +37,8 @@ namespace Assets.Components.InGame.Chunks.Interactables
 
 			SpawnObstacles(chunk, ref lstInteractables);
 			SpawnCollectibles(chunk, ref lstInteractables);
+			EnnemyController ennemy = SpawnEnnemy(chunk);
+
 			// TODO : ajouter le super collectible
 
 			if (lstInteractables.Count == 0)
@@ -42,6 +48,7 @@ namespace Assets.Components.InGame.Chunks.Interactables
 			}
 
 			chunk.GenerateInLanes(lstInteractables);
+			chunk.SpawnEnnemies(ennemy);
 		}
 
 		private void SpawnObstacles(Chunk chunk, ref List<AInteractable> lstInteractables)
@@ -78,6 +85,20 @@ namespace Assets.Components.InGame.Chunks.Interactables
 				collectible.SetPool(this._collectiblePool);
 				lstInteractables.Add(collectible);
 			}
+		}
+
+		private EnnemyController? SpawnEnnemy(Chunk chunk)
+		{
+			if (_lastEnnemySpawnZPos != 0 && _lastEnnemySpawnZPos < chunk.transform.position.z + chunk.GetDistanceBetweenEnnemies())
+				return null;
+
+			GameObject obj = _ennemyPool.Get();
+			if (obj == null)
+				return null;
+
+			EnnemyController ennemy = obj.GetComponent<EnnemyController>();
+			ennemy.SetPool(this._ennemyPool);
+			return ennemy;
 		}
 	}
 }

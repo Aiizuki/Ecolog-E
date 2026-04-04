@@ -1,4 +1,5 @@
 ﻿using Assets.Components.InGame.Chunks.Interactables;
+using Assets.Components.InGame.Ennemy;
 using UnityEngine;
 
 namespace Assets.Components.Game.Chunks.Lanes
@@ -14,6 +15,19 @@ namespace Assets.Components.Game.Chunks.Lanes
 			interactible.transform.localPosition = new Vector3(0f, 0.5f, localZ / transform.localScale.z);
 			interactible.transform.localRotation = Quaternion.identity;
 			interactible.gameObject.SetActive(true);
+		}
+
+		internal void SpawnEnnemy(EnnemyController ennemy)
+		{
+			// position en local, centré sur le mesh
+			float localZ = -(GetLaneLength() / 2f);
+
+			ennemy.transform.SetParent(this.transform, true);
+			ennemy.transform.localPosition = new Vector3(0f, 0.5f, localZ / transform.localScale.z);
+			ennemy.transform.localRotation = Quaternion.identity;
+			ennemy.gameObject.SetActive(true);
+			ennemy.SetParent(GetComponentInParent<Chunk>());
+			ennemy.StartLiving(); // TODO:  remplacer par un rangeChecker dans un Update dans EnnemyController
 		}
 
 		private float GetLaneLength()
