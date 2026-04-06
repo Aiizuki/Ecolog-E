@@ -10,6 +10,9 @@ namespace Assets.Components.StateMachines
 
 		public void ChangeState(State newState)
 		{
+			if (CurrentState is GameOverState)
+				return;
+
 			Debug.Log("Changing state from: " + CurrentState?.GetType().Name + " to: " + newState.GetType().Name);
 
 			if (CurrentState != null)

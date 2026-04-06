@@ -56,7 +56,10 @@ public class PlayerAnimationController : MonoBehaviour
 	}
 
 	private void PlayDeathAnimation()
-		=> _animator.SetTrigger("Dead");
+	{
+		_animator.SetBool("IsDead", true);
+		_animator.SetTrigger("Dead");
+	}
 
 	private void PlayJumpAnimation()
 		=> _animator.SetTrigger("Jump");

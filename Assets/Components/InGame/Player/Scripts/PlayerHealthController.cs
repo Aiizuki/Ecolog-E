@@ -35,6 +35,7 @@ namespace Assets.Components.InGame.Player.Scripts
 
 			UnityEvents.Instance.HealthGainEvent.AddListener(Recover);
 			UnityEvents.Instance.HealthLooseEvent.AddListener(TakeDamage);
+			UnityEvents.Instance.GameOverEvent.AddListener(EmptyHealthBar);
 		}
 
 		private void Update()
@@ -53,11 +54,6 @@ namespace Assets.Components.InGame.Player.Scripts
 				// La scale suit _health
 				float scaleX = _health / _playerConfig.MaxHealth;
 				_playerHealthUI.transform.localScale = new Vector3(scaleX, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
-			}
-			else if (_gameStateController.GetCurrentState() is not GameOverState)
-			{
-				_playerHealthUI.transform.localScale = new Vector3(0f, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
-				_gameStateController.ChangeState(typeof(GameOverState));
 			}
 		}
 
@@ -102,5 +98,8 @@ namespace Assets.Components.InGame.Player.Scripts
 			else
 				_gameStateController.ChangeState(typeof(InvincibleState));
 		}
+
+		private void EmptyHealthBar()
+			=> _playerHealthUI.transform.localScale = new Vector3(0f, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
 	}
 }
