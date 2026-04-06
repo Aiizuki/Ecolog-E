@@ -10,7 +10,7 @@ namespace Assets.Components.StateMachines.States
 
 		public override void Enter()
 		{
-			UnityEvents.Instance.GameOverEvent.Invoke();
+			UnityEvents.Instance.GameOver.Invoke();
 		}
 	}
 }

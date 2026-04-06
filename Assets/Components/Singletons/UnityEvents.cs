@@ -1,5 +1,6 @@
 ﻿using Assets.Components.Game.Chunks;
 using Assets.Components.StateMachines.States;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,44 +13,44 @@ namespace Assets.Components.Singletons
 	{
 		public static UnityEvents Instance { get; private set; }
 
-		[HideInInspector] public UnityEvent NewGameEvent;
-		[HideInInspector] public UnityEvent GameOverEvent;
-		[HideInInspector] public UnityEvent GamePauseEvent;
-		[HideInInspector] public UnityEvent GameResumeEvent;
+		[HideInInspector] public UnityEvent NewGame;
+		[HideInInspector] public UnityEvent GameOver;
+		[HideInInspector] public UnityEvent GamePause;
+		[HideInInspector] public UnityEvent GameResume;
 
 		#region UI
 
-		[HideInInspector] public UnityEvent GameOverTransitionEvent;
-		[HideInInspector] public UnityEvent ReturnToHomeEvent;
-		[HideInInspector] public UnityEvent<int> ScoreUpdateEvent;
+		public static Action GameOverTransition;
+		public static Action ReturnToHome;
+		public static Action<int> ScoreUpdate;
 
 		#endregion UI
 
 		#region InGame Events
 
-		[HideInInspector] public UnityEvent GenerateNewChunkEvent;
-		[HideInInspector] public UnityEvent<Chunk> GenerateNewInteractibles;
-		[HideInInspector] public UnityEvent<Chunk> ChunkDestroyedEvent;
-		[HideInInspector] public UnityEvent<Chunk> InteractibleDestroyedEvent;
+		public static Action GenerateNewChunk;
+		public static Action<Chunk> GenerateNewInteractibles;
+		public static Action<Chunk> ChunkDestroyed;
+		public static Action<Chunk> InteractibleDestroyed;
 
-		[HideInInspector] public UnityEvent<int?> HealthGainEvent;
-		[HideInInspector] public UnityEvent<int?> HealthLooseEvent;
-		[HideInInspector] public UnityEvent CriticalHealthEvent;
-		[HideInInspector] public UnityEvent EndCriticalHealthEvent;
+		public static Action<int?> HealthGain;
+		public static Action<int?> HealthLoose;
+		[HideInInspector] public UnityEvent CriticalHealthStart;
+		[HideInInspector] public UnityEvent CriticalHealthEnd;
 
-		[HideInInspector] public UnityEvent<State> OnStateChangedEvent;
+		public static Action<State> StateChanged;
 
 		#endregion InGame Events
 
 		#region Player Animator
 
-		[HideInInspector] public UnityEvent PlayRunAnimation;
-		[HideInInspector] public UnityEvent<bool> PlayDodgeAnimation;
-		[HideInInspector] public UnityEvent PlayDeathAnimation;
-		[HideInInspector] public UnityEvent PlayJumpAnimation;
-		[HideInInspector] public UnityEvent PlayCrouchAnimation;
-		[HideInInspector] public UnityEvent<float> SpeedIncreaseEvent;
-		[HideInInspector] public UnityEvent NotifyDeathAnimationFinishedEvent;
+		public static Action PlayRunAnimation;
+		public static Action<bool> PlayDodgeAnimation;
+		public static Action PlayDeathAnimation;
+		public static Action PlayJumpAnimation;
+		public static Action PlayCrouchAnimation;
+		public static Action<float> SpeedIncreaseEvent;
+		public static Action NotifyDeathAnimationFinishedEvent;
 
 		#endregion Player Animator
 
@@ -69,34 +70,13 @@ namespace Assets.Components.Singletons
 
 		private void InitializeEvents()
 		{
-			GameOverEvent ??= new UnityEvent();
+			GameOver ??= new UnityEvent();
 
-			GameResumeEvent ??= new UnityEvent();
-			NewGameEvent ??= new UnityEvent();
+			GameResume ??= new UnityEvent();
+			NewGame ??= new UnityEvent();
 
-			GameOverTransitionEvent ??= new UnityEvent();
-			ReturnToHomeEvent ??= new UnityEvent();
-			ScoreUpdateEvent ??= new UnityEvent<int>();
-
-			GenerateNewChunkEvent ??= new UnityEvent();
-			GenerateNewInteractibles ??= new UnityEvent<Chunk>();
-			ChunkDestroyedEvent ??= new UnityEvent<Chunk>();
-			InteractibleDestroyedEvent ??= new UnityEvent<Chunk>();
-
-			HealthGainEvent ??= new UnityEvent<int?>();
-			HealthLooseEvent ??= new UnityEvent<int?>();
-			CriticalHealthEvent ??= new UnityEvent();
-			EndCriticalHealthEvent ??= new UnityEvent();
-
-			OnStateChangedEvent ??= new UnityEvent<State>();
-
-			PlayRunAnimation ??= new UnityEvent();
-			PlayDodgeAnimation ??= new UnityEvent<bool>();
-			PlayDeathAnimation ??= new UnityEvent();
-			PlayJumpAnimation ??= new UnityEvent();
-			PlayCrouchAnimation ??= new UnityEvent();
-			SpeedIncreaseEvent ??= new UnityEvent<float>();
-			NotifyDeathAnimationFinishedEvent ??= new UnityEvent();
+			CriticalHealthStart ??= new UnityEvent();
+			CriticalHealthEnd ??= new UnityEvent();
 		}
 	}
 }

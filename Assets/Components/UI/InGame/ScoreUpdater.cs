@@ -26,17 +26,17 @@ namespace Assets.Components.UI.Game
 
 		private void InitEvents()
 		{
-			UnityEvents.Instance.ScoreUpdateEvent.AddListener(UpdateScoreText);
+			UnityEvents.ScoreUpdate += OnScoreUpdate;
 		}
 
 		private void RevokeEvents()
 		{
-			UnityEvents.Instance.ScoreUpdateEvent.RemoveListener(UpdateScoreText);
+			UnityEvents.ScoreUpdate -= OnScoreUpdate;
 		}
 
 		#endregion Unity Events
 
-		private void UpdateScoreText(int score)
+		private void OnScoreUpdate(int score)
 		{
 			_scoreText.text = score.ToString();
 		}

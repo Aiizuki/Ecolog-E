@@ -13,11 +13,11 @@ namespace Assets.Components.StateMachines.States
 
 		public override void Enter()
 		{
-			UnityEvents.Instance.PlayRunAnimation.Invoke();
+			UnityEvents.PlayRunAnimation.Invoke();
 
 			if (!_newGame)
 			{
-				UnityEvents.Instance.GameResumeEvent.Invoke();
+				UnityEvents.Instance.GameResume.Invoke();
 				_newGame = true;
 			}
 		}

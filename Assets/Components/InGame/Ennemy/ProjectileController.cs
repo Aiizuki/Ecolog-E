@@ -41,7 +41,7 @@ namespace Assets.Components.InGame.Ennemy
 		{
 			if (other.gameObject.CompareTag("Player"))
 			{
-				UnityEvents.Instance.HealthLooseEvent.Invoke(_damage);
+				UnityEvents.HealthLoose.Invoke(_damage);
 				Destroy(this.gameObject);
 			}
 		}

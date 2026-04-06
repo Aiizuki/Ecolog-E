@@ -21,7 +21,7 @@ namespace Assets.Components.StateMachines
 			CurrentState = newState;
 			CurrentState.Enter();
 
-			UnityEvents.Instance.OnStateChangedEvent?.Invoke(CurrentState);
+			UnityEvents.StateChanged.Invoke(CurrentState);
 		}
 
 		public void Update()

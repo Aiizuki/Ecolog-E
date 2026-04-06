@@ -33,9 +33,7 @@ namespace Assets.Components.InGame.Player.Scripts
 			_health = _playerConfig.MaxHealth;
 			_playerHealthUI.transform.localScale = new Vector3(1f, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
 
-			UnityEvents.Instance.HealthGainEvent.AddListener(Recover);
-			UnityEvents.Instance.HealthLooseEvent.AddListener(TakeDamage);
-			UnityEvents.Instance.GameOverEvent.AddListener(EmptyHealthBar);
+			InitEvents();
 		}
 
 		private void Update()
@@ -47,9 +45,9 @@ namespace Assets.Components.InGame.Player.Scripts
 
 				// TODO : remplacer par un state de la state machine
 				if (_health < 0.30f * _playerConfig.MaxHealth)
-					UnityEvents.Instance.CriticalHealthEvent.Invoke();
+					UnityEvents.Instance.CriticalHealthStart.Invoke();
 				else
-					UnityEvents.Instance.EndCriticalHealthEvent.Invoke();
+					UnityEvents.Instance.CriticalHealthEnd.Invoke();
 
 				// La scale suit _health
 				float scaleX = _health / _playerConfig.MaxHealth;
@@ -59,13 +57,30 @@ namespace Assets.Components.InGame.Player.Scripts
 
 		private void OnDestroy()
 		{
-			UnityEvents.Instance.HealthGainEvent.RemoveListener(Recover);
-			UnityEvents.Instance.HealthLooseEvent.RemoveListener(TakeDamage);
+			RevokeEvents();
 		}
 
 		#endregion Unity Lifecycle
 
-		private void Recover(int? amount = 0)
+		#region UnityEvents
+
+		private void InitEvents()
+		{
+			UnityEvents.HealthGain += OnHealthGain;
+			UnityEvents.HealthLoose += OnHealthLoose;
+			UnityEvents.Instance.GameOver.AddListener(OnGameOver);
+		}
+
+		private void RevokeEvents()
+		{
+			UnityEvents.HealthGain -= OnHealthGain;
+			UnityEvents.HealthLoose -= OnHealthLoose;
+			UnityEvents.Instance.GameOver.RemoveListener(OnGameOver);
+		}
+
+		#endregion UnityEvents
+
+		private void OnHealthGain(int? amount = 0)
 		{
 			if (amount > 0)
 				_health += amount.Value;
@@ -73,7 +88,7 @@ namespace Assets.Components.InGame.Player.Scripts
 				_health += _playerConfig.HealthGainPerTrashCollect;
 		}
 
-		private void TakeDamage(int? amount = 0)
+		private void OnHealthLoose(int? amount = 0)
 		{
 			if (_gameStateController.GetCurrentState() is InvincibleState)
 				return;
@@ -99,7 +114,7 @@ namespace Assets.Components.InGame.Player.Scripts
 				_gameStateController.ChangeState(typeof(InvincibleState));
 		}
 
-		private void EmptyHealthBar()
+		private void OnGameOver()
 			=> _playerHealthUI.transform.localScale = new Vector3(0f, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
 	}
 }

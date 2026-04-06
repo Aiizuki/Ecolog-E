@@ -33,7 +33,7 @@ namespace Assets.Components.Game
 
 		#region Private Helpers
 
-		private void SpawnChunk()
+		private void OnGenerateNewChunk()
 			=> AddChunk(_startPoint.transform.position);
 
 		private void AddChunk(Vector3 position)
@@ -60,10 +60,10 @@ namespace Assets.Components.Game
 			if (_chunkPool != null && !chunk.IsDefinedInScene)
 				_chunkPool.Release(chunk.gameObject);
 
-			UnityEvents.Instance.GenerateNewChunkEvent.Invoke();
+			UnityEvents.GenerateNewChunk.Invoke();
 		}
 
-		private void HandleStateChanged(State newState)
+		private void OnStateChanged(State newState)
 		{
 			_inGameState = newState is not GameOverState;
 		}
@@ -74,16 +74,16 @@ namespace Assets.Components.Game
 
 		private void InitEvents()
 		{
-			UnityEvents.Instance.GenerateNewChunkEvent.AddListener(SpawnChunk);
-			UnityEvents.Instance.ChunkDestroyedEvent.AddListener(OnChunkDestroyed);
-			UnityEvents.Instance.OnStateChangedEvent.AddListener(HandleStateChanged);
+			UnityEvents.GenerateNewChunk += OnGenerateNewChunk;
+			UnityEvents.ChunkDestroyed += OnChunkDestroyed;
+			UnityEvents.StateChanged += OnStateChanged;
 		}
 
 		private void RevokeEvents()
 		{
-			UnityEvents.Instance.GenerateNewChunkEvent.RemoveListener(SpawnChunk);
-			UnityEvents.Instance.ChunkDestroyedEvent.RemoveListener(OnChunkDestroyed);
-			UnityEvents.Instance.OnStateChangedEvent.RemoveListener(HandleStateChanged);
+			UnityEvents.GenerateNewChunk -= OnGenerateNewChunk;
+			UnityEvents.ChunkDestroyed -= OnChunkDestroyed;
+			UnityEvents.StateChanged -= OnStateChanged;
 		}
 
 		#endregion UnityEvents

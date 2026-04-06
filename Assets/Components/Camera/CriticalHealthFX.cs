@@ -14,10 +14,29 @@ namespace Assets.Components.Camera
 		private void Start()
 		{
 			_volume.profile.TryGet(out _vignette);
-
-			UnityEvents.Instance.CriticalHealthEvent.AddListener(OnCriticalHealthStart);
-			UnityEvents.Instance.EndCriticalHealthEvent.AddListener(OnCriticalHealthEnd);
+			InitEvents();
 		}
+
+		private void OnDestroy()
+		{
+			RevokeEvents();
+		}
+
+		#region UnityEvents
+
+		private void InitEvents()
+		{
+			UnityEvents.Instance.CriticalHealthStart.AddListener(OnCriticalHealthStart);
+			UnityEvents.Instance.CriticalHealthEnd.AddListener(OnCriticalHealthEnd);
+		}
+
+		private void RevokeEvents()
+		{
+			UnityEvents.Instance.CriticalHealthStart.RemoveListener(OnCriticalHealthStart);
+			UnityEvents.Instance.CriticalHealthEnd.RemoveListener(OnCriticalHealthEnd);
+		}
+
+		#endregion UnityEvents
 
 		private void OnCriticalHealthStart()
 			=> _vignette.active = true;

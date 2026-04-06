@@ -15,23 +15,37 @@ namespace Assets.Components.InGame.Chunks.Interactables
 		[SerializeField] private ObjectPoolManager _collectiblePool;
 		[SerializeField] private ObjectPoolManager _ennemyPool;
 
-		private float _lastEnnemySpawnZPos;
+		private readonly float? _lastEnnemySpawnZPos = null;
 
 		#region Unity Lifecycle
 
 		private void Start()
 		{
-			UnityEvents.Instance.GenerateNewInteractibles.AddListener(SpawnInteractables);
+			InitEvents();
 		}
 
 		private void OnDestroy()
 		{
-			UnityEvents.Instance.GenerateNewInteractibles.RemoveListener(SpawnInteractables);
+			RevokeEvents();
 		}
 
 		#endregion Unity Lifecycle
 
-		private void SpawnInteractables(Chunk chunk)
+		#region UnityEvents
+
+		private void InitEvents()
+		{
+			UnityEvents.GenerateNewInteractibles += OnGenerateNewInteractibles;
+		}
+
+		private void RevokeEvents()
+		{
+			UnityEvents.GenerateNewInteractibles -= OnGenerateNewInteractibles;
+		}
+
+		#endregion UnityEvents
+
+		private void OnGenerateNewInteractibles(Chunk chunk)
 		{
 			List<AInteractable> lstInteractables = new();
 

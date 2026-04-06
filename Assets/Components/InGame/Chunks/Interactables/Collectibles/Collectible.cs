@@ -9,7 +9,7 @@ namespace Assets.Components.InGame.Chunks.Interactables.Collectibles
 		{
 			if (other.gameObject.CompareTag("Player"))
 			{
-				UnityEvents.Instance.HealthGainEvent.Invoke(null);
+				UnityEvents.HealthGain.Invoke(null);
 				_pool.Release(this.gameObject);
 			}
 		}

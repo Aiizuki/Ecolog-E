@@ -2,63 +2,66 @@ using Assets.Components.Singletons;
 using System.Collections;
 using UnityEngine;
 
-public class GameOverFXController : MonoBehaviour
+namespace Assets.Components.InGame.FX
 {
-	private bool _deathAnimationDone = false;
-
-	#region Unity Lifecycle
-
-	void Start()
+	public class GameOverFXController : MonoBehaviour
 	{
-		InitEvents();
-	}
+		private bool _deathAnimationDone = false;
 
-	private void OnDestroy()
-	{
-		RevokeEvents();
-	}
+		#region Unity Lifecycle
 
-	#endregion Unity Lifecycle
+		void Start()
+		{
+			InitEvents();
+		}
 
-	#region Unity Events
+		private void OnDestroy()
+		{
+			RevokeEvents();
+		}
 
-	private void InitEvents()
-	{
-		UnityEvents.Instance.GameOverEvent.AddListener(PlayGameOverFX);
-		UnityEvents.Instance.NotifyDeathAnimationFinishedEvent.AddListener(ChangeState);
-	}
+		#endregion Unity Lifecycle
 
-	private void RevokeEvents()
-	{
-		UnityEvents.Instance.GameOverEvent.RemoveListener(PlayGameOverFX);
-		UnityEvents.Instance.NotifyDeathAnimationFinishedEvent.RemoveListener(ChangeState);
-	}
+		#region Unity Events
 
-	#endregion Unity Events
+		private void InitEvents()
+		{
+			UnityEvents.Instance.GameOver.AddListener(OnGameOver);
+			UnityEvents.NotifyDeathAnimationFinishedEvent += OnStateChanged;
+		}
 
-	private void PlayGameOverFX()
-	{
-		StartCoroutine(GameOver());
-	}
+		private void RevokeEvents()
+		{
+			UnityEvents.Instance.GameOver.RemoveListener(OnGameOver);
+			UnityEvents.NotifyDeathAnimationFinishedEvent -= OnStateChanged;
+		}
 
-	private void ChangeState()
-		=> _deathAnimationDone = true;
+		#endregion Unity Events
 
-	private IEnumerator GameOver()
-	{
-		yield return StartCoroutine(PlayPlayerDeathAnimation());
-		yield return StartCoroutine(PlayCameraAnimation());
-	}
+		private void OnGameOver()
+		{
+			StartCoroutine(GameOver());
+		}
 
-	private IEnumerator PlayPlayerDeathAnimation()
-	{
-		UnityEvents.Instance.PlayDeathAnimation.Invoke();
-		yield return new WaitUntil(() => _deathAnimationDone);
-	}
+		private void OnStateChanged()
+			=> _deathAnimationDone = true;
 
-	private IEnumerator PlayCameraAnimation()
-	{
-		UnityEvents.Instance.GameOverTransitionEvent.Invoke();
-		yield return null;
+		private IEnumerator GameOver()
+		{
+			yield return StartCoroutine(PlayPlayerDeathAnimation());
+			yield return StartCoroutine(PlayCameraAnimation());
+		}
+
+		private IEnumerator PlayPlayerDeathAnimation()
+		{
+			UnityEvents.PlayDeathAnimation.Invoke();
+			yield return new WaitUntil(() => _deathAnimationDone);
+		}
+
+		private IEnumerator PlayCameraAnimation()
+		{
+			UnityEvents.GameOverTransition.Invoke();
+			yield return null;
+		}
 	}
 }

@@ -59,18 +59,24 @@ namespace Assets.Components.Game
 			{
 				yield return new WaitForSeconds(_timerSettings.SpeedIncreaseDelay);
 				_currentSpeed = Mathf.Min(_currentSpeed + _timerSettings.SpeedIncreaseRate, _timerSettings.MaxSpeed);
-				UnityEvents.Instance.SpeedIncreaseEvent.Invoke(_currentSpeed);
+				UnityEvents.SpeedIncreaseEvent.Invoke(_currentSpeed);
 				//Debug.Log($"[SpeedRoutine] currentSpeed={_currentSpeed} | maxSpeed={_timerSettings.MaxSpeed} | gamePause={_gamePause}");
 			}
 		}
 
-		private void ResumeRoutine()
+		private void OnGameResume()
 		{
 			_speedRoutine ??= StartCoroutine(SpeedRoutine());
 			_gamePause = false;
 		}
 
-		private void PauseRoutine()
+		private void OnGamePause()
+			=> Pause();
+
+		private void OnGameOver()
+			=> Pause();
+
+		private void Pause()
 		{
 			StopCoroutine(_speedRoutine);
 			_speedRoutine = null;
@@ -88,16 +94,16 @@ namespace Assets.Components.Game
 
 		private void InitEvents()
 		{
-			UnityEvents.Instance.GameResumeEvent.AddListener(ResumeRoutine);
-			UnityEvents.Instance.GameOverEvent.AddListener(PauseRoutine);
-			UnityEvents.Instance.GamePauseEvent.AddListener(PauseRoutine);
+			UnityEvents.Instance.GameResume.AddListener(OnGameResume);
+			UnityEvents.Instance.GameOver.AddListener(OnGameOver);
+			UnityEvents.Instance.GamePause.AddListener(OnGamePause);
 		}
 
 		private void RevokeEvents()
 		{
-			UnityEvents.Instance.GameResumeEvent.RemoveListener(ResumeRoutine);
-			UnityEvents.Instance.GameOverEvent.RemoveListener(PauseRoutine);
-			UnityEvents.Instance.GamePauseEvent.RemoveListener(PauseRoutine);
+			UnityEvents.Instance.GameResume.RemoveListener(OnGameResume);
+			UnityEvents.Instance.GameOver.RemoveListener(OnGameOver);
+			UnityEvents.Instance.GamePause.RemoveListener(OnGamePause);
 		}
 
 		#endregion Unity Events

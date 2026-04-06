@@ -9,7 +9,7 @@ namespace Assets.Components.InGame.Chunks.Interactables.Obstacles
 		{
 			if (other.gameObject.CompareTag("Player"))
 			{
-				UnityEvents.Instance.HealthLooseEvent.Invoke(null);
+				UnityEvents.HealthLoose.Invoke(null);
 				_pool.Release(this.gameObject);
 			}
 		}

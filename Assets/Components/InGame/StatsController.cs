@@ -15,8 +15,8 @@ namespace Assets.Components.Game
 		private void Start()
 		{
 			_saveData = SaveServiceController.Load();
-			UnityEvents.Instance.NewGameEvent.AddListener(ResetStats);
-			UnityEvents.Instance.GameOverEvent.AddListener(SaveStats);
+			UnityEvents.Instance.NewGame.AddListener(OnNewGame);
+			UnityEvents.Instance.GameOver.AddListener(OnGameOver);
 		}
 
 		#region Static Helpers
@@ -24,19 +24,19 @@ namespace Assets.Components.Game
 		public static void AddScore(int score)
 		{
 			Score += score;
-			UnityEvents.Instance.ScoreUpdateEvent.Invoke(Score);
+			UnityEvents.ScoreUpdate.Invoke(Score);
 		}
 
 		#endregion Static Helpers
 
 		#region Private Methods
 
-		private void ResetStats()
+		private void OnNewGame()
 		{
 			Score = 0;
 		}
 
-		private void SaveStats()
+		private void OnGameOver()
 		{
 			_saveData.Score = Score;
 			_saveData.RunCount++;

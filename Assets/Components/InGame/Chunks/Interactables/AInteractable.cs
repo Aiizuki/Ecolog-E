@@ -13,22 +13,34 @@ namespace Assets.Components.InGame.Chunks.Interactables
 
 		private void Start()
 		{
-			UnityEvents.Instance.InteractibleDestroyedEvent.AddListener(ReturnToPool);
+			InitEvents();
 		}
 
 		private void OnDestroy()
 		{
-			UnityEvents.Instance.InteractibleDestroyedEvent.RemoveListener(ReturnToPool);
+			RevokeEvents();
 		}
 
 		#endregion Unity Lifecycle
 
+		#region UnityEvents
+
+		private void InitEvents()
+		{
+			UnityEvents.InteractibleDestroyed += OnInteractibleDestroyed;
+		}
+
+		private void RevokeEvents()
+		{
+			UnityEvents.InteractibleDestroyed -= OnInteractibleDestroyed;
+		}
+
+		#endregion UnityEvents
+
 		public void SetPool(ObjectPoolManager obstaclePool)
 			=> _pool = obstaclePool;
 
-		#region UnityEvents
-
-		protected void ReturnToPool(Chunk chunkParent)
+		protected void OnInteractibleDestroyed(Chunk chunkParent)
 		{
 			if (transform.parent != chunkParent.transform)
 				return;
@@ -41,7 +53,5 @@ namespace Assets.Components.InGame.Chunks.Interactables
 
 			_pool.Release(this.gameObject);
 		}
-
-		#endregion UnityEvents
 	}
 }

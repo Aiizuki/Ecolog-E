@@ -13,12 +13,35 @@ namespace Assets.Components.InGame.Player.Scripts
 		[SerializeField] private PlayerConfig _playerConfig;
 		[SerializeField] private GameStateController _gameStateController;
 
+		#region Unity Lifecycle
+
 		private void Start()
 		{
-			UnityEvents.Instance.OnStateChangedEvent.AddListener(HandleStateChange);
+			InitEvents();
 		}
 
-		private void HandleStateChange(State newState)
+		private void OnDestroy()
+		{
+			RevokeEvents();
+		}
+
+		#endregion Unity Lifecycle
+
+		#region UnityEvents
+
+		private void InitEvents()
+		{
+			UnityEvents.StateChanged += OnStateChanged;
+		}
+
+		private void RevokeEvents()
+		{
+			UnityEvents.StateChanged -= OnStateChanged;
+		}
+
+		#endregion UnityEvents
+
+		private void OnStateChanged(State newState)
 		{
 			if (newState is InvincibleState)
 				StartCoroutine(InvicibleRoutine());

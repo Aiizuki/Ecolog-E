@@ -8,13 +8,13 @@ public class ButtonsManager : MonoBehaviour
 	public void FireReturnToHomeEvent()
 	{
 		PlayButtonClickSound();
-		UnityEvents.Instance.ReturnToHomeEvent.Invoke();
+		UnityEvents.ReturnToHome.Invoke();
 	}
 
 	public void FireNewGameEvent()
 	{
 		PlayButtonClickSound();
-		UnityEvents.Instance.NewGameEvent.Invoke();
+		UnityEvents.Instance.NewGame.Invoke();
 	}
 
 	public void PlayButtonClickSound()

@@ -103,17 +103,18 @@ namespace Assets.Components.InGame.Ennemy
 
 		private void InitEvents()
 		{
-			UnityEvents.Instance.GameOverEvent.AddListener(() => _isPlaying = false);
-			UnityEvents.Instance.GamePauseEvent.AddListener(() => _isPlaying = false);
-			UnityEvents.Instance.GameResumeEvent.AddListener(() => _isPlaying = true);
-			UnityEvents.Instance.InteractibleDestroyedEvent.AddListener(this.ReturnToPool);
+			UnityEvents.Instance.GameOver.AddListener(() => _isPlaying = false);
+			UnityEvents.Instance.GamePause.AddListener(() => _isPlaying = false);
+			UnityEvents.Instance.GameResume.AddListener(() => _isPlaying = true);
+			UnityEvents.InteractibleDestroyed += this.ReturnToPool;
 		}
 
 		private void RevokeEvents()
 		{
-			UnityEvents.Instance.GameOverEvent.RemoveListener(() => _isPlaying = false);
-			UnityEvents.Instance.GamePauseEvent.RemoveListener(() => _isPlaying = false);
-			UnityEvents.Instance.GameResumeEvent.AddListener(() => _isPlaying = true);
+			UnityEvents.Instance.GameOver.RemoveListener(() => _isPlaying = false);
+			UnityEvents.Instance.GamePause.RemoveListener(() => _isPlaying = false);
+			UnityEvents.Instance.GameResume.AddListener(() => _isPlaying = true);
+			UnityEvents.InteractibleDestroyed -= this.ReturnToPool;
 		}
 
 		protected new void ReturnToPool(Chunk chunkParent)

@@ -1967,73 +1967,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b08f7d07abe08b4aa99f6f199e54aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UnityEvents
-  NewGameEvent:
+  NewGame:
     m_PersistentCalls:
       m_Calls: []
-  GameOverEvent:
+  GameOver:
     m_PersistentCalls:
       m_Calls: []
-  GamePauseEvent:
+  GamePause:
     m_PersistentCalls:
       m_Calls: []
-  GameResumeEvent:
+  GameResume:
     m_PersistentCalls:
       m_Calls: []
-  GameOverTransitionEvent:
+  CriticalHealthStart:
     m_PersistentCalls:
       m_Calls: []
-  ReturnToHomeEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  ScoreUpdateEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  GenerateNewChunkEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  GenerateNewInteractibles:
-    m_PersistentCalls:
-      m_Calls: []
-  ChunkDestroyedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  InteractibleDestroyedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  HealthGainEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  HealthLooseEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  CriticalHealthEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  EndCriticalHealthEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStateChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  PlayRunAnimation:
-    m_PersistentCalls:
-      m_Calls: []
-  PlayDodgeAnimation:
-    m_PersistentCalls:
-      m_Calls: []
-  PlayDeathAnimation:
-    m_PersistentCalls:
-      m_Calls: []
-  PlayJumpAnimation:
-    m_PersistentCalls:
-      m_Calls: []
-  PlayCrouchAnimation:
-    m_PersistentCalls:
-      m_Calls: []
-  SpeedIncreaseEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  NotifyDeathAnimationFinishedEvent:
+  CriticalHealthEnd:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &1913453355
@@ -3247,7 +3196,7 @@ MonoBehaviour:
   _playerConfig: {fileID: 11400000, guid: 96e6ff38ce422c148ab3804ac5083d26, type: 2}
   _slideLeftInput: {fileID: -6195904533131247468, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _slideRightInput: {fileID: 7261642757737378122, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _slideDownInput: {fileID: 7040659881675835329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _crouchInput: {fileID: 7040659881675835329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _jumpInput: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _jumpCurve:
     serializedVersion: 2

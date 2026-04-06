@@ -16,16 +16,16 @@ namespace Assets.Components.UI
 
 		private void Start()
 		{
-			UnityEvents.Instance.ReturnToHomeEvent.AddListener(OnReturnToHome);
-			UnityEvents.Instance.NewGameEvent.AddListener(OnNewGame);
-			UnityEvents.Instance.GameOverTransitionEvent.AddListener(OnGameOver);
+			UnityEvents.ReturnToHome += OnReturnToHome;
+			UnityEvents.Instance.NewGame.AddListener(OnNewGame);
+			UnityEvents.GameOverTransition += OnGameOver;
 		}
 
 		private void OnDestroy()
 		{
-			UnityEvents.Instance.ReturnToHomeEvent.RemoveListener(OnReturnToHome);
-			UnityEvents.Instance.NewGameEvent.RemoveListener(OnNewGame);
-			UnityEvents.Instance.GameOverTransitionEvent.RemoveListener(OnGameOver);
+			UnityEvents.ReturnToHome -= OnReturnToHome;
+			UnityEvents.Instance.NewGame.RemoveListener(OnNewGame);
+			UnityEvents.GameOverTransition -= OnGameOver;
 		}
 
 		public void ReloadCurrentScene()

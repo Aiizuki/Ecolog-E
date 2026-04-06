@@ -58,9 +58,9 @@ namespace Assets.Components.Game.Chunks
 		{
 			_gameOver = false;
 			if (IsDefinedInScene)
-				UnityEvents.Instance.GenerateNewInteractibles.Invoke(this);
+				UnityEvents.GenerateNewInteractibles.Invoke(this);
 
-			UnityEvents.Instance.GameOverEvent.AddListener(Stop);
+			UnityEvents.Instance.GameOver.AddListener(Stop);
 		}
 
 		private void OnDisable()
@@ -79,14 +79,14 @@ namespace Assets.Components.Game.Chunks
 				if (IsDefinedInScene)
 					Destroy(gameObject);
 
-				UnityEvents.Instance.InteractibleDestroyedEvent.Invoke(this);
-				UnityEvents.Instance.ChunkDestroyedEvent.Invoke(this);
+				UnityEvents.InteractibleDestroyed.Invoke(this);
+				UnityEvents.ChunkDestroyed.Invoke(this);
 			}
 		}
 
 		private void OnDestroy()
 		{
-			UnityEvents.Instance.GameOverEvent.RemoveListener(Stop);
+			UnityEvents.Instance.GameOver.RemoveListener(Stop);
 		}
 
 		#endregion Unity Lifecycle
@@ -99,7 +99,7 @@ namespace Assets.Components.Game.Chunks
 			transform.position = position;
 			transform.SetParent(_chunkParent.transform, true);
 
-			UnityEvents.Instance.GenerateNewInteractibles.Invoke(this);
+			UnityEvents.GenerateNewInteractibles.Invoke(this);
 		}
 
 		#region Lane Generation
