@@ -184,9 +184,11 @@ namespace Assets.Components.InGame.Player.Scripts
 		private IEnumerator CrouchCoroutine()
 		{
 			_isCrouching = true;
+			_animator.SetBool("IsCrouching", _isCrouching);
 			UnityEvents.PlayCrouchAnimation.Invoke();
 			yield return new WaitForSeconds(_playerConfig.CrouchDurantion);
 			_isCrouching = false;
+			_animator.SetBool("IsCrouching", _isCrouching);
 		}
 
 		private IEnumerator StrafeCoroutine(Transform target)
