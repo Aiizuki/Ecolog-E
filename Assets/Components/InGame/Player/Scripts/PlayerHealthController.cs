@@ -18,6 +18,7 @@ namespace Assets.Components.InGame.Player.Scripts
 
 		private float _health;
 		private Dictionary<int, int> _assoDistanceWithDamage;
+		private bool _gameOver = false;
 
 		#region Unity Lifecycle
 
@@ -38,10 +39,10 @@ namespace Assets.Components.InGame.Player.Scripts
 
 		private void Update()
 		{
-			if (_health >= _playerConfig.MinHealth)
+			if (_health > _playerConfig.MinHealth)
 			{
 				// Réduction progressive de la santé
-				_health = Mathf.Max(0, _health - (_playerConfig.HealthLooseRatio / _playerConfig.HealthLooseRate) * Time.deltaTime);
+				_health = Mathf.Max(_playerConfig.MinHealth, _health - (_playerConfig.HealthLooseRatio / _playerConfig.HealthLooseRate) * Time.deltaTime);
 
 				// TODO : remplacer par un state de la state machine
 				if (_health < 0.30f * _playerConfig.MaxHealth)
@@ -53,8 +54,11 @@ namespace Assets.Components.InGame.Player.Scripts
 				float scaleX = _health / _playerConfig.MaxHealth;
 				_playerHealthUI.transform.localScale = new Vector3(scaleX, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
 			}
-			else
+			else if (!_gameOver)
+			{
 				UnityEvents.Instance.GameOver.Invoke();
+				_gameOver = true;
+			}
 		}
 
 		private void OnDestroy()
