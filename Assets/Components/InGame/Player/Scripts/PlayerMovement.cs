@@ -10,12 +10,6 @@ namespace Assets.Components.InGame.Player.Scripts
 	{
 		[SerializeField] private PlayerConfig _playerConfig;
 
-		[Header("Inputs")]
-		[SerializeField] private InputActionReference _slideLeftInput;
-		[SerializeField] private InputActionReference _slideRightInput;
-		[SerializeField] private InputActionReference _crouchInput;
-		[SerializeField] private InputActionReference _jumpInput;
-
 		[Header("Jump parameters")]
 		[SerializeField] private AnimationCurve _jumpCurve;
 		[SerializeField] private AnimationCurve _fallCurve;
@@ -28,99 +22,87 @@ namespace Assets.Components.InGame.Player.Scripts
 
 		[Header("Debug")]
 		[SerializeField] private int _currentLaneIndex = 1;
-		[SerializeField] private bool _isSlidingHorizontally;
-		[SerializeField] private bool _isSlidingDown;
+		[SerializeField] private bool _isStrafing;
+		[SerializeField] private bool _isCrouching;
 		[SerializeField] private bool _isJumping;
 
 		private float _baseHeight;
-		private Coroutine _slideHorizontalCoroutine;
-		private Coroutine _slideVerticalCoroutine;
+		private Coroutine _strafeCoroutine;
+		private Coroutine _jumpCoroutine;
 		private Coroutine _fallCoroutine;
+
+		private InputBuffer _inputBuffer;
+		private const string JUMP_INPUT_NAME = "Jump";
+		private const string STRAFE_LEFT_INPUT_NAME = "SlideLeft";
+		private const string STRAFE_RIGHT_INPUT_NAME = "SlideRight";
+		private const string CROUCH_INPUT_NAME = "Crouch";
 
 		#region Unity Lifecycle
 
-		private void OnEnable()
-		{
-			InitEvents();
-		}
-
 		private void Start()
 		{
+			_inputBuffer ??= new InputBuffer();
 			_baseHeight = transform.position.y;
-		}
-
-		private void OnDisable()
-		{
-			RevokeEvents();
 		}
 
 		#endregion Unity Lifecycle
 
-		#region UnityEvents
-
-		private void InitEvents()
-		{
-			_slideLeftInput.action.performed += OnSlideLeft;
-			_slideRightInput.action.performed += OnSlideRight;
-			_crouchInput.action.performed += OnCrouch;
-			_jumpInput.action.performed += OnJump;
-		}
-
-		private void RevokeEvents()
-		{
-			_slideLeftInput.action.performed -= OnSlideLeft;
-			_slideRightInput.action.performed -= OnSlideRight;
-			_crouchInput.action.performed -= OnCrouch;
-			_jumpInput.action.performed -= OnJump;
-		}
-
-		#endregion UnityEvents
-
 		#region Inputs Actions
 
-		private void OnJump(InputAction.CallbackContext context)
+		public void OnJump(InputAction.CallbackContext context)
 		{
+			_inputBuffer.Buffer(JUMP_INPUT_NAME);
+
 			if (_isJumping)
-			{
 				return;
-			}
-			else if (_isSlidingDown)
+			if (!_inputBuffer.TryConsume(JUMP_INPUT_NAME))
+				return;
+
+			if (_isCrouching)
 			{
-				StopCoroutine(_slideVerticalCoroutine);
-				_isSlidingDown = false;
+				StopCoroutine(_jumpCoroutine);
+				_isCrouching = false;
 			}
 
-			_slideVerticalCoroutine = StartCoroutine(JumpCoroutine());
+			_jumpCoroutine = StartCoroutine(JumpCoroutine());
 		}
 
-		private void OnCrouch(InputAction.CallbackContext context)
+		public void OnCrouch(InputAction.CallbackContext context)
 		{
-			if (_isSlidingDown)
+			_inputBuffer.Buffer(CROUCH_INPUT_NAME);
+
+			if (_isCrouching)
+				return;
+			if (!_inputBuffer.TryConsume(CROUCH_INPUT_NAME))
 				return;
 
 			if (_isJumping)
 			{
 				// Stop les deux coroutines actives
-				StopCoroutine(_slideVerticalCoroutine);
+				StopCoroutine(_jumpCoroutine);
 
 				if (_fallCoroutine != null)
 					StopCoroutine(_fallCoroutine);
 
-				_isJumping = false;
 				_fallCoroutine = StartCoroutine(FallCoroutine(speedFall: true));
 			}
 			else
 			{
-				_slideVerticalCoroutine = StartCoroutine(CrouchCoroutine());
+				_jumpCoroutine = StartCoroutine(CrouchCoroutine());
 			}
 		}
 
-		private void OnSlideLeft(InputAction.CallbackContext context)
+		public void OnSlideLeft(InputAction.CallbackContext context)
 		{
-			if (_isSlidingHorizontally)
+			_inputBuffer.Buffer(STRAFE_LEFT_INPUT_NAME);
+
+			if (!_inputBuffer.TryConsume(STRAFE_LEFT_INPUT_NAME))
+				return;
+
+			if (_isStrafing)
 			{
-				StopCoroutine(_slideHorizontalCoroutine);
-				_isSlidingHorizontally = false;
+				StopCoroutine(_strafeCoroutine);
+				_isStrafing = false;
 			}
 
 			if (_currentLaneIndex == 0)
@@ -130,15 +112,20 @@ namespace Assets.Components.InGame.Player.Scripts
 
 			_currentLaneIndex--;
 			UnityEvents.PlayDodgeAnimation.Invoke(true);
-			_slideHorizontalCoroutine = StartCoroutine(StrafeCoroutine(_slideTarget[_currentLaneIndex]));
+			_strafeCoroutine = StartCoroutine(StrafeCoroutine(_slideTarget[_currentLaneIndex]));
 		}
 
-		private void OnSlideRight(InputAction.CallbackContext context)
+		public void OnSlideRight(InputAction.CallbackContext context)
 		{
-			if (_isSlidingHorizontally)
+			_inputBuffer.Buffer(STRAFE_RIGHT_INPUT_NAME);
+
+			if (!_inputBuffer.TryConsume(STRAFE_RIGHT_INPUT_NAME))
+				return;
+
+			if (_isStrafing)
 			{
-				StopCoroutine(_slideHorizontalCoroutine);
-				_isSlidingHorizontally = false;
+				StopCoroutine(_strafeCoroutine);
+				_isStrafing = false;
 			}
 
 			if (_currentLaneIndex == _slideTarget.Length - 1)
@@ -148,7 +135,7 @@ namespace Assets.Components.InGame.Player.Scripts
 
 			_currentLaneIndex++;
 			UnityEvents.PlayDodgeAnimation.Invoke(false);
-			_slideHorizontalCoroutine = StartCoroutine(StrafeCoroutine(_slideTarget[_currentLaneIndex]));
+			_strafeCoroutine = StartCoroutine(StrafeCoroutine(_slideTarget[_currentLaneIndex]));
 		}
 
 		#endregion Input Actions
@@ -159,7 +146,6 @@ namespace Assets.Components.InGame.Player.Scripts
 		{
 			_isJumping = true;
 			UnityEvents.PlayJumpAnimation.Invoke();
-			_animator.SetBool("IsGrounded", false);
 
 			float jumpTimer = 0f;
 
@@ -174,10 +160,6 @@ namespace Assets.Components.InGame.Player.Scripts
 
 			yield return new WaitForSeconds(_playerConfig.JumpFloatingTime);
 			_fallCoroutine = StartCoroutine(FallCoroutine());
-			yield return _fallCoroutine;
-
-			_animator.SetBool("IsGrounded", true);
-			_isJumping = false;
 		}
 
 		private IEnumerator FallCoroutine(bool speedFall = false)
@@ -195,23 +177,21 @@ namespace Assets.Components.InGame.Player.Scripts
 			}
 
 			transform.position = new Vector3(transform.position.x, _baseHeight, transform.position.z);
+			_animator.SetBool("IsGrounded", true);
+			_isJumping = false;
 		}
 
 		private IEnumerator CrouchCoroutine()
 		{
-			_isSlidingDown = true;
-			_animator.SetBool("Crouch", true);
-
+			_isCrouching = true;
 			UnityEvents.PlayCrouchAnimation.Invoke();
 			yield return new WaitForSeconds(_playerConfig.CrouchDurantion);
-
-			_isSlidingDown = false;
-			_animator.SetBool("Crouch", false);
+			_isCrouching = false;
 		}
 
 		private IEnumerator StrafeCoroutine(Transform target)
 		{
-			_isSlidingHorizontally = true;
+			_isStrafing = true;
 			float slideTimer = 0f;
 
 			while (slideTimer < _playerConfig.StrafeDuration)
@@ -226,7 +206,7 @@ namespace Assets.Components.InGame.Player.Scripts
 				yield return null;
 			}
 
-			_isSlidingHorizontally = false;
+			_isStrafing = false;
 		}
 
 		#endregion Coroutines

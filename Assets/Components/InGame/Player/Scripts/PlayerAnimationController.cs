@@ -64,10 +64,13 @@ namespace Assets.Components.InGame.Player.Scripts
 		}
 
 		private void OnPlayJumpAnimation()
-			=> _animator.SetTrigger("Jump");
+		{
+			_animator.SetTrigger("Jump");
+			_animator.SetBool("IsGrounded", false);
+		}
 
 		private void OnPlayCrouchAnimation()
-			=> _animator.SetTrigger("Slide");
+			=> _animator.SetTrigger("Crouch");
 
 		private void OnSpeedIncrease(float speed)
 			=> _animator.SetFloat("Speed", speed);

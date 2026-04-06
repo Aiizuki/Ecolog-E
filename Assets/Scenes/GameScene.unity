@@ -2797,6 +2797,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3464624677928090838}
   - component: {fileID: 7418832788298229420}
+  - component: {fileID: 7418832788298229426}
   - component: {fileID: 7418832788298229421}
   - component: {fileID: 7418832788298229423}
   - component: {fileID: 7418832788298229422}
@@ -3194,10 +3195,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   _playerConfig: {fileID: 11400000, guid: 96e6ff38ce422c148ab3804ac5083d26, type: 2}
-  _slideLeftInput: {fileID: -6195904533131247468, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _slideRightInput: {fileID: 7261642757737378122, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _crouchInput: {fileID: 7040659881675835329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _jumpInput: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _jumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -3252,8 +3249,8 @@ MonoBehaviour:
   - {fileID: 1194115174}
   _animator: {fileID: 7418832788298229420}
   _currentLaneIndex: 1
-  _isSlidingHorizontally: 0
-  _isSlidingDown: 0
+  _isStrafing: 0
+  _isCrouching: 0
   _isJumping: 0
 --- !u!114 &7418832788298229422
 MonoBehaviour:
@@ -3321,6 +3318,23 @@ CapsuleCollider:
   m_Height: 2.203139
   m_Direction: 1
   m_Center: {x: 0, y: 1.1316351, z: 0.024198573}
+--- !u!114 &7418832788298229426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4278139705893381740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ba1092381c207d4ab8f083846eac3c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputController
+  _slideLeftInput: {fileID: -6195904533131247468, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _slideRightInput: {fileID: 7261642757737378122, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _crouchInput: {fileID: 7040659881675835329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _jumpInput: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _playerMovement: {fileID: 7418832788298229421}
 --- !u!137 &7739181496980919529
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
