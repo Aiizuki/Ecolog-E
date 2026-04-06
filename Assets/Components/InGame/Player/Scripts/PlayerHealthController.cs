@@ -38,7 +38,7 @@ namespace Assets.Components.InGame.Player.Scripts
 
 		private void Update()
 		{
-			if (_health > 0)
+			if (_health >= _playerConfig.MinHealth)
 			{
 				// Réduction progressive de la santé
 				_health = Mathf.Max(0, _health - (_playerConfig.HealthLooseRatio / _playerConfig.HealthLooseRate) * Time.deltaTime);
@@ -53,6 +53,8 @@ namespace Assets.Components.InGame.Player.Scripts
 				float scaleX = _health / _playerConfig.MaxHealth;
 				_playerHealthUI.transform.localScale = new Vector3(scaleX, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
 			}
+			else
+				UnityEvents.Instance.GameOver.Invoke();
 		}
 
 		private void OnDestroy()
