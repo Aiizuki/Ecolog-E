@@ -165,73 +165,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b08f7d07abe08b4aa99f6f199e54aa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Core.UnityEvents
-  NewGameEvent:
+  NewGame:
     m_PersistentCalls:
       m_Calls: []
-  GameOverEvent:
+  GameOver:
     m_PersistentCalls:
       m_Calls: []
-  GamePauseEvent:
+  GamePause:
     m_PersistentCalls:
       m_Calls: []
-  GameResumeEvent:
+  GameResume:
     m_PersistentCalls:
       m_Calls: []
-  GameOverTransitionEvent:
+  CriticalHealthStart:
     m_PersistentCalls:
       m_Calls: []
-  ReturnToHomeEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  ScoreUpdateEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  GenerateNewChunkEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  GenerateNewInteractibles:
-    m_PersistentCalls:
-      m_Calls: []
-  ChunkDestroyedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  InteractibleDestroyedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  HealthGainEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  HealthLooseEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  CriticalHealthEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  EndCriticalHealthEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStateChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  PlayRunAnimation:
-    m_PersistentCalls:
-      m_Calls: []
-  PlayDodgeAnimation:
-    m_PersistentCalls:
-      m_Calls: []
-  PlayDeathAnimation:
-    m_PersistentCalls:
-      m_Calls: []
-  PlayJumpAnimation:
-    m_PersistentCalls:
-      m_Calls: []
-  PlaySlideAnimation:
-    m_PersistentCalls:
-      m_Calls: []
-  SpeedIncreaseEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  NotifyDeathAnimationFinishedEvent:
+  CriticalHealthEnd:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &808582066
@@ -433,7 +382,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v_0.1.0
+  m_text: v_0.3.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
