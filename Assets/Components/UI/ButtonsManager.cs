@@ -7,17 +7,17 @@ public class ButtonsManager : MonoBehaviour
 {
 	public void FireReturnToHomeEvent()
 	{
-		PlayButtonClickSound();
+		PlayButtonClick();
 		UnityEvents.ReturnToHome.Invoke();
 	}
 
 	public void FireNewGameEvent()
 	{
-		PlayButtonClickSound();
+		PlayButtonClick();
 		UnityEvents.Instance.NewGame.Invoke();
 	}
 
-	public void PlayButtonClickSound()
+	public void PlayButtonClick()
 	{
 		//AudioManager.Instance.PlayOneShot(FMODEvents.Instance.ButtonClick, Vector2.zero);
 		StartCoroutine(PreventSpamClickRoutine());

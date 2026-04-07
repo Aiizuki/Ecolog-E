@@ -1,4 +1,5 @@
-﻿using Assets.Components.Singletons;
+﻿using Assets.Components.Game;
+using Assets.Components.Singletons;
 using Assets.Components.StateMachines;
 using Assets.Components.StateMachines.States;
 using Assets.Settings.Player;
@@ -12,6 +13,7 @@ namespace Assets.Components.InGame.Player.Scripts
 		[SerializeField] private Collider _playerCollider;
 		[SerializeField] private PlayerConfig _playerConfig;
 		[SerializeField] private GameStateController _gameStateController;
+		[SerializeField] private StatsController _statsController;
 
 		#region Unity Lifecycle
 
@@ -51,7 +53,7 @@ namespace Assets.Components.InGame.Player.Scripts
 		{
 			Debug.Log("Player is now invincible");
 			// TODO : faire une animation d'invincibilité
-			yield return new WaitForSeconds(_playerConfig.InvincibilityDuration);
+			yield return new WaitForSeconds(_statsController.GetPlayerInvicibilityDuration(_playerConfig.InvincibilityDuration));
 			_gameStateController.RevertState();
 			Debug.Log("Player is no more invincible");
 		}

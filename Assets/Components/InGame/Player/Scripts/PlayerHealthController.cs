@@ -15,8 +15,12 @@ namespace Assets.Components.InGame.Player.Scripts
 		[SerializeField] private Image _playerHealthUI;
 		[SerializeField] private PlayerConfig _playerConfig;
 		[SerializeField] private GameStateController _gameStateController;
+		[SerializeField] private StatsController _statsController;
 
-		private float _health;
+		public float BaseHealth;
+		public float Health;
+		public float HealthLooseRatio;
+
 		private Dictionary<int, int> _assoDistanceWithDamage;
 		private bool _gameOver = false;
 
@@ -31,7 +35,9 @@ namespace Assets.Components.InGame.Player.Scripts
 				.Zip(_playerConfig.lstDamagePerCheckpoints, (key, value) => new { key, value })
 				.ToDictionary(x => x.key, x => x.value);
 
-			_health = _playerConfig.MaxHealth;
+			BaseHealth = Health = _statsController.GetPlayerHealth(_playerConfig.MaxHealth);
+			HealthLooseRatio = _statsController.GetPlayerHealthLooseRatio(_playerConfig.HealthLooseRatio);
+
 			_playerHealthUI.transform.localScale = new Vector3(1f, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
 
 			InitEvents();
@@ -39,19 +45,19 @@ namespace Assets.Components.InGame.Player.Scripts
 
 		private void Update()
 		{
-			if (_health > _playerConfig.MinHealth)
+			if (Health > _playerConfig.MinHealth)
 			{
 				// Réduction progressive de la santé
-				_health = Mathf.Max(_playerConfig.MinHealth, _health - (_playerConfig.HealthLooseRatio / _playerConfig.HealthLooseRate) * Time.deltaTime);
+				Health = Mathf.Max(_playerConfig.MinHealth, Health - (HealthLooseRatio / _playerConfig.HealthLooseRate) * Time.deltaTime);
 
 				// TODO : remplacer par un state de la state machine
-				if (_health < 0.30f * _playerConfig.MaxHealth)
+				if (Health < 0.30f * BaseHealth)
 					UnityEvents.Instance.CriticalHealthStart.Invoke();
 				else
 					UnityEvents.Instance.CriticalHealthEnd.Invoke();
 
 				// La scale suit _health
-				float scaleX = _health / _playerConfig.MaxHealth;
+				float scaleX = Health / BaseHealth;
 				_playerHealthUI.transform.localScale = new Vector3(scaleX, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
 			}
 			else if (!_gameOver)
@@ -89,9 +95,9 @@ namespace Assets.Components.InGame.Player.Scripts
 		private void OnHealthGain(int? amount = 0)
 		{
 			if (amount > 0)
-				_health += amount.Value;
+				Health += amount.Value;
 			else
-				_health += _playerConfig.HealthGainPerTrashCollect;
+				Health += _playerConfig.HealthGainPerTrashCollect;
 		}
 
 		private void OnHealthLoose(int? amount = 0)
@@ -111,10 +117,10 @@ namespace Assets.Components.InGame.Player.Scripts
 				}
 			}
 
-			_health = Mathf.Max(_playerConfig.MinHealth, _health - amount.Value);
+			Health = Mathf.Max(_playerConfig.MinHealth, Health - (amount.Value - (_statsController.GetPlayerDamageReduction() * amount.Value)));
 			Debug.Log($"Player lost {amount.Value} hp");
 
-			if (_health <= _playerConfig.MinHealth)
+			if (Health <= _playerConfig.MinHealth)
 				_gameStateController.ChangeState(typeof(GameOverState));
 			else
 				_gameStateController.ChangeState(typeof(InvincibleState));

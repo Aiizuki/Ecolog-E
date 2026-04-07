@@ -647,6 +647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c960f9225b4b04b83474dd94e7ed36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.StatsController
+  _statsConfig: {fileID: 11400000, guid: 6035af028eaf730489d1f961e3958ae5, type: 2}
 --- !u!114 &334075609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1939,7 +1940,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1913453353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3267,6 +3268,7 @@ MonoBehaviour:
   _playerHealthUI: {fileID: 1281136396}
   _playerConfig: {fileID: 11400000, guid: 96e6ff38ce422c148ab3804ac5083d26, type: 2}
   _gameStateController: {fileID: 1348506392}
+  _statsController: {fileID: 334075608}
 --- !u!114 &7418832788298229423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3282,6 +3284,7 @@ MonoBehaviour:
   _playerCollider: {fileID: 0}
   _playerConfig: {fileID: 11400000, guid: 96e6ff38ce422c148ab3804ac5083d26, type: 2}
   _gameStateController: {fileID: 1348506392}
+  _statsController: {fileID: 334075608}
 --- !u!114 &7418832788298229424
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 namespace Assets.Components.SaveService
 {
+	using Newtonsoft.Json;
 	using System;
 	using System.IO;
 	using System.Security.Cryptography;
@@ -20,7 +21,8 @@ namespace Assets.Components.SaveService
 
 			public static void Save(SaveData data)
 			{
-				string json = JsonUtility.ToJson(data);
+				string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+
 #if UNITY_EDITOR
 				File.WriteAllText(FilePath + ".json", json);
 				Debug.Log("Data saved (unencrypted) at: " + FilePath + ".json");
@@ -41,7 +43,7 @@ namespace Assets.Components.SaveService
 					byte[] encrypted = File.ReadAllBytes(FilePath);
 					string json = Decrypt(encrypted);
 #endif
-					return JsonUtility.FromJson<SaveData>(json);
+					return JsonConvert.DeserializeObject<SaveData>(json);
 				}
 				catch (Exception exception)
 				{

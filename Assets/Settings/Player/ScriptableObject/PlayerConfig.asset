@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Settings.Player.PlayerConfig
   MaxHealth: 100
   MinHealth: 0
-  HealthLooseRatio: 2.5
+  HealthLooseRatio: 2
   HealthLooseRate: 1
   HealthGainPerTrashCollect: 8
   InvincibilityDuration: 1.5

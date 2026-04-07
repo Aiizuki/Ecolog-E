@@ -1,4 +1,5 @@
 ﻿using Assets.Components.Game.Chunks;
+using Assets.Components.PlayerStats;
 using Assets.Components.StateMachines.States;
 using System;
 using UnityEngine;
@@ -23,6 +24,9 @@ namespace Assets.Components.Singletons
 		public static Action GameOverTransition;
 		public static Action ReturnToHome;
 		public static Action<int> ScoreUpdate;
+
+		public static Action<EnumUpgradableStat> UpgradeStat;
+		public static Action<EnumUpgradableStat> FillStatPanel;
 
 		#endregion UI
 
