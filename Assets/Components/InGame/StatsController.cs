@@ -38,40 +38,40 @@ namespace Assets.Components.Game
 
 		public float GetPlayerHealth(int basePlayerHealth)
 		{
-			KeyValuePair<EnumUpgradableStat, int> stat = _saveData.LstPlayerStats.FirstOrDefault(x => x.Key == EnumUpgradableStat.Renforcement);
+			KeyValuePair<EnumUpgradableStat, int> stat = _saveData.LstPlayerStats.FirstOrDefault(x => x.Key == EnumUpgradableStat.Reinforcement);
 			if (!stat.Equals(default(KeyValuePair<PlayerStat, int>)))
 			{
-				return basePlayerHealth + _statsConfig.GetStatValue(EnumUpgradableStat.Renforcement, stat.Value) ?? basePlayerHealth;
+				return basePlayerHealth + _statsConfig.GetStatValue(EnumUpgradableStat.Reinforcement, stat.Value) ?? basePlayerHealth;
 			}
 			return basePlayerHealth;
 		}
 
 		public float GetPlayerDamageReduction()
 		{
-			KeyValuePair<EnumUpgradableStat, int> stat = _saveData.LstPlayerStats.FirstOrDefault(x => x.Key == EnumUpgradableStat.Blindage);
+			KeyValuePair<EnumUpgradableStat, int> stat = _saveData.LstPlayerStats.FirstOrDefault(x => x.Key == EnumUpgradableStat.Shielding);
 			if (!stat.Equals(default(KeyValuePair<PlayerStat, int>)))
 			{
-				return _statsConfig.GetStatValue(EnumUpgradableStat.Blindage, stat.Value) ?? 0;
+				return _statsConfig.GetStatValue(EnumUpgradableStat.Shielding, stat.Value) ?? 0;
 			}
 			return 0;
 		}
 
 		public float GetPlayerInvicibilityDuration(float baseDuration)
 		{
-			KeyValuePair<EnumUpgradableStat, int> stat = _saveData.LstPlayerStats.FirstOrDefault(x => x.Key == EnumUpgradableStat.Stabilisateur);
+			KeyValuePair<EnumUpgradableStat, int> stat = _saveData.LstPlayerStats.FirstOrDefault(x => x.Key == EnumUpgradableStat.Stabilizer);
 			if (!stat.Equals(default(KeyValuePair<PlayerStat, int>)))
 			{
-				return baseDuration + _statsConfig.GetStatValue(EnumUpgradableStat.Stabilisateur, stat.Value) ?? baseDuration;
+				return baseDuration + _statsConfig.GetStatValue(EnumUpgradableStat.Stabilizer, stat.Value) ?? baseDuration;
 			}
 			return baseDuration;
 		}
 
 		public float GetPlayerHealthLooseRatio(float basePlayerHealthLooseRatio)
 		{
-			KeyValuePair<EnumUpgradableStat, int> stat = _saveData.LstPlayerStats.FirstOrDefault(x => x.Key == EnumUpgradableStat.Optimisation);
+			KeyValuePair<EnumUpgradableStat, int> stat = _saveData.LstPlayerStats.FirstOrDefault(x => x.Key == EnumUpgradableStat.Optimization);
 			if (!stat.Equals(default(KeyValuePair<PlayerStat, int>)))
 			{
-				return basePlayerHealthLooseRatio + _statsConfig.GetStatValue(EnumUpgradableStat.Optimisation, stat.Value) ?? basePlayerHealthLooseRatio;
+				return basePlayerHealthLooseRatio + _statsConfig.GetStatValue(EnumUpgradableStat.Optimization, stat.Value) ?? basePlayerHealthLooseRatio;
 			}
 			return basePlayerHealthLooseRatio;
 		}

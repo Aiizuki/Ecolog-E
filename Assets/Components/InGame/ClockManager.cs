@@ -78,7 +78,9 @@ namespace Assets.Components.Game
 
 		private void Pause()
 		{
-			StopCoroutine(_speedRoutine);
+			if (_speedRoutine != null)
+				StopCoroutine(_speedRoutine);
+
 			_speedRoutine = null;
 			_gamePause = true;
 		}

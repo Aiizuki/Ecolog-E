@@ -18,5 +18,5 @@ MonoBehaviour:
   - 0.1
   - 0.2
   - 0.3
-  Description: Blindage
-  StatIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  Description: Increases the damage reduction applied upon collision
+  StatIcon: {fileID: 21300000, guid: 51f1d857da3c5ec45ba643c7f4c9ed97, type: 3}

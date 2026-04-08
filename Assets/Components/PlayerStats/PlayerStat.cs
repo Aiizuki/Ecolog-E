@@ -14,6 +14,8 @@ namespace Assets.Components.PlayerStats
 		public string Description;
 		public Sprite StatIcon;
 
+		public int MaxLevel => LstCostPerLevel.Count;
+
 		public float? GetStat(int playerLevel)
 		{
 			if (playerLevel == 0)

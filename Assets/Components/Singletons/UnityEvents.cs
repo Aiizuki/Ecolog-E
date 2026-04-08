@@ -27,6 +27,7 @@ namespace Assets.Components.Singletons
 
 		public static Action<EnumUpgradableStat> UpgradeStat;
 		public static Action<EnumUpgradableStat> FillStatPanel;
+		public static Action<EnumUpgradableStat, int> UpdateStatText;
 
 		#endregion UI
 

@@ -91,10 +91,12 @@ namespace Assets.Components.PlayerStats
 			if (!stat.Equals(default(KeyValuePair<PlayerStat, int>)))
 			{
 				_playerStats[stat.Key]++;
+				UnityEvents.UpdateStatText.Invoke(statName, _playerStats[stat.Key]);
 			}
 			else
 			{
 				_playerStats.Add(baseStat, 1);
+				UnityEvents.UpdateStatText.Invoke(statName, 1);
 			}
 		}
 

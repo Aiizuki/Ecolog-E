@@ -3,15 +3,15 @@
 	public enum EnumUpgradableStat
 	{
 		// Max health of the player
-		Renforcement,
+		Reinforcement,
 
 		// Damage reduction (in %)
-		Blindage,
+		Shielding,
 
 		// Invicibility duration
-		Stabilisateur,
+		Stabilizer,
 
 		// Health loose reduction
-		Optimisation
+		Optimization
 	}
 }

@@ -9,9 +9,12 @@ namespace Assets.Settings.Player
 	{
 		public List<PlayerStat> LstAvailableStats;
 
+		public PlayerStat? GetStat(EnumUpgradableStat statName)
+			=> LstAvailableStats.Find(s => s.StatName.Equals(statName));
+
 		public float? GetStatValue(EnumUpgradableStat statName, int playerLevel)
 		{
-			PlayerStat stat = LstAvailableStats.Find(s => s.StatName.Equals(statName));
+			PlayerStat? stat = GetStat(statName);
 			float? value = stat?.GetStat(playerLevel);
 
 			if (value == null)

@@ -1,5 +1,6 @@
 ﻿using Assets.Components.PlayerStats;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assets.Components.SaveService
 {
@@ -16,5 +17,8 @@ namespace Assets.Components.SaveService
 			Score = 0;
 			LstPlayerStats = new();
 		}
+
+		public KeyValuePair<EnumUpgradableStat, int> GetPlayerStatData(EnumUpgradableStat statName)
+			=> LstPlayerStats.FirstOrDefault(kvp => kvp.Key == statName);
 	}
 }

@@ -5,6 +5,20 @@ using UnityEngine.UI;
 
 public class ButtonsManager : MonoBehaviour
 {
+	#region Unity Lifecycle
+
+	private void OnEnable()
+	{
+		this.GetComponent<Button>().interactable = true;
+	}
+
+	private void OnDisable()
+	{
+		StopAllCoroutines();
+	}
+
+	#endregion Unity Lifecycle
+
 	public void FireReturnToHomeEvent()
 	{
 		PlayButtonClick();

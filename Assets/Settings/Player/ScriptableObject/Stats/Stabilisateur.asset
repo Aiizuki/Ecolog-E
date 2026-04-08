@@ -18,5 +18,5 @@ MonoBehaviour:
   - 0.5
   - 1
   - 1.5
-  Description: Stabilisateur
-  StatIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  Description: Increases the duration of the player's invincibility after a collision
+  StatIcon: {fileID: 21300000, guid: 4c97b2b0586390f49b8de0231850bd92, type: 3}
