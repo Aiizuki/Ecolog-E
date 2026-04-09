@@ -62,7 +62,7 @@ namespace Assets.Components.PlayerStats
 		private void RevokeEvents()
 		{
 			UnityEvents.UpgradeStat -= OnUpgradeStat;
-			UnityEvents.ReturnToHome -= OnReturnToHome;
+			UnityEvents.FillStatPanel -= OnFillStatPanel;
 
 			closeButton.onClick.RemoveListener(ClosePanel);
 		}
