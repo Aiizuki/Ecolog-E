@@ -18,6 +18,7 @@ namespace Assets.Components.PlayerStats
 		[SerializeField] private StatsConfig _availableStats;
 		[SerializeField] private StatPanelManager statPanel;
 		[SerializeField] private PlayerMoneyController _playerMoneyController;
+		[SerializeField] private ToastNotification _toastNotification;
 
 		[Header("UI References")]
 		public Button closeButton;
@@ -102,8 +103,7 @@ namespace Assets.Components.PlayerStats
 				}
 				else
 				{
-					// TODO : Throw une notification qui dit que le player n'a pas assez de thunes
-					Debug.LogWarning($"Player has not enought money !");
+					ToastNotification.Show("You don't have enought money", 3f);
 				}
 			}
 			else
@@ -118,8 +118,7 @@ namespace Assets.Components.PlayerStats
 				}
 				else
 				{
-					// TODO : Throw une notification qui dit que le player n'a pas assez de thunes
-					Debug.LogWarning($"Player has not enought money !");
+					ToastNotification.Show("You don't have enought money", 3f);
 				}
 			}
 		}

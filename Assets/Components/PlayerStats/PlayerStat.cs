@@ -20,13 +20,12 @@ namespace Assets.Components.PlayerStats
 		{
 			if (playerLevel == 0)
 			{
-				Debug.Log("Current level is 0 so no stat");
 				return 0;
 			}
 
 			if (LstCoefPerLevel?.Count < playerLevel)
 			{
-				Debug.LogWarning($"{StatName} doesn't have {playerLevel} levels ! (max : {LstCoefPerLevel.Count})");
+				Debug.Log($"{StatName} doesn't have {playerLevel} levels (max : {LstCoefPerLevel.Count})");
 				return null;
 			}
 
@@ -37,7 +36,7 @@ namespace Assets.Components.PlayerStats
 		{
 			if (LstCostPerLevel.Count < playerLevel)
 			{
-				Debug.LogWarning($"{StatName} doesn't have a cost at level {playerLevel}");
+				Debug.Log($"{StatName} doesn't have a cost at level {playerLevel}");
 				return -1;
 			}
 
