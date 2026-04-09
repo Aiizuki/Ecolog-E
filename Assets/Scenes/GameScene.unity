@@ -1148,6 +1148,7 @@ Transform:
   - {fileID: 55734074}
   - {fileID: 2008695165}
   - {fileID: 961530408}
+  - {fileID: 2015818538}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &788875729
@@ -1334,6 +1335,7 @@ GameObject:
   - component: {fileID: 881442406}
   - component: {fileID: 881442407}
   - component: {fileID: 881442408}
+  - component: {fileID: 881442409}
   m_Layer: 0
   m_Name: InteractibleSpawnController
   m_TagString: Untagged
@@ -1371,6 +1373,7 @@ MonoBehaviour:
   _obstaclePool: {fileID: 881442406}
   _collectiblePool: {fileID: 881442407}
   _ennemyPool: {fileID: 881442408}
+  _componentPool: {fileID: 881442409}
 --- !u!114 &881442406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1415,6 +1418,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.ObjectPoolManager
   poolSettings: {fileID: 11400000, guid: 41a39555e21913f40bd32cac42c4ee95, type: 2}
   poolParent: {fileID: 2008695164}
+  _poolSize: 0
+--- !u!114 &881442409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881442402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b919a608d25d44fbc4d8e1e8c39659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.ObjectPoolManager
+  poolSettings: {fileID: 11400000, guid: 6cbf658b6dd74cb498dc9ded7f22d3e1, type: 2}
+  poolParent: {fileID: 2015818537}
   _poolSize: 0
 --- !u!1 &961530407
 GameObject:
@@ -2056,6 +2074,37 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008695164}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 759907779}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2015818537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2015818538}
+  m_Layer: 0
+  m_Name: ComponentPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2015818538
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015818537}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -3269,6 +3318,9 @@ MonoBehaviour:
   _playerConfig: {fileID: 11400000, guid: 96e6ff38ce422c148ab3804ac5083d26, type: 2}
   _gameStateController: {fileID: 1348506392}
   _statsController: {fileID: 334075608}
+  BaseHealth: 0
+  Health: 0
+  HealthLooseRatio: 0
 --- !u!114 &7418832788298229423
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,8 @@ namespace Assets.Components.Game
 	{
 		public static int Score;
 		public static int InGameTime;
+		public static int TrashCollected;
+		public static int MoneyEarned;
 
 		private SaveData _saveData;
 		[SerializeField] private StatsConfig _statsConfig;
@@ -24,9 +26,39 @@ namespace Assets.Components.Game
 
 		private void Start()
 		{
+			InitEvents();
+		}
+
+		private void OnDestroy()
+		{
+			RevokeEvents();
+		}
+
+		#region Unity Events
+
+		private void InitEvents()
+		{
 			UnityEvents.Instance.NewGame.AddListener(OnNewGame);
 			UnityEvents.Instance.GameOver.AddListener(OnGameOver);
+			UnityEvents.OnTrashCollected += OnTrashCollected;
+			UnityEvents.OnComponentCollected += OnComponentCollected;
 		}
+
+		private void RevokeEvents()
+		{
+			UnityEvents.Instance.NewGame.RemoveListener(OnNewGame);
+			UnityEvents.Instance.GameOver.RemoveListener(OnGameOver);
+			UnityEvents.OnTrashCollected -= OnTrashCollected;
+			UnityEvents.OnComponentCollected -= OnComponentCollected;
+		}
+
+		private static void OnTrashCollected()
+			=> TrashCollected++;
+
+		private static void OnComponentCollected()
+			=> MoneyEarned++;
+
+		#endregion UnityEvents
 
 		#region Static Helpers
 
@@ -83,12 +115,18 @@ namespace Assets.Components.Game
 		private void OnNewGame()
 		{
 			Score = 0;
+			TrashCollected = 0;
+			MoneyEarned = 0;
+			InGameTime = 0;
 		}
 
 		private void OnGameOver()
 		{
 			_saveData.Score = Score;
 			_saveData.RunCount++;
+			_saveData.TrashCollected = TrashCollected;
+			_saveData.MoneyEarned = MoneyEarned;
+			_saveData.LastRunTime = InGameTime;
 
 			SaveServiceController.Save(_saveData);
 		}

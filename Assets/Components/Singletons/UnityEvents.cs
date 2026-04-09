@@ -43,6 +43,9 @@ namespace Assets.Components.Singletons
 		[HideInInspector] public UnityEvent CriticalHealthStart;
 		[HideInInspector] public UnityEvent CriticalHealthEnd;
 
+		public static Action OnTrashCollected;
+		public static Action OnComponentCollected;
+
 		public static Action<State> StateChanged;
 
 		#endregion InGame Events
