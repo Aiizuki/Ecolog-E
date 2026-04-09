@@ -27,6 +27,7 @@ namespace Assets.Components.Game
 		private void Start()
 		{
 			InitEvents();
+			OnNewGame();
 		}
 
 		private void OnDestroy()
@@ -122,11 +123,16 @@ namespace Assets.Components.Game
 
 		private void OnGameOver()
 		{
-			_saveData.Score = Score;
+			_saveData.RunScore = Score;
 			_saveData.RunCount++;
 			_saveData.TrashCollected = TrashCollected;
-			_saveData.MoneyEarned = MoneyEarned;
+			_saveData.ComponentsCollected = MoneyEarned;
 			_saveData.LastRunTime = InGameTime;
+
+			_saveData.PlayerComponentTotal += MoneyEarned;
+			_saveData.PlayerBestScore = Mathf.Max(_saveData.PlayerBestScore, Score);
+			_saveData.PlayerBestRunTime = Mathf.Max(_saveData.PlayerBestRunTime, InGameTime);
+			_saveData.PlayerBestTrashCollected = Mathf.Max(_saveData.PlayerBestTrashCollected, TrashCollected);
 
 			SaveServiceController.Save(_saveData);
 		}

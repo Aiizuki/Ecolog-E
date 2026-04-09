@@ -17,6 +17,7 @@ namespace Assets.Components.PlayerStats
 
 		[SerializeField] private StatsConfig _availableStats;
 		[SerializeField] private StatPanelManager statPanel;
+		[SerializeField] private PlayerMoneyController _playerMoneyController;
 
 		[Header("UI References")]
 		public Button closeButton;
@@ -26,6 +27,7 @@ namespace Assets.Components.PlayerStats
 		private void Start()
 		{
 			_saveData = SaveServiceController.Load();
+			_playerMoneyController.Init(_saveData.PlayerComponentTotal);
 
 			_playerStats = _saveData.LstPlayerStats
 				.Select(entry => new
@@ -90,13 +92,35 @@ namespace Assets.Components.PlayerStats
 			KeyValuePair<PlayerStat, int> stat = _playerStats.FirstOrDefault(x => x.Key.StatName == statName);
 			if (!stat.Equals(default(KeyValuePair<PlayerStat, int>)))
 			{
-				_playerStats[stat.Key]++;
-				UnityEvents.UpdateStatText.Invoke(statName, _playerStats[stat.Key]);
+				int statCost = stat.Key.GetUpgradeCost(stat.Value);
+				if (_playerMoneyController.HasMoney(_saveData.PlayerComponentTotal, statCost))
+				{
+					_playerStats[stat.Key]++;
+					UnityEvents.UpdateStatText.Invoke(statName, _playerStats[stat.Key]);
+					_saveData.PlayerComponentTotal = _playerMoneyController.Pay(_saveData.PlayerComponentTotal, statCost);
+					UnityEvents.FillStatPanel.Invoke(statName);
+				}
+				else
+				{
+					// TODO : Throw une notification qui dit que le player n'a pas assez de thunes
+					Debug.LogWarning($"Player has not enought money !");
+				}
 			}
 			else
 			{
-				_playerStats.Add(baseStat, 1);
-				UnityEvents.UpdateStatText.Invoke(statName, 1);
+				int statCost = baseStat.GetUpgradeCost(1);
+				if (_playerMoneyController.HasMoney(_saveData.PlayerComponentTotal, statCost))
+				{
+					_playerStats.Add(baseStat, 1);
+					UnityEvents.UpdateStatText.Invoke(statName, 1);
+					_saveData.PlayerComponentTotal = _playerMoneyController.Pay(_saveData.PlayerComponentTotal, statCost);
+					UnityEvents.FillStatPanel.Invoke(statName);
+				}
+				else
+				{
+					// TODO : Throw une notification qui dit que le player n'a pas assez de thunes
+					Debug.LogWarning($"Player has not enought money !");
+				}
 			}
 		}
 

@@ -45,7 +45,6 @@ namespace Assets.Components.UI.Stats
 		public void UpgradeStat()
 		{
 			UnityEvents.UpgradeStat.Invoke(statName);
-			UnityEvents.FillStatPanel.Invoke(statName);
 		}
 	}
 }

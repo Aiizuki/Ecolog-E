@@ -8,24 +8,29 @@ namespace Assets.Components.SaveService
 	public class SaveData
 	{
 		public Dictionary<EnumUpgradableStat, int> LstPlayerStats;
+		public int PlayerComponentTotal;
+
+		public int PlayerBestScore;
+		public int PlayerBestRunTime;
+		public int PlayerBestTrashCollected;
 
 		#region InGame stats
 
 		public int RunCount;
-		public int Score;
+		public int RunScore;
 		public float LastRunTime;
 		public int TrashCollected;
-		public int MoneyEarned;
+		public int ComponentsCollected;
 
 		#endregion InGame stats
 
 		public SaveData()
 		{
 			RunCount = 0;
-			Score = 0;
+			RunScore = 0;
 			LastRunTime = 0;
 			TrashCollected = 0;
-			MoneyEarned = 0;
+			ComponentsCollected = 0;
 
 			LstPlayerStats = new();
 		}

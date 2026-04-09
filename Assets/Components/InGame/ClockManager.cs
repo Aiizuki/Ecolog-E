@@ -24,10 +24,11 @@ namespace Assets.Components.Game
 		private void Start()
 		{
 			InitEvents();
-
 			if (_timerSettings == null)
 				throw new System.NullReferenceException("Timer settings is not defined !");
 
+			_lastTick = 0;
+			_timer = 0f;
 			_currentSpeed = _timerSettings.BaseSpeed;
 			_speedRoutine = StartCoroutine(SpeedRoutine());
 		}

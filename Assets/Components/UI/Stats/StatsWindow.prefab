@@ -55,6 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StatsManager
   _availableStats: {fileID: 11400000, guid: 6035af028eaf730489d1f961e3958ae5, type: 2}
   statPanel: {fileID: 9007367468367659565}
+  _playerMoneyController: {fileID: 2890462709368865846}
   closeButton: {fileID: 1155333327106046515}
 --- !u!1 &849465290899811215
 GameObject:
@@ -454,6 +455,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4310198991923747582}
   - component: {fileID: 4805641483383795615}
+  - component: {fileID: 2890462709368865846}
   m_Layer: 5
   m_Name: PlayerMoney
   m_TagString: Untagged
@@ -509,6 +511,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2890462709368865846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8923874013289967504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bae96e5ad3299d4cb0a2049f1eedd44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMoneyController
+  _moneyText: {fileID: 4624848689817894894}
 --- !u!1001 &394852648788257750
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1211,6 +1226,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 454020245259894336, guid: 3ff9bb76af861214a910927e4139ad2b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 454020245259894336, guid: 3ff9bb76af861214a910927e4139ad2b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 454020245259894336, guid: 3ff9bb76af861214a910927e4139ad2b, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1276,6 +1299,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3398494430855809298, guid: 3ff9bb76af861214a910927e4139ad2b, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3398494430855809298, guid: 3ff9bb76af861214a910927e4139ad2b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3398494430855809298, guid: 3ff9bb76af861214a910927e4139ad2b, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3398494430855809298, guid: 3ff9bb76af861214a910927e4139ad2b, type: 3}
@@ -1345,6 +1376,10 @@ PrefabInstance:
     - target: {fileID: 5357635406391943401, guid: 3ff9bb76af861214a910927e4139ad2b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5480417561813131126, guid: 3ff9bb76af861214a910927e4139ad2b, type: 3}
+      propertyPath: m_fontSize
+      value: 51.25
       objectReference: {fileID: 0}
     - target: {fileID: 5715632058776145536, guid: 3ff9bb76af861214a910927e4139ad2b, type: 3}
       propertyPath: m_AnchorMax.y

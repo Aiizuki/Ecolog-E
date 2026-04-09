@@ -33,7 +33,7 @@ namespace Assets.Components.PlayerStats
 			return LstCoefPerLevel[playerLevel - 1];
 		}
 
-		public float GetUpgradeCost(int playerLevel)
+		public int GetUpgradeCost(int playerLevel)
 		{
 			if (LstCostPerLevel.Count < playerLevel)
 			{
