@@ -6,6 +6,7 @@ using Assets.Components.InGame.Ennemy;
 using Assets.Components.Singletons;
 using System.Collections.Generic;
 using UnityEngine;
+using Component = Assets.Components.InGame.Chunks.Interactables.Collectibles.Component;
 
 namespace Assets.Components.InGame.Chunks.Interactables
 {
@@ -14,6 +15,7 @@ namespace Assets.Components.InGame.Chunks.Interactables
 		[SerializeField] private ObjectPoolManager _obstaclePool;
 		[SerializeField] private ObjectPoolManager _collectiblePool;
 		[SerializeField] private ObjectPoolManager _ennemyPool;
+		[SerializeField] private ObjectPoolManager _componentPool;
 
 		private readonly float? _lastEnnemySpawnZPos = null;
 
@@ -51,9 +53,8 @@ namespace Assets.Components.InGame.Chunks.Interactables
 
 			SpawnObstacles(chunk, ref lstInteractables);
 			SpawnCollectibles(chunk, ref lstInteractables);
+			SpawnComponent(ref lstInteractables);
 			EnnemyController ennemy = SpawnEnnemy(chunk);
-
-			// TODO : ajouter le super collectible
 
 			if (lstInteractables.Count == 0)
 			{
@@ -99,6 +100,19 @@ namespace Assets.Components.InGame.Chunks.Interactables
 				collectible.SetPool(this._collectiblePool);
 				lstInteractables.Add(collectible);
 			}
+		}
+
+		private void SpawnComponent(ref List<AInteractable> lstInteractables)
+		{
+			GameObject obj = _componentPool.Get();
+
+			if (obj == null)
+				return;
+
+			Component component = obj.GetComponent<Component>();
+
+			component.SetPool(this._componentPool);
+			lstInteractables.Add(component);
 		}
 
 		private EnnemyController? SpawnEnnemy(Chunk chunk)

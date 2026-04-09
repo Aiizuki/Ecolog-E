@@ -10,6 +10,7 @@ using Assets.Settings.Chunks;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Component = Assets.Components.InGame.Chunks.Interactables.Collectibles.Component;
 
 namespace Assets.Components.Game.Chunks
 {
@@ -108,11 +109,11 @@ namespace Assets.Components.Game.Chunks
 		{
 			List<Obstacle> obstacles = lstInteractables.OfType<Obstacle>().ToList();
 			List<Collectible> collectibles = lstInteractables.OfType<Collectible>().ToList();
-			// TODO: List<SuperCollectible> superCollectibles = lstInteractables.OfType<SuperCollectible>().ToList();
+			List<Component> lstComponents = lstInteractables.OfType<Component>().ToList();
 
 			GenerateObstacles(obstacles);
 			GenerateCollectiblePath(collectibles);
-			// TODO: GenerateSuperCollectibles(superCollectibles);
+			GenerateComponents(lstComponents);
 		}
 
 		public void SpawnEnnemies(EnnemyController? ennemy)
@@ -194,6 +195,27 @@ namespace Assets.Components.Game.Chunks
 			// Release les collectibles non placés
 			for (int i = collectibleIndex; i < lstCollectibles.Count; i++)
 				lstCollectibles[i]._pool.Release(lstCollectibles[i].gameObject);
+		}
+
+		private void GenerateComponents(List<Component> lstComponents)
+		{
+			if (lstComponents.Count == 0)
+				return;
+
+			foreach (Component component in lstComponents)
+			{
+				(int row, int col) = _matrice.GetFarthestPositionFromCollectibles(_chunkSettings.MinDistanceBeforeCollectibleSpawn);
+
+				if (row == -1 || col == -1)
+				{
+					Debug.Log("Can't place component in chunk");
+					component._pool.Release(component.gameObject);
+					continue;
+				}
+
+				_matrice.Set(row, col, 3);
+				_lanes[col].SpawnInteractible(component, row);
+			}
 		}
 
 		// Returns an adjacent free lane or null
