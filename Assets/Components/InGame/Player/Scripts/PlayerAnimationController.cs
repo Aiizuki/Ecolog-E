@@ -29,7 +29,7 @@ namespace Assets.Components.InGame.Player.Scripts
 			UnityEvents.PlayRunAnimation += OnPlayRunAnimation;
 			UnityEvents.PlayDodgeAnimation += OnPlayDodgeAnimation;
 			UnityEvents.PlayDeathAnimation += OnPlayDeathAnimation;
-			UnityEvents.PlayJumpAnimation += OnPlayJumpAnimation;
+			UnityEvents.OnPlayerJump += OnPlayerJump;
 			UnityEvents.PlayCrouchAnimation += OnPlayCrouchAnimation;
 			UnityEvents.SpeedIncreaseEvent += OnSpeedIncrease;
 			UnityEvents.HealthLoose += OnHealthLoose;
@@ -40,7 +40,7 @@ namespace Assets.Components.InGame.Player.Scripts
 			UnityEvents.PlayRunAnimation -= OnPlayRunAnimation;
 			UnityEvents.PlayDodgeAnimation -= OnPlayDodgeAnimation;
 			UnityEvents.PlayDeathAnimation -= OnPlayDeathAnimation;
-			UnityEvents.PlayJumpAnimation -= OnPlayJumpAnimation;
+			UnityEvents.OnPlayerJump -= OnPlayerJump;
 			UnityEvents.PlayCrouchAnimation -= OnPlayCrouchAnimation;
 			UnityEvents.SpeedIncreaseEvent -= OnSpeedIncrease;
 			UnityEvents.HealthLoose -= OnHealthLoose;
@@ -63,7 +63,7 @@ namespace Assets.Components.InGame.Player.Scripts
 			_animator.SetTrigger("Dead");
 		}
 
-		private void OnPlayJumpAnimation()
+		private void OnPlayerJump()
 		{
 			_animator.SetTrigger("Jump");
 			_animator.SetBool("IsGrounded", false);

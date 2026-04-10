@@ -13,6 +13,15 @@ namespace Assets.Components.Audio
 
 		[Header("UI sounds")]
 		[field: SerializeField] public EventReference ButtonClick { get; private set; }
+		[field: SerializeField] public EventReference NotificationFailure { get; private set; }
+
+		[Header("Player sounds")]
+		[field: SerializeField] public EventReference ObstacleCollision { get; private set; }
+		[field: SerializeField] public EventReference TrashCollision { get; private set; }
+		[field: SerializeField] public EventReference ComponentCollision { get; private set; }
+		[Tooltip("Regroup strafe/jump and fall")][field: SerializeField] public EventReference PlayerMovement { get; private set; }
+		[field: SerializeField] public EventReference Crouch { get; private set; }
+
 
 		public static FMODEvents Instance { get; private set; }
 

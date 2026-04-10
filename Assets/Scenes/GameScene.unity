@@ -2647,6 +2647,7 @@ GameObject:
   - component: {fileID: 7418832788298229422}
   - component: {fileID: 7418832788298229424}
   - component: {fileID: 7418832788298229425}
+  - component: {fileID: 7418832788298229427}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3184,6 +3185,18 @@ MonoBehaviour:
   _crouchInput: {fileID: 7040659881675835329, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _jumpInput: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _playerMovement: {fileID: 7418832788298229421}
+--- !u!114 &7418832788298229427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4278139705893381740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bffffe03ac3c6404faac5f27e674fc01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAudioController
 --- !u!137 &7739181496980919529
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

@@ -1152,6 +1152,38 @@ PrefabInstance:
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 0.754717
       objectReference: {fileID: 0}
+    - target: {fileID: 6869109184988527954, guid: 7f5bc6a64b9a4644fbf7ebdb85fcf372, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6869109184988527954, guid: 7f5bc6a64b9a4644fbf7ebdb85fcf372, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6869109184988527954, guid: 7f5bc6a64b9a4644fbf7ebdb85fcf372, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5097922363739342108}
+    - target: {fileID: 6869109184988527954, guid: 7f5bc6a64b9a4644fbf7ebdb85fcf372, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6869109184988527954, guid: 7f5bc6a64b9a4644fbf7ebdb85fcf372, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayButtonClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 6869109184988527954, guid: 7f5bc6a64b9a4644fbf7ebdb85fcf372, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonsManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6869109184988527954, guid: 7f5bc6a64b9a4644fbf7ebdb85fcf372, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6869109184988527954, guid: 7f5bc6a64b9a4644fbf7ebdb85fcf372, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8692308636447845204, guid: 7f5bc6a64b9a4644fbf7ebdb85fcf372, type: 3}
       propertyPath: m_text
       value: Back

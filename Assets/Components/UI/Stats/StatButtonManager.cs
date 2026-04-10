@@ -25,8 +25,9 @@ namespace Assets.Components.UI
 			UnityEvents.UpdateStatText += OnUpdateStatText;
 		}
 
-		private void OnEnable()
+		private new void OnEnable()
 		{
+			base.OnEnable();
 			UpdateStats();
 
 			if (_baseStat == null)

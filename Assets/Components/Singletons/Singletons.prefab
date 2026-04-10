@@ -111,7 +111,49 @@ MonoBehaviour:
       Data2: 1164073050
       Data3: 324949418
       Data4: -2119243081
-    Path: event:/ButtonClick
+    Path: event:/UI/ButtonClick
+  <NotificationFailure>k__BackingField:
+    Guid:
+      Data1: 40112337
+      Data2: 1103853683
+      Data3: 1814161539
+      Data4: -765990729
+    Path: event:/UI/NotificationFailure
+  <ObstacleCollision>k__BackingField:
+    Guid:
+      Data1: 1412589151
+      Data2: 1222257223
+      Data3: 1634369435
+      Data4: -1372335541
+    Path: event:/SFX/Interactibles/ObstacleCollision
+  <TrashCollision>k__BackingField:
+    Guid:
+      Data1: -1021141565
+      Data2: 1305539706
+      Data3: 19849145
+      Data4: -541427882
+    Path: event:/SFX/Interactibles/TrashCollision
+  <ComponentCollision>k__BackingField:
+    Guid:
+      Data1: 1508302727
+      Data2: 1209820115
+      Data3: 85036166
+      Data4: 1075995749
+    Path: event:/SFX/Interactibles/ComponentCollision
+  <PlayerMovement>k__BackingField:
+    Guid:
+      Data1: -1173536522
+      Data2: 1184804521
+      Data3: 1770153393
+      Data4: -1553087329
+    Path: event:/SFX/Player/Movement
+  <Crouch>k__BackingField:
+    Guid:
+      Data1: -951181334
+      Data2: 1185831580
+      Data3: 2090792113
+      Data4: 130084770
+    Path: event:/SFX/Player/Crouch
 --- !u!1 &3116095586325864698
 GameObject:
   m_ObjectHideFlags: 0

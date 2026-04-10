@@ -1,3 +1,4 @@
+using Assets.Components.Audio;
 using Assets.Components.Singletons;
 using System.Collections;
 using UnityEngine;
@@ -7,12 +8,12 @@ public class ButtonsManager : MonoBehaviour
 {
 	#region Unity Lifecycle
 
-	private void OnEnable()
+	protected void OnEnable()
 	{
 		this.GetComponent<Button>().interactable = true;
 	}
 
-	private void OnDisable()
+	protected void OnDisable()
 	{
 		StopAllCoroutines();
 	}
@@ -31,10 +32,11 @@ public class ButtonsManager : MonoBehaviour
 		UnityEvents.Instance.NewGame.Invoke();
 	}
 
-	public void PlayButtonClick()
+	public void PlayButtonClick(bool preventSpam = true)
 	{
-		//AudioManager.Instance.PlayOneShot(FMODEvents.Instance.ButtonClick, Vector2.zero);
-		StartCoroutine(PreventSpamClickRoutine());
+		AudioManager.Instance.PlayOneShot(FMODEvents.Instance.ButtonClick, Vector2.zero);
+		if (preventSpam)
+			StartCoroutine(PreventSpamClickRoutine());
 	}
 
 	private IEnumerator PreventSpamClickRoutine()

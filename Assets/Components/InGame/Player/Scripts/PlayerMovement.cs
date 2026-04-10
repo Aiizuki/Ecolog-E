@@ -148,8 +148,8 @@ namespace Assets.Components.InGame.Player.Scripts
 		private IEnumerator JumpCoroutine()
 		{
 			_isJumping = true;
-			UnityEvents.PlayJumpAnimation.Invoke();
 
+			UnityEvents.OnPlayerJump.Invoke();
 			float jumpTimer = 0f;
 
 			while (jumpTimer < 0.5f)
@@ -189,6 +189,8 @@ namespace Assets.Components.InGame.Player.Scripts
 		private IEnumerator CrouchCoroutine()
 		{
 			_isCrouching = true;
+			UnityEvents.OnPlayerCrouch.Invoke();
+
 			_animator.SetBool("IsCrouching", _isCrouching);
 			UnityEvents.PlayCrouchAnimation.Invoke();
 			yield return new WaitForSeconds(_playerConfig.CrouchDurantion);
@@ -199,6 +201,8 @@ namespace Assets.Components.InGame.Player.Scripts
 		private IEnumerator StrafeCoroutine(Transform target)
 		{
 			_isStrafing = true;
+			UnityEvents.OnPlayerStrafe.Invoke();
+
 			float slideTimer = 0f;
 
 			while (slideTimer < _playerConfig.StrafeDuration)

@@ -45,6 +45,12 @@ namespace Assets.Components.Singletons
 
 		public static Action OnTrashCollected;
 		public static Action OnComponentCollected;
+		public static Action OnObstacleCollision;
+
+		public static Action OnPlayerStrafe;
+		public static Action OnPlayerJump;
+		public static Action OnPlayerFall;
+		public static Action OnPlayerCrouch;
 
 		public static Action<State> StateChanged;
 
@@ -55,7 +61,6 @@ namespace Assets.Components.Singletons
 		public static Action PlayRunAnimation;
 		public static Action<bool> PlayDodgeAnimation;
 		public static Action PlayDeathAnimation;
-		public static Action PlayJumpAnimation;
 		public static Action PlayCrouchAnimation;
 		public static Action<float> SpeedIncreaseEvent;
 		public static Action NotifyDeathAnimationFinishedEvent;

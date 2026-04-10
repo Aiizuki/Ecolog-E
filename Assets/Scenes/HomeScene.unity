@@ -223,14 +223,14 @@ MonoBehaviour:
       - m_Target: {fileID: 692110545}
         m_TargetAssemblyTypeName: ButtonsManager, Assembly-CSharp
         m_MethodName: PlayButtonClick
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 555415972}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -951,8 +951,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2056330634}
   - component: {fileID: 2056330633}
-  - component: {fileID: 2056330632}
   - component: {fileID: 2056330635}
+  - component: {fileID: 2056330636}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -960,14 +960,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &2056330632
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2056330631}
-  m_Enabled: 1
 --- !u!20 &2056330633
 Camera:
   m_ObjectHideFlags: 0
@@ -1078,6 +1070,20 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &2056330636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056330631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FMODUnity::FMODUnity.StudioListener
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!114 &105799734900845194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1367,14 +1373,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 096a96c3947a0c94db331543577c4b16, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7f418f76aa87ddc4da26c1c104edd9f0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1846,15 +1852,15 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6151248476138808706}
         m_TargetAssemblyTypeName: ButtonsManager, Assembly-CSharp
-        m_MethodName: PlayButtonClickSound
-        m_Mode: 1
+        m_MethodName: PlayButtonClick
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 4790535121110766215}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -2621,6 +2627,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OptionsManager
   closeButton: {fileID: 5841903570899985686}
+  bankControlsContainer: {fileID: 4085305712572654764}
+  bankControlPrefab: {fileID: 7794134070806679795, guid: 57703e24e90632a47bd1a69b763f4b78, type: 3}
+  banks:
+  - bankName: Music
+    busPath: bus:/Music
+  - bankName: SFX
+    busPath: bus:/SFX
+  - bankName: Ambience
+    busPath: bus:/Ambience
+  - bankName: UI
+    busPath: bus:/UI
 --- !u!114 &9132143645836963036
 MonoBehaviour:
   m_ObjectHideFlags: 0

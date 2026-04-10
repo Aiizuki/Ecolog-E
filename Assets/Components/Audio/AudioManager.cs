@@ -17,6 +17,8 @@ namespace Assets.Components.Audio
 		public EventInstance AmbienceInstance;
 		public EventInstance BonusZoneInstance;
 
+		#region Unity Lifecycle
+
 		private void Awake()
 		{
 			if (Instance != null)
@@ -26,16 +28,38 @@ namespace Assets.Components.Audio
 			_lstEventInstances = new List<EventInstance>();
 			_lstEventEmitters = new List<StudioEventEmitter>();
 
-			UnityEvents.Instance.GameOver.AddListener(() => GameOverAmbiance());
-			UnityEvents.ReturnToHome += HomeMenuAmbiance;
-
 			DontDestroyOnLoad(gameObject);
 		}
 
 		private void Start()
 		{
+			InitEvents();
 			StartCoroutine(InitializeAudioWhenReady());
 		}
+
+		private void OnApplicationQuit()
+		{
+			CleanSounds();
+			RevokeEvents();
+		}
+
+		#endregion Unity Lifecycle
+
+		#region Unity Events
+
+		private void InitEvents()
+		{
+			UnityEvents.Instance.GameOver.AddListener(GameOverAmbiance);
+			UnityEvents.ReturnToHome += HomeMenuAmbiance;
+		}
+
+		private void RevokeEvents()
+		{
+			UnityEvents.Instance.GameOver.RemoveListener(GameOverAmbiance);
+			UnityEvents.ReturnToHome -= HomeMenuAmbiance;
+		}
+
+		#endregion Unity Events
 
 		private IEnumerator InitializeAudioWhenReady()
 		{
@@ -146,11 +170,6 @@ namespace Assets.Components.Audio
 			RuntimeManager.StudioSystem.getParameterByName(@event, out float paramValue);
 			FMOD.RESULT result = RuntimeManager.StudioSystem.setParameterByName(@event, paramValue == 0f ? 1f : 0f);
 			Debug.Log($"[FMOD] Changement param global {@event} : {result}");
-		}
-
-		private void OnApplicationQuit()
-		{
-			CleanSounds();
 		}
 	}
 }
