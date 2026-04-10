@@ -65,6 +65,15 @@ namespace Assets.Components.Game.Chunks
 
 		private void OnDisable()
 		{
+			// Release tous les interactables encore présents dans les lanes
+			foreach (Lane lane in _lanes)
+			{
+				// On copie car on va modifier la hiérarchie pendant l'itération
+				var children = lane.GetComponentsInChildren<AInteractable>(includeInactive: true);
+				foreach (AInteractable interactable in children)
+					interactable._pool.Release(interactable.gameObject);
+			}
+
 			_matrice?.Clear();
 		}
 
