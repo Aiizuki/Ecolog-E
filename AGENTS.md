@@ -2,7 +2,7 @@
 - Project name: Ecolog-E
 - Unity version: Unity 6000.3.6f1
 - Active game object:
-  - Name: Canvas
+  - Name: Line_Left
   - Tag: Untagged
-  - Layer: UI
+  - Layer: World
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

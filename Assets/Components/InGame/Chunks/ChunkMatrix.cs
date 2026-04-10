@@ -9,7 +9,7 @@ namespace Assets.Components.InGame.Chunks
 	/// If _matrice[x,y] = 0 => empty position on the X position of the Y lane
 	/// If _matrice[x,y] = 1 => obstacle on the X position of the Y lane
 	/// If _matrice[x,y] = 2 => collectible on the X position of the Y lane
-	/// If _matrice[x,y] = 3 => super collectible on the X position of the Y lane
+	/// If _matrice[x,y] = 3 => component on the X position of the Y lane
 	/// </summary>
 	[System.Serializable]
 	public class ChunkMatrix
@@ -39,21 +39,17 @@ namespace Assets.Components.InGame.Chunks
 		}
 
 		public int Get(int row, int col)
-			=> _rows[row - 1].cols[col];
+			=> _rows[row].cols[col];
 
 		public void Set(int row, int col, int value)
-			=> _rows[row - 1].cols[col] = value;
+			=> _rows[row].cols[col] = value;
 
 		public bool IsFree(int row, int col)
-			=> _rows[row - 1].cols[col] == 0;
+			=> _rows[row].cols[col] == 0;
 
 		/// <summary>
 		/// Check if we can place a <see cref="AInteractable"/> at a position, while respecting its constraints
 		/// </summary>
-		/// <param name="row">The position in the lane</param>
-		/// <param name="col">The lane</param>
-		/// <param name="minDistance">The distance constraint</param>
-		/// <returns></returns>
 		public bool IsFreeInRangeOfType(int row, int col, int minRows, int type)
 		{
 			int from = Mathf.Max(0, row - minRows);
@@ -74,9 +70,8 @@ namespace Assets.Components.InGame.Chunks
 		}
 
 		/// <summary>
-		/// Construct a ditance map using BFS algorithm
+		/// Construct a distance map using BFS algorithm
 		/// </summary>
-		/// <remarks> Each collectible or component count as a starting point, as the goal is to identified the most isolated coordinates to spawn a <see cref="Interactables.Collectibles.Component"/></remarks>
 		private int[,] BuildCollectibleDistanceMap(int minRow)
 		{
 			int[,] dist = new int[NbRows, NbCols];
@@ -86,17 +81,14 @@ namespace Assets.Components.InGame.Chunks
 			{
 				for (int col = 0; col < NbCols; col++)
 				{
-					// If we have an obstacle, we insert a infinite distance to ensure that the BFS algorithm will not return theese coords
-					// We also insert an infinite distance for every row where we don't want to spawn anything
 					if (_rows[row].cols[col] == 1 || row < minRow)
 					{
 						dist[row, col] = -2;
 					}
 					else if (_rows[row].cols[col] == 2 || _rows[row].cols[col] == 3)
 					{
-						// If we have either a component or collectible at these coords, we insert 0 as distance (starting point)
 						dist[row, col] = 0;
-						queue.Enqueue((row, col)); // We add the point to the BFS queue
+						queue.Enqueue((row, col));
 					}
 					else
 					{
@@ -105,7 +97,6 @@ namespace Assets.Components.InGame.Chunks
 				}
 			}
 
-			// BFS alogrithm
 			while (queue.Count > 0)
 			{
 				(int r, int c) = queue.Dequeue();
@@ -138,7 +129,7 @@ namespace Assets.Components.InGame.Chunks
 					if (_rows[r].cols[c] == 0 && dist[r, c] > bestDist)
 					{
 						bestDist = dist[r, c];
-						best = (r + 1, c);
+						best = (r, c);
 					}
 				}
 			}

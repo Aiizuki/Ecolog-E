@@ -24,7 +24,6 @@ namespace Assets.Components.Game.Chunks
 		[Tooltip("When tracing a collectible path, defines the chances that it can switch to another lanes")]
 		[SerializeField] private float derivationPourcent = 0.4f;
 
-
 		[Header("Debug")]
 		public bool IsDefinedInScene = false;
 		[SerializeField] private ChunkMatrix _matrice;
@@ -132,24 +131,40 @@ namespace Assets.Components.Game.Chunks
 			int obstacleIndex = 0;
 			int step = Mathf.RoundToInt(GetDistanceBetweenObstacles());
 
-			for (int row = _chunkSettings.MinDistanceBeforeObstacleSpawn; row < _matrice.NbRows && obstacleIndex + 1 < lstObstacles.Count; row += step)
+			Debug.Log($"[Chunk] GenerateObstacles — step={step}, NbRows={_matrice.NbRows}, obstacles={lstObstacles.Count}");
+
+			for (int row = _chunkSettings.MinDistanceBeforeObstacleSpawn;
+				 row < _matrice.NbRows && obstacleIndex + 1 < lstObstacles.Count;
+				 row += step)
 			{
-				Lane laneA = RandomisationHelper.GetRandomItemFromList(_lanes);
-				Lane laneB = RandomisationHelper.GetRandomItemFromList(_lanes, exclude: laneA);
+				List<Lane> freeLanes = _lanes
+					.Where(l => _matrice.Get(row, _lanes.IndexOf(l)) != 1)
+					.ToList();
+
+				Debug.Log($"[Chunk] row={row}, freeLanes={freeLanes.Count}");
+
+				if (freeLanes.Count < 2)
+				{
+					Debug.Log($"[Chunk] row={row} skip — pas assez de lanes libres");
+					continue;
+				}
+
+				Lane laneA = RandomisationHelper.GetRandomItemFromList(freeLanes);
+				Lane laneB = RandomisationHelper.GetRandomItemFromList(freeLanes, exclude: laneA);
 
 				int idxA = _lanes.IndexOf(laneA);
 				int idxB = _lanes.IndexOf(laneB);
+
+				Debug.Log($"[Chunk] Spawn obstacles — row={row}, idxA={idxA}, idxB={idxB}");
 
 				_matrice.Set(row, idxA, 1);
 				_matrice.Set(row, idxB, 1);
 
 				laneA.SpawnInteractible(lstObstacles[obstacleIndex], row);
 				laneB.SpawnInteractible(lstObstacles[obstacleIndex + 1], row);
-
 				obstacleIndex += 2;
 			}
 
-			// Release tous les obstacles non placés
 			for (int i = obstacleIndex; i < lstObstacles.Count; i++)
 				lstObstacles[i]._pool.Release(lstObstacles[i].gameObject);
 		}
@@ -160,26 +175,25 @@ namespace Assets.Components.Game.Chunks
 				return;
 
 			int collectibleIndex = 0;
-			int obstacleMargin = Mathf.RoundToInt(7f);  // 7m autour des obstacles
-			int collectibleStep = Mathf.RoundToInt(5f);   // 5m entre chaque collectible
+			int obstacleMargin = Mathf.RoundToInt(7f);
+			int collectibleStep = Mathf.RoundToInt(5f);
 
 			Lane currentLane = RandomisationHelper.GetRandomItemFromList(_lanes);
 
-			for (int row = _chunkSettings.MinDistanceBeforeCollectibleSpawn; row < _matrice.NbRows && collectibleIndex < lstCollectibles.Count; row++)
+			for (int row = _chunkSettings.MinDistanceBeforeCollectibleSpawn;
+				 row < _matrice.NbRows && collectibleIndex < lstCollectibles.Count;
+				 row++)
 			{
 				int laneIdx = _lanes.IndexOf(currentLane);
 
-				// Vérifie qu'on est pas trop proche d'un obstacle (valeur 1 dans la matrice)
 				if (!_matrice.IsFreeInRangeOfType(row, laneIdx, obstacleMargin, 1))
 				{
-					// Tente une lane adjacente
 					Lane adjacent = GetAdjacentFreeLane(row, currentLane, obstacleMargin);
 					if (adjacent == null) continue;
 					currentLane = adjacent;
 					laneIdx = _lanes.IndexOf(currentLane);
 				}
 
-				// Vérifie qu'on est pas trop proche d'un autre collectible (valeur 2 dans la matrice)
 				if (!_matrice.IsFreeInRangeOfType(row, laneIdx, collectibleStep, 2))
 					continue;
 
@@ -187,12 +201,10 @@ namespace Assets.Components.Game.Chunks
 				currentLane.SpawnInteractible(lstCollectibles[collectibleIndex], row);
 				collectibleIndex++;
 
-				// Dérive aléatoire de lane
 				if (Random.value < derivationPourcent)
 					currentLane = RandomisationHelper.GetRandomItemFromList(_lanes, exclude: currentLane);
 			}
 
-			// Release les collectibles non placés
 			for (int i = collectibleIndex; i < lstCollectibles.Count; i++)
 				lstCollectibles[i]._pool.Release(lstCollectibles[i].gameObject);
 		}
@@ -218,7 +230,6 @@ namespace Assets.Components.Game.Chunks
 			}
 		}
 
-		// Returns an adjacent free lane or null
 		private Lane GetAdjacentFreeLane(int row, Lane current, int margin)
 		{
 			int idx = _lanes.IndexOf(current);
@@ -242,9 +253,6 @@ namespace Assets.Components.Game.Chunks
 
 		#region Obstacle Counting
 
-		/// <summary>
-		/// Determine the number of <see cref="Obstacle"/> we need to assign to a chunk
-		/// </summary>
 		public int GetNbObstacle()
 			=> GetMaxObstaclePerLane() * GetNbLanes();
 
@@ -265,7 +273,7 @@ namespace Assets.Components.Game.Chunks
 				return _assoTimeWithDistance[lastKey];
 			}
 
-			throw new UnityException("Distance between obstalces can't be null or less or equal to 0");
+			throw new UnityException("Distance between obstacles can't be null or less or equal to 0");
 		}
 
 		private int GetMaxObstaclePerLane(bool getMaxNb = false)
@@ -278,9 +286,6 @@ namespace Assets.Components.Game.Chunks
 
 		#region Collectible Counting
 
-		/// <summary>
-		/// Determine the number of <see cref="Collectible"/> we need to assign to a chunk
-		/// </summary>
 		public int GetNbCollectible()
 			=> Mathf.Min(GetMaxCollectiblePerLane(), _chunkSettings.MaxCollectiblePerChunk);
 

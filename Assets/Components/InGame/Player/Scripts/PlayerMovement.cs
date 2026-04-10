@@ -25,6 +25,7 @@ namespace Assets.Components.InGame.Player.Scripts
 		[SerializeField] private bool _isStrafing;
 		[SerializeField] private bool _isCrouching;
 		[SerializeField] private bool _isJumping;
+		private bool _canFall = true;
 
 		private float _baseHeight;
 		private Coroutine _strafeCoroutine;
@@ -80,11 +81,13 @@ namespace Assets.Components.InGame.Player.Scripts
 			{
 				// Stop les deux coroutines actives
 				StopCoroutine(_jumpCoroutine);
+				if (_canFall)
+				{
+					if (_fallCoroutine != null)
+						StopCoroutine(_fallCoroutine);
 
-				if (_fallCoroutine != null)
-					StopCoroutine(_fallCoroutine);
-
-				_fallCoroutine = StartCoroutine(FallCoroutine(speedFall: true));
+					_fallCoroutine = StartCoroutine(FallCoroutine(speedFall: true));
+				}
 			}
 			else
 			{
@@ -164,6 +167,7 @@ namespace Assets.Components.InGame.Player.Scripts
 
 		private IEnumerator FallCoroutine(bool speedFall = false)
 		{
+			_canFall = false;
 			float timer = 0f;
 			float startHeight = transform.position.y;
 
@@ -179,6 +183,7 @@ namespace Assets.Components.InGame.Player.Scripts
 			transform.position = new Vector3(transform.position.x, _baseHeight, transform.position.z);
 			_animator.SetBool("IsGrounded", true);
 			_isJumping = false;
+			_canFall = true;
 		}
 
 		private IEnumerator CrouchCoroutine()

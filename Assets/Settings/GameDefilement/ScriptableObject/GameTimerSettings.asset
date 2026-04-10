@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8485f10083cbe40ac614b1004ff52b, type: 3}
   m_Name: GameTimerSettings
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Settings.GameDefilement.GameTimerSettings
-  BaseSpeed: 7
-  MaxSpeed: 14
+  BaseSpeed: 9
+  MaxSpeed: 15
   SpeedIncreaseRate: 0.1
   SpeedIncreaseDelay: 15

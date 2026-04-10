@@ -98,6 +98,8 @@ namespace Assets.Components.InGame.Player.Scripts
 				Health += amount.Value;
 			else
 				Health += _playerConfig.HealthGainPerTrashCollect;
+
+			Health = Mathf.Min(Health, _playerConfig.MaxHealth);
 		}
 
 		private void OnHealthLoose(int? amount = 0)

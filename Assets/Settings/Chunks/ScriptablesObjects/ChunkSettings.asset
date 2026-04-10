@@ -17,7 +17,7 @@ MonoBehaviour:
   LstDitancesBetweenTwoObstacles:
   - 18
   - 16
-  - 13
+  - 14
   - 10
   MinDistanceBeforeObstacleSpawn: 28
   DistanceBetweenCollectibles: 5
