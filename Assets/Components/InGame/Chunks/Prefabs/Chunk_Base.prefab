@@ -112,6 +112,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &410149994752138860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3496888635512797968}
+  m_Layer: 0
+  m_Name: EnnemySpawnPosLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3496888635512797968
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410149994752138860}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -45.5, y: 0, z: 45}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5933432696280083759}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &797307477745513081
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,6 +269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381365e796ae1564a864751e79c746ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.Chunks.Lanes.Lane
+  side: 0
+  spawnPos: {fileID: 3496888635512797968}
 --- !u!1 &859798194720001814
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,6 +383,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1290532189817933257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 196610024528366295}
+  m_Layer: 0
+  m_Name: EnnemySpawnPosRight
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &196610024528366295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290532189817933257}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 44.5, y: 0, z: 45}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5933432696280083759}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1479108500319275262
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,6 +652,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381365e796ae1564a864751e79c746ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.Chunks.Lanes.Lane
+  side: 1
+  spawnPos: {fileID: 0}
 --- !u!1 &4804950085800122810
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,6 +1099,8 @@ Transform:
   - {fileID: 7491495661814691351}
   - {fileID: 6850093453353734863}
   - {fileID: 217779136258960405}
+  - {fileID: 196610024528366295}
+  - {fileID: 3496888635512797968}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8858614596761361743
@@ -1183,6 +1251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381365e796ae1564a864751e79c746ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Game.Chunks.Lanes.Lane
+  side: 2
+  spawnPos: {fileID: 196610024528366295}
 --- !u!1001 &1080253404399469172
 PrefabInstance:
   m_ObjectHideFlags: 0

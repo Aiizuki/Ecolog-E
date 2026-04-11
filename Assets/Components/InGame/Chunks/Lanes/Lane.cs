@@ -6,6 +6,9 @@ namespace Assets.Components.Game.Chunks.Lanes
 {
 	public class Lane : MonoBehaviour
 	{
+		[SerializeField] private int side; //0 = left, 1= middle, 2=right
+		[SerializeField] private Transform spawnPos;
+
 		public void SpawnInteractible(AInteractable interactible, int position)
 		{
 			// position en local, centré sur le mesh
@@ -19,15 +22,13 @@ namespace Assets.Components.Game.Chunks.Lanes
 
 		internal void SpawnEnnemy(EnnemyController ennemy)
 		{
-			// position en local, centré sur le mesh
-			float localZ = -(GetLaneLength() / 2f);
-
 			ennemy.transform.SetParent(this.transform, true);
-			ennemy.transform.localPosition = new Vector3(0f, 0.5f, localZ / transform.localScale.z);
-			ennemy.transform.localRotation = Quaternion.identity;
-			ennemy.gameObject.SetActive(true);
+
+			// Convertit la position monde du spawnPoint en local du parent
+			Vector3 localPos = this.transform.InverseTransformPoint(spawnPos.position);
+			ennemy.transform.localPosition = localPos;
 			ennemy.SetParent(GetComponentInParent<Chunk>());
-			ennemy.StartLiving(); // TODO:  remplacer par un rangeChecker dans un Update dans EnnemyController
+			ennemy.StartLiving(side);
 		}
 
 		private float GetLaneLength()

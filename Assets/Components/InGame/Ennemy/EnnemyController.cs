@@ -4,6 +4,7 @@ using Assets.Components.InGame.Chunks.Interactables;
 using Assets.Components.Singletons;
 using Assets.Scripts.Helpers;
 using Assets.Settings.GameDefilement;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,31 +16,61 @@ namespace Assets.Components.InGame.Ennemy
 	{
 		[SerializeField] private List<ProjectileController> _lstProjectile;
 		[SerializeField] private EnnemySettings _ennemySettings;
+		[SerializeField] private GameObject _ennemyPivot;
+		[SerializeField] private Animator _animator;
+		[SerializeField] private Transform _projectileSpawnPoint;
 
+		private GameObject _player;
 		private Transform _playerTransform;
 		private Coroutine _patternRoutine;
 
 		private bool _isPlaying = true;
 		private Chunk _chunkParent;
 		private Dictionary<int, int> _assoCheckpointWithProjectileDamage;
+		private int _side;
 
 		#region Unity Lifecycle
 
 		private new void Start()
 		{
+			_player = GameObject.FindGameObjectWithTag("Player");
+			if (_player == null)
+				throw new Exception("Player not found");
+
 			InitEvents();
-			_playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+			_playerTransform = _player.transform;
 
 			_assoCheckpointWithProjectileDamage = _ennemySettings.LstDistanceCheckpoints
 				.Zip(_ennemySettings.LstProjectileDamageByDistance, (key, value) => new { key, value })
 				.ToDictionary(x => x.key, x => x.value);
 		}
 
-		private void OnDestroy()
+		private void Update()
+		{
+			Vector3 dirToCamera = Camera.main.transform.position - transform.position;
+			dirToCamera.y = 0f;
+			_ennemyPivot.transform.localRotation = Quaternion.LookRotation(dirToCamera);
+		}
+
+		private void OnTriggerEnter(Collider other)
+		{
+			if (other.CompareTag("Player"))
+			{
+				_patternRoutine ??= StartCoroutine(EnnemyPattern(_side));
+			}
+		}
+
+		private void OnDisable()
 		{
 			if (_patternRoutine != null)
+			{
 				StopCoroutine(_patternRoutine);
+				_patternRoutine = null;
+			}
+		}
 
+		private void OnDestroy()
+		{
 			RevokeEvents();
 		}
 
@@ -48,27 +79,39 @@ namespace Assets.Components.InGame.Ennemy
 		public void SetParent(Chunk chunk)
 			=> _chunkParent = chunk;
 
-		public void StartLiving()
-			=> _patternRoutine = StartCoroutine(EnnemyPattern());
-
-		private IEnumerator EnnemyPattern()
+		public void StartLiving(int side)
 		{
-			// TODO : rajouter une animation de spawn et une animation de despawn
-			// TODO : rajouter un setting lifetime sur l'ennemi (au bout du décompte il despawn)
+			foreach (SkinnedMeshRenderer renderer in GetComponentsInChildren<SkinnedMeshRenderer>())
+				renderer.enabled = false;
 
-			if (_playerTransform == null)
-				_playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+			_ennemyPivot.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+			_side = side;
+		}
+
+		private IEnumerator EnnemyPattern(int side)
+		{
+			_animator.SetBool("IsSideLeft", side == 0);
+			_animator.SetTrigger("Spawn");
 
 			while (_isPlaying)
 			{
-				ThrowProjectile(_playerTransform.position);
+				_animator.SetTrigger("Attack");
 				yield return new WaitForSeconds(_ennemySettings.ThrowingInterval);
 			}
 		}
 
-		private void ThrowProjectile(Vector3 position)
+		public void ThrowProjectile()
 		{
-			ProjectileController projectile = Instantiate(RandomisationHelper.GetRandomItemFromList(_lstProjectile), transform);
+			if (this.transform.position.z < _player.transform.position.z)
+				return;
+
+			if (_playerTransform == null)
+				_playerTransform = _player.transform;
+
+			Vector3 position = _playerTransform.position;
+
+			ProjectileController projectile = Instantiate(RandomisationHelper.GetRandomItemFromList(_lstProjectile), this.transform);
+			projectile.transform.position = _projectileSpawnPoint.position;
 			projectile.LaunchTowards(position, _ennemySettings.ProjectileSpeed, _ennemySettings.ProjectileLifetime, GetProjectileDamage());
 		}
 
@@ -134,5 +177,11 @@ namespace Assets.Components.InGame.Ennemy
 		}
 
 		#endregion Unity Events
+
+		public void SetActive()
+		{
+			foreach (SkinnedMeshRenderer renderer in GetComponentsInChildren<SkinnedMeshRenderer>())
+				renderer.enabled = true;
+		}
 	}
 }

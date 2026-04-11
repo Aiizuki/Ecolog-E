@@ -26,6 +26,7 @@ namespace Assets.Components.Game.Chunks
 
 		[Header("Debug")]
 		public bool IsDefinedInScene = false;
+		public bool IgnoreEnnemySpawn = false;
 		[SerializeField] private ChunkMatrix _matrice;
 
 		private Dictionary<int, float> _assoTimeWithDistance;
@@ -128,6 +129,8 @@ namespace Assets.Components.Game.Chunks
 		{
 			if (ennemy == null)
 				return;
+			else if (IgnoreEnnemySpawn)
+				ennemy._pool.Release(ennemy.gameObject);
 
 			List<Lane> lstSideLanes = new() { _lanes.First(), _lanes.Last() };
 			Lane sideLane = RandomisationHelper.GetRandomItemFromList(lstSideLanes);
