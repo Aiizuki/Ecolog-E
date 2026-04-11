@@ -18,5 +18,5 @@ MonoBehaviour:
   - -0.2
   - -0.5
   - -0.8
-  Description: Reduces the player's passive wear and tear
+  Description: Reduces Stuffy's passive wear and tear
   StatIcon: {fileID: 21300000, guid: 1363ae62461e93e4a9336688c7e35e85, type: 3}
