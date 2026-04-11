@@ -93,6 +93,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f99849211c9e6c8479c2c999ac25132e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Audio.AudioManager
+  Banks:
+  - bankName: Music
+    busPath: bus:/Music
+  - bankName: SFX
+    busPath: bus:/SFX
+  - bankName: UI
+    busPath: bus:/UI
 --- !u!114 &5010909517551484010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +161,20 @@ MonoBehaviour:
       Data3: 2090792113
       Data4: 130084770
     Path: event:/SFX/Player/Crouch
+  MainMusic:
+    Guid:
+      Data1: -1137423452
+      Data2: 1132041733
+      Data3: 393681316
+      Data4: -1500091614
+    Path: event:/Music/MainMusic
+  GameMusic:
+    Guid:
+      Data1: 381236501
+      Data2: 1164411983
+      Data3: 1857393063
+      Data4: -2049978087
+    Path: event:/Music/GameMusic
 --- !u!1 &3116095586325864698
 GameObject:
   m_ObjectHideFlags: 0

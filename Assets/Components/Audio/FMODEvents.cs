@@ -22,6 +22,10 @@ namespace Assets.Components.Audio
 		[Tooltip("Regroup strafe/jump and fall")][field: SerializeField] public EventReference PlayerMovement { get; private set; }
 		[field: SerializeField] public EventReference Crouch { get; private set; }
 
+		[Header("Musics")]
+		[field: SerializeField] public EventReference MainMusic;
+		[field: SerializeField] public EventReference GameMusic;
+
 
 		public static FMODEvents Instance { get; private set; }
 

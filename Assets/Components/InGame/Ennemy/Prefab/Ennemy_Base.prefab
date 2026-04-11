@@ -1713,7 +1713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20b17619c8262634e82c9ca797e2366a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnnemyAnimationController
-  _ennemyController: {fileID: 0}
+  _ennemyController: {fileID: 6610017024989103096}
 --- !u!135 &5132607039043993410
 SphereCollider:
   m_ObjectHideFlags: 0

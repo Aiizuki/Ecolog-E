@@ -54,7 +54,6 @@ namespace Assets.Components.Audio
 		private void OnApplicationQuit()
 		{
 			CleanSounds();
-			RevokeEvents();
 		}
 
 		#endregion Unity Lifecycle
@@ -65,12 +64,8 @@ namespace Assets.Components.Audio
 		{
 			UnityEvents.Instance.GameOver.AddListener(GameOverAmbiance);
 			UnityEvents.ReturnToHome += HomeMenuAmbiance;
-		}
-
-		private void RevokeEvents()
-		{
-			UnityEvents.Instance.GameOver.RemoveListener(GameOverAmbiance);
-			UnityEvents.ReturnToHome -= HomeMenuAmbiance;
+			UnityEvents.Instance.CriticalHealthStart.AddListener(CriticalAmbianceStart);
+			UnityEvents.Instance.CriticalHealthEnd.AddListener(CriticalAmbianceEnd);
 		}
 
 		#endregion Unity Events
@@ -96,6 +91,7 @@ namespace Assets.Components.Audio
 
 				float volume = _saveData.LstSoundSettings.ContainsKey($"Volume_{bank.bankName}") ? _saveData.LstSoundSettings[$"Volume_{bank.bankName}"] : 0.5f;
 				bank.bus.setVolume(volume);
+				HomeMenuAmbiance();
 			}
 		}
 
@@ -128,9 +124,18 @@ namespace Assets.Components.Audio
 		{
 			CleanSounds();
 			MusicEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-			//if (RuntimeManager.StudioSystem.getParameterByName(FMODEvents.GameOverEvent, out _) != 0)
-			//	SwitchBooleanParameter(FMODEvents.GameOverEvent);
-			//InitializeAmbiance(FMODEvents.Instance.CaveAmbiance, FMODEvents.Instance.MainMusic);
+			MusicEventInstance = CreateEventInstance(FMODEvents.Instance.MainMusic, intouchable: true);
+
+			// V�rifier que l'instance est valide
+			if (MusicEventInstance.isValid())
+			{
+				FMOD.RESULT result = MusicEventInstance.start();
+				Debug.Log($"[FMOD] Music started with result: {result}");
+			}
+			else
+			{
+				Debug.LogError("[FMOD] MusicEventInstance is not valid!");
+			}
 		}
 
 		/// <summary>
@@ -139,9 +144,60 @@ namespace Assets.Components.Audio
 		private void GameOverAmbiance()
 		{
 			CleanSounds();
-			//RuntimeManager.StudioSystem.getParameterByName(FMODEvents.GameOverEvent, out float paramValue);
-			//if (paramValue != null && paramValue != 1)
-			//	SwitchBooleanParameter(FMODEvents.GameOverEvent);
+
+		}
+
+		/// <summary>
+		/// Setups the ambiance for the GameOver screen
+		/// </summary>
+		public void GameAmbiance()
+		{
+			CleanSounds();
+			MusicEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
+			//RuntimeManager.StudioSystem.setParameterByName(FMODEvents.GameOverEvent, 0f);
+
+			MusicEventInstance = CreateEventInstance(FMODEvents.Instance.GameMusic, intouchable: true);
+
+			// V�rifier que l'instance est valide
+			if (MusicEventInstance.isValid())
+			{
+				FMOD.RESULT result = MusicEventInstance.start();
+				Debug.Log($"[FMOD] Music started with result: {result}");
+			}
+			else
+			{
+				Debug.LogError("[FMOD] MusicEventInstance is not valid!");
+			}
+		}
+
+		private void CriticalAmbianceStart()
+			=> StartCoroutine(TransitionToCritical(true));
+
+		private void CriticalAmbianceEnd()
+			=> StartCoroutine(TransitionToCritical(false));
+
+		private IEnumerator TransitionToCritical(bool start)
+		{
+			while (true)
+			{
+				RuntimeManager.StudioSystem.getParameterByName("CriticalHealth", out float value);
+
+				if (start)
+				{
+					if (value >= 1f)
+						yield break;
+					RuntimeManager.StudioSystem.setParameterByName("CriticalHealth", Mathf.Min(value + 0.1f, 1f));
+				}
+				else
+				{
+					if (value <= 0f)
+						yield break;
+					RuntimeManager.StudioSystem.setParameterByName("CriticalHealth", Mathf.Max(value - 0.1f, 0f));
+				}
+
+				yield return new WaitForFixedUpdate();
+			}
 		}
 
 		/// <summary>

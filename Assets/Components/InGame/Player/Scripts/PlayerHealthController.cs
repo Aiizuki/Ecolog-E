@@ -23,6 +23,7 @@ namespace Assets.Components.InGame.Player.Scripts
 
 		private Dictionary<int, int> _assoDistanceWithDamage;
 		private bool _gameOver = false;
+		private bool _criticalHealthEventFired = false;
 
 		#region Unity Lifecycle
 
@@ -50,11 +51,19 @@ namespace Assets.Components.InGame.Player.Scripts
 				// Réduction progressive de la santé
 				Health = Mathf.Max(_playerConfig.MinHealth, Health - (HealthLooseRatio / _playerConfig.HealthLooseRate) * Time.deltaTime);
 
-				// TODO : remplacer par un state de la state machine
 				if (Health < 0.30f * BaseHealth)
-					UnityEvents.Instance.CriticalHealthStart.Invoke();
+				{
+					if (!_criticalHealthEventFired)
+					{
+						UnityEvents.Instance.CriticalHealthStart.Invoke();
+						_criticalHealthEventFired = true;
+					}
+				}
 				else
+				{
 					UnityEvents.Instance.CriticalHealthEnd.Invoke();
+					_criticalHealthEventFired = false;
+				}
 
 				// La scale suit _health
 				float scaleX = Health / BaseHealth;
