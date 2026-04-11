@@ -1,5 +1,7 @@
 using Assets.Components.Audio;
 using Assets.Components.Singletons;
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,19 +24,31 @@ public class ButtonsManager : MonoBehaviour
 
 	public void FireReturnToHomeEvent()
 	{
-		PlayButtonClick();
+		PlayBack();
 		UnityEvents.ReturnToHome.Invoke();
 	}
 
 	public void FireNewGameEvent()
 	{
-		PlayButtonClick();
+		PlayForward();
 		UnityEvents.Instance.NewGame.Invoke();
 	}
 
-	public void PlayButtonClick(bool preventSpam = true)
+	public void PlayBack(bool preventSpam = true)
+		=> PlayButtonClick(preventSpam, true);
+
+	public void PlayForward(bool preventSpam = true)
+		=> PlayButtonClick(preventSpam, false);
+
+	private void PlayButtonClick(bool preventSpam, bool isBackButton)
 	{
-		AudioManager.Instance.PlayOneShot(FMODEvents.Instance.ButtonClick, Vector2.zero);
+		EventInstance instance = RuntimeManager.CreateInstance(FMODEvents.Instance.ButtonClick);
+
+		instance.setParameterByNameWithLabel("ButtonClickType", isBackButton ? "GoBack" : "GoForward");
+		instance.set3DAttributes(RuntimeUtils.To3DAttributes(Vector3.zero));
+		instance.start();
+		instance.release();
+
 		if (preventSpam)
 			StartCoroutine(PreventSpamClickRoutine());
 	}

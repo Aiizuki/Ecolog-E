@@ -1,14 +1,25 @@
+ï»¿using Assets.Components.SaveService;
+using Assets.Components.SaveService.Components.SaveService;
 using Assets.Components.Singletons;
 using FMOD.Studio;
 using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static OptionsManager;
 
 namespace Assets.Components.Audio
 {
 	public class AudioManager : MonoBehaviour
 	{
+		[Header("Banks Configuration")]
+		public BankVolumeControl[] Banks = new BankVolumeControl[3]
+		{
+			new() { bankName = "Music",    busPath = "bus:/Music"    },
+			new() { bankName = "SFX",      busPath = "bus:/SFX"      },
+			new() { bankName = "UI",       busPath = "bus:/UI"       }
+		};
+
 		public static AudioManager Instance { get; private set; }
 		private List<EventInstance> _lstEventInstances;
 		private List<StudioEventEmitter> _lstEventEmitters;
@@ -16,6 +27,8 @@ namespace Assets.Components.Audio
 		public EventInstance MusicEventInstance;
 		public EventInstance AmbienceInstance;
 		public EventInstance BonusZoneInstance;
+
+		private SaveData _saveData;
 
 		#region Unity Lifecycle
 
@@ -27,6 +40,7 @@ namespace Assets.Components.Audio
 
 			_lstEventInstances = new List<EventInstance>();
 			_lstEventEmitters = new List<StudioEventEmitter>();
+			_saveData = SaveServiceController.Load();
 
 			DontDestroyOnLoad(gameObject);
 		}
@@ -63,13 +77,26 @@ namespace Assets.Components.Audio
 
 		private IEnumerator InitializeAudioWhenReady()
 		{
-			// Wait until FMOD is initialized and the Master bank is loaded
 			while (!RuntimeManager.HasBankLoaded("Master"))
 			{
 				yield return null;
 			}
 
-			//InitializeAmbiance(FMODEvents.Instance.CaveAmbiance, FMODEvents.Instance.MainMusic);
+			foreach (BankVolumeControl bank in Banks)
+			{
+				try
+				{
+					bank.bus = RuntimeManager.GetBus(bank.busPath);
+				}
+				catch (BusNotFoundException)
+				{
+					Debug.LogWarning($"[AudioManager] Bus introuvable : '{bank.busPath}'");
+					continue;
+				}
+
+				float volume = _saveData.LstSoundSettings.ContainsKey($"Volume_{bank.bankName}") ? _saveData.LstSoundSettings[$"Volume_{bank.bankName}"] : 0.5f;
+				bank.bus.setVolume(volume);
+			}
 		}
 
 		/// <summary>
@@ -92,29 +119,6 @@ namespace Assets.Components.Audio
 				_lstEventInstances.Add(eventInstance);
 
 			return eventInstance;
-		}
-
-		/// <summary>
-		/// Initializes the ambiance by starting the music and ambience event instances, and setting the GameOver parameter to 0 if it's not already. 
-		/// This method is called when entering the HomeMenu screen to ensure the correct ambiance is set
-		/// </summary>
-		private void InitializeAmbiance(EventReference ambience, EventReference music)
-		{
-			RuntimeManager.StudioSystem.setParameterByName(FMODEvents.GameOverEvent, 0f);
-
-			MusicEventInstance = CreateEventInstance(music, intouchable: true);
-			AmbienceInstance = CreateEventInstance(ambience);
-
-			// Vérifier que l'instance est valide
-			if (MusicEventInstance.isValid())
-			{
-				FMOD.RESULT result = MusicEventInstance.start();
-				Debug.Log($"[FMOD] Music started with result: {result}");
-			}
-			else
-			{
-				Debug.LogError("[FMOD] MusicEventInstance is not valid!");
-			}
 		}
 
 		/// <summary>

@@ -24,6 +24,12 @@ namespace Assets.Components.SaveService
 
 		#endregion InGame stats
 
+		#region Audio settings
+
+		public Dictionary<string, float> LstSoundSettings;
+
+		#endregion Audio settings
+
 		public SaveData()
 		{
 			RunCount = 0;
@@ -33,9 +39,18 @@ namespace Assets.Components.SaveService
 			ComponentsCollected = 0;
 
 			LstPlayerStats = new();
+			LstSoundSettings = new();
 		}
 
 		public KeyValuePair<EnumUpgradableStat, int> GetPlayerStatData(EnumUpgradableStat statName)
 			=> LstPlayerStats.FirstOrDefault(kvp => kvp.Key == statName);
+
+		public void SetAudioSetting(string busName, float value)
+		{
+			if (LstSoundSettings.ContainsKey(busName))
+				LstSoundSettings[busName] = value;
+			else
+				LstSoundSettings.Add(busName, value);
+		}
 	}
 }

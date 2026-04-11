@@ -66,7 +66,7 @@ namespace Assets.Components.UI
 
 		public void FireDisplayStatPanel()
 		{
-			PlayButtonClick();
+			PlayForward();
 			UnityEvents.FillStatPanel.Invoke(statName);
 		}
 	}

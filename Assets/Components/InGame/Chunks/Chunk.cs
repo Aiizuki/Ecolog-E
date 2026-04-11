@@ -72,7 +72,7 @@ namespace Assets.Components.Game.Chunks
 				// On copie car on va modifier la hiérarchie pendant l'itération
 				var children = lane.GetComponentsInChildren<AInteractable>(includeInactive: true);
 				foreach (AInteractable interactable in children)
-					interactable._pool.Release(interactable.gameObject);
+					interactable?._pool?.Release(interactable?.gameObject);
 			}
 
 			_matrice?.Clear();

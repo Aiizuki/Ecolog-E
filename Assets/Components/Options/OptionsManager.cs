@@ -1,5 +1,9 @@
-﻿using FMOD.Studio;
+﻿using Assets.Components.Audio;
+using Assets.Components.SaveService;
+using Assets.Components.SaveService.Components.SaveService;
+using FMOD.Studio;
 using FMODUnity;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,29 +28,25 @@ public class OptionsManager : MonoBehaviour
 	[Header("Prefab")]
 	public GameObject bankControlPrefab;
 
-	[Header("Banks Configuration")]
-	public BankVolumeControl[] banks = new BankVolumeControl[4]
-	{
-			new BankVolumeControl { bankName = "Music", busPath = "bus:/Music" },
-			new BankVolumeControl { bankName = "SFX", busPath = "bus:/SFX" },
-			new BankVolumeControl { bankName = "Ambience", busPath = "bus:/Ambience" },
-			new BankVolumeControl { bankName = "UI", busPath = "bus:/UI" }
-	};
-
 	private bool controlsCreated = false;
+	private bool busesInitialized = false;
 
-	void Start()
+	private SaveData _saveData;
+
+	#region Unity Lifecycle
+
+	private void Start()
 	{
-		// Initialize FMOD buses
-		foreach (BankVolumeControl bank in banks)
-		{
-			bank.bus = RuntimeManager.GetBus(bank.busPath);
-		}
+		_saveData = SaveServiceController.Load();
 		closeButton.onClick.AddListener(CloseSettings);
+		StartCoroutine(InitializeBuses());
 	}
 
-	void OnEnable()
+	private void OnEnable()
 	{
+		if (!busesInitialized)
+			return;
+
 		if (!controlsCreated)
 		{
 			CreateBankControls();
@@ -58,18 +58,64 @@ public class OptionsManager : MonoBehaviour
 		}
 	}
 
+	#endregion Unity Lifecycle
+
+	/// <summary>
+	/// Attends que FMOD soit prêt, initialise les bus, puis crée les contrôles UI.
+	/// </summary>
+	private IEnumerator InitializeBuses()
+	{
+		// Attendre que le RuntimeManager FMOD soit pleinement initialisé
+		while (!RuntimeManager.HaveAllBanksLoaded)
+		{
+			yield return null;
+		}
+
+		// Initialiser chaque bus avec gestion d'erreur
+		foreach (BankVolumeControl bank in AudioManager.Instance.Banks)
+		{
+			try
+			{
+				bank.bus = RuntimeManager.GetBus(bank.busPath);
+			}
+			catch (BusNotFoundException)
+			{
+				Debug.LogWarning($"[OptionsManager] Bus introuvable : '{bank.busPath}'. Vérifiez le chemin dans FMOD Studio.");
+			}
+		}
+
+		busesInitialized = true;
+
+		// Créer les contrôles maintenant que les bus sont prêts
+		if (!controlsCreated)
+		{
+			CreateBankControls();
+			controlsCreated = true;
+		}
+	}
+
 	/// <summary>
 	/// Initializes the UI controls for each audio bank, setting their initial values based on saved preferences or current bus volumes.
 	/// </summary>
-	void CreateBankControls()
+	private void CreateBankControls()
 	{
-		foreach (BankVolumeControl bank in banks)
+		foreach (BankVolumeControl bank in AudioManager.Instance.Banks)
 		{
+			// Ignorer les bus qui n't ont pas pu être initialisés
+			if (!bank.bus.isValid())
+			{
+				Debug.LogWarning($"[OptionsManager] Bus invalide ignoré : '{bank.busPath}'");
+				continue;
+			}
+
 			GameObject control = Instantiate(bankControlPrefab, bankControlsContainer);
+
 			TextMeshProUGUI nameText = control.transform.Find("BankName").GetComponent<TextMeshProUGUI>();
 			nameText.text = bank.bankName;
+
 			Slider volumeSlider = control.transform.Find("VolumeSlider").GetComponent<Slider>();
-			float savedVolume = PlayerPrefs.GetFloat($"Volume_{bank.bankName}", -1f);
+
+			float savedVolume = _saveData.LstSoundSettings.ContainsKey($"Volume_{bank.bankName}") ? _saveData.LstSoundSettings[$"Volume_{bank.bankName}"] : -1f;
 			if (savedVolume >= 0)
 			{
 				volumeSlider.value = savedVolume;
@@ -85,30 +131,39 @@ public class OptionsManager : MonoBehaviour
 		}
 	}
 
-	void UpdateSliderValues()
+	private void UpdateSliderValues()
 	{
 		int index = 0;
 		foreach (Transform child in bankControlsContainer)
 		{
-			if (index >= banks.Length) break;
+			if (index >= AudioManager.Instance.Banks.Length) break;
+
+			if (!AudioManager.Instance.Banks[index].bus.isValid())
+			{
+				index++;
+				continue;
+			}
 
 			Slider slider = child.Find("VolumeSlider").GetComponent<Slider>();
-			banks[index].bus.getVolume(out float currentVolume);
+			AudioManager.Instance.Banks[index].bus.getVolume(out float currentVolume);
 			slider.value = currentVolume;
 
 			index++;
 		}
 	}
 
-	void OnVolumeChanged(BankVolumeControl bank, float value)
+	private void OnVolumeChanged(BankVolumeControl bank, float value)
 	{
+		if (!bank.bus.isValid())
+			return;
+
 		bank.bus.setVolume(value);
-		PlayerPrefs.SetFloat($"Volume_{bank.bankName}", value);
+		_saveData.SetAudioSetting($"Volume_{bank.bankName}", value);
 	}
 
 	public void CloseSettings()
 	{
-		PlayerPrefs.Save();
+		SaveServiceController.Save(_saveData);
 		gameObject.SetActive(false);
 	}
 }
