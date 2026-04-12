@@ -1,8 +1,8 @@
-﻿using Assets.Components.Game.Chunks.Lanes;
-using Assets.Components.InGame.Chunks;
+﻿using Assets.Components.InGame.Chunks;
 using Assets.Components.InGame.Chunks.Interactables;
 using Assets.Components.InGame.Chunks.Interactables.Collectibles;
 using Assets.Components.InGame.Chunks.Interactables.Obstacles;
+using Assets.Components.InGame.Chunks.Lanes;
 using Assets.Components.InGame.Ennemy;
 using Assets.Components.Singletons;
 using Assets.Scripts.Helpers;
@@ -14,19 +14,26 @@ using Component = Assets.Components.InGame.Chunks.Interactables.Collectibles.Com
 
 namespace Assets.Components.Game.Chunks
 {
+	/// <summary>
+	/// Represents a Chunk in the game
+	/// A chunk contains X <see cref="Lane"/> (defined in <see cref="_lanes"/>), and on each lanes we can have multiple <see cref="AInteractable"/>
+	/// The procedural generation is made chunk by chunk
+	/// </summary>
 	public class Chunk : MonoBehaviour
 	{
+		[Header("Chunk Config")]
 		[SerializeField] private ChunkSettings _chunkSettings;
 		[SerializeField] private List<Lane> _lanes;
 		[SerializeField] private float _length;
-
-		[Header("Collectibles Settings")]
-		[Tooltip("When tracing a collectible path, defines the chances that it can switch to another lanes")]
-		[SerializeField] private float derivationPourcent = 0.4f;
-
-		[Header("Debug")]
 		public bool IsDefinedInScene = false;
 		public bool IgnoreEnnemySpawn = false;
+
+		[Header("Collectibles Settings")]
+		[Tooltip("When tracing a collectible path, defines the chances that the n+1 collectible is placed on another lane")][SerializeField] private float derivationPourcent = 0.4f;
+
+		[Header("Debug")]
+		[SerializeField] private bool _debug = true;
+		[SerializeField] private bool _debugObstacleGeneration = true;
 		[SerializeField] private ChunkMatrix _matrice;
 
 		private Dictionary<int, float> _assoTimeWithDistance;
@@ -69,19 +76,21 @@ namespace Assets.Components.Game.Chunks
 			if (_lanes == null)
 				return;
 
-			// Release tous les interactables encore présents dans les lanes
 			foreach (Lane lane in _lanes)
 			{
-				// On copie car on va modifier la hiérarchie pendant l'itération
-				var children = lane.GetComponentsInChildren<AInteractable>(includeInactive: true);
+				AInteractable[] children = lane.GetComponentsInChildren<AInteractable>(includeInactive: true);
 				if (children?.Length > 0)
 				{
 					foreach (AInteractable interactable in children)
-						interactable?._pool?.Release(interactable?.gameObject);
+					{
+						if (interactable == null || interactable.gameObject == null || !interactable.gameObject)
+							continue;
+
+						interactable._pool.Release(interactable.gameObject);
+					}
 				}
 			}
-
-			_matrice?.Clear();
+			_matrice.Clear();
 		}
 
 		private void Update()
@@ -120,6 +129,9 @@ namespace Assets.Components.Game.Chunks
 
 		#region Lane Generation
 
+		/// <summary>
+		/// Generates a list of <see cref="AInteractable"/> in lanes
+		/// </summary>
 		public void GenerateInLanes(List<AInteractable> lstInteractables)
 		{
 			List<Obstacle> obstacles = lstInteractables.OfType<Obstacle>().ToList();
@@ -131,6 +143,7 @@ namespace Assets.Components.Game.Chunks
 			GenerateComponents(lstComponents);
 		}
 
+#nullable enable
 		public void SpawnEnnemies(EnnemyController? ennemy)
 		{
 			if (ennemy == null)
@@ -143,13 +156,15 @@ namespace Assets.Components.Game.Chunks
 
 			sideLane.SpawnEnnemy(ennemy);
 		}
+#nullable disable
 
 		private void GenerateObstacles(List<Obstacle> lstObstacles)
 		{
 			int obstacleIndex = 0;
 			int step = Mathf.RoundToInt(GetDistanceBetweenObstacles());
 
-			Debug.Log($"[Chunk] GenerateObstacles — step={step}, NbRows={_matrice.NbRows}, obstacles={lstObstacles.Count}");
+			if (_debugObstacleGeneration)
+				Debug.Log($"[Chunk] GenerateObstacles — step={step}, NbRows={_matrice.NbRows}, obstacles={lstObstacles.Count}");
 
 			for (int row = _chunkSettings.MinDistanceBeforeObstacleSpawn;
 				 row < _matrice.NbRows && obstacleIndex + 1 < lstObstacles.Count;
@@ -159,11 +174,13 @@ namespace Assets.Components.Game.Chunks
 					.Where(l => _matrice.Get(row, _lanes.IndexOf(l)) != 1)
 					.ToList();
 
-				Debug.Log($"[Chunk] row={row}, freeLanes={freeLanes.Count}");
+				if (_debugObstacleGeneration)
+					Debug.Log($"[Chunk] row={row}, freeLanes={freeLanes.Count}");
 
 				if (freeLanes.Count < 2)
 				{
-					Debug.Log($"[Chunk] row={row} skip — pas assez de lanes libres");
+					if (_debugObstacleGeneration)
+						Debug.Log($"[Chunk] row={row} skip — not enought free lane");
 					continue;
 				}
 
@@ -173,7 +190,8 @@ namespace Assets.Components.Game.Chunks
 				int idxA = _lanes.IndexOf(laneA);
 				int idxB = _lanes.IndexOf(laneB);
 
-				Debug.Log($"[Chunk] Spawn obstacles — row={row}, idxA={idxA}, idxB={idxB}");
+				if (_debugObstacleGeneration)
+					Debug.Log($"[Chunk] Spawn obstacles — row={row}, idxA={idxA}, idxB={idxB}");
 
 				_matrice.Set(row, idxA, 1);
 				_matrice.Set(row, idxB, 1);
@@ -187,6 +205,10 @@ namespace Assets.Components.Game.Chunks
 				lstObstacles[i]._pool.Release(lstObstacles[i].gameObject);
 		}
 
+		/// <summary>
+		/// Generates every collectible as a path in the chunk
+		/// </summary>
+		/// <remarks> "Path" means that the n+1 collectible cords follows the n one, but can be on a different lane</remarks>
 		private void GenerateCollectiblePath(List<Collectible> lstCollectibles)
 		{
 			if (lstCollectibles.Count == 0)
@@ -198,9 +220,7 @@ namespace Assets.Components.Game.Chunks
 
 			Lane currentLane = RandomisationHelper.GetRandomItemFromList(_lanes);
 
-			for (int row = _chunkSettings.MinDistanceBeforeCollectibleSpawn;
-				 row < _matrice.NbRows && collectibleIndex < lstCollectibles.Count;
-				 row++)
+			for (int row = _chunkSettings.MinDistanceBeforeCollectibleSpawn; row < _matrice.NbRows && collectibleIndex < lstCollectibles.Count; row++)
 			{
 				int laneIdx = _lanes.IndexOf(currentLane);
 
@@ -227,6 +247,10 @@ namespace Assets.Components.Game.Chunks
 				lstCollectibles[i]._pool.Release(lstCollectibles[i].gameObject);
 		}
 
+		/// <summary>
+		/// Generates Components in the chunk at the farthest coords from collectibles
+		/// </summary>
+		/// <remarks> Due to the game design document, <paramref name="lstComponents"/> will always contain only one item (we keep the list in cases were the GDD change)</remarks>
 		private void GenerateComponents(List<Component> lstComponents)
 		{
 			if (lstComponents.Count == 0)
@@ -238,7 +262,8 @@ namespace Assets.Components.Game.Chunks
 
 				if (row == -1 || col == -1)
 				{
-					Debug.Log("Can't place component in chunk");
+					if (_debug)
+						Debug.Log("Can't place component in chunk");
 					component._pool.Release(component.gameObject);
 					continue;
 				}

@@ -1,4 +1,5 @@
 ﻿using Assets.Components.Singletons;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,6 +29,7 @@ namespace Assets.Components.UI
 			UnityEvents.GameOverTransition -= OnGameOver;
 		}
 
+		[Obsolete("Not used in this project ATM")]
 		public void ReloadCurrentScene()
 		{
 			StartCoroutine(ReloadSceneRoutine());
@@ -51,16 +53,19 @@ namespace Assets.Components.UI
 		private IEnumerator ReturnToHomeRoutine()
 			=> TransitionToScene("HomeScene");
 
+		[Obsolete("Not used in this project ATM")]
 		private IEnumerator GameWinRoutine()
 			=> TransitionToScene("GameWin");
 
 		private IEnumerator LoadGameOverSceneRoutine()
 			=> TransitionToScene("GameOver");
 
+
 		/// <summary>
 		/// Reloads the current scene with a fade to black and fade from black effect, ensuring that all sounds are cleaned up before reloading the scene*
 		/// Used when the player go to the next floor
 		/// </summary>
+		[Obsolete("Not used in this project ATM")]
 		private IEnumerator ReloadSceneRoutine()
 		{
 			int sceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -113,7 +118,7 @@ namespace Assets.Components.UI
 			fadeCanvasGroup.alpha = 0f;
 		}
 
-		#region Event Listeners
+		#region Event Handlers
 
 		private void OnReturnToHome()
 			=> StartCoroutine(ReturnToHomeRoutine());
@@ -121,12 +126,9 @@ namespace Assets.Components.UI
 		private void OnNewGame()
 			=> StartCoroutine(NewGameRoutine());
 
-		private void OnGameWin()
-			=> StartCoroutine(GameWinRoutine());
-
 		private void OnGameOver()
 			=> StartCoroutine(LoadGameOverSceneRoutine());
 
-		#endregion Event Listeners
+		#endregion Event Handlers
 	}
 }

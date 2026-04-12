@@ -22,8 +22,10 @@ namespace Assets.Components.InGame.Player.Scripts
 		public float HealthLooseRatio;
 
 		private Dictionary<int, int> _assoDistanceWithDamage;
-		private bool _gameOver = false;
-		private bool _criticalHealthEventFired = false;
+		private bool _gameOver;
+		private bool _criticalHealthEventFired;
+
+		private float CriticalHealthThreshold => 0.30f * BaseHealth;
 
 		#region Unity Lifecycle
 
@@ -39,8 +41,7 @@ namespace Assets.Components.InGame.Player.Scripts
 			BaseHealth = Health = _statsController.GetPlayerHealth(_playerConfig.MaxHealth);
 			HealthLooseRatio = _statsController.GetPlayerHealthLooseRatio(_playerConfig.HealthLooseRatio);
 
-			_playerHealthUI.transform.localScale = new Vector3(1f, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
-
+			SetHealthBarScale(1f);
 			InitEvents();
 		}
 
@@ -48,38 +49,17 @@ namespace Assets.Components.InGame.Player.Scripts
 		{
 			if (Health > _playerConfig.MinHealth)
 			{
-				// Réduction progressive de la santé
-				Health = Mathf.Max(_playerConfig.MinHealth, Health - (HealthLooseRatio / _playerConfig.HealthLooseRate) * Time.deltaTime);
-
-				if (Health < 0.30f * BaseHealth)
-				{
-					if (!_criticalHealthEventFired)
-					{
-						UnityEvents.Instance.CriticalHealthStart.Invoke();
-						_criticalHealthEventFired = true;
-					}
-				}
-				else
-				{
-					UnityEvents.Instance.CriticalHealthEnd.Invoke();
-					_criticalHealthEventFired = false;
-				}
-
-				// La scale suit _health
-				float scaleX = Health / BaseHealth;
-				_playerHealthUI.transform.localScale = new Vector3(scaleX, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
+				UpdateHealth();
+				UpdateCriticalHealthState();
+				SetHealthBarScale(Health / BaseHealth);
 			}
 			else if (!_gameOver)
 			{
-				UnityEvents.Instance.GameOver.Invoke();
-				_gameOver = true;
+				TriggerGameOver();
 			}
 		}
 
-		private void OnDestroy()
-		{
-			RevokeEvents();
-		}
+		private void OnDestroy() => RevokeEvents();
 
 		#endregion Unity Lifecycle
 
@@ -101,13 +81,51 @@ namespace Assets.Components.InGame.Player.Scripts
 
 		#endregion UnityEvents
 
+		private void UpdateHealth()
+		{
+			Health = Mathf.Max(_playerConfig.MinHealth, Health - (HealthLooseRatio / _playerConfig.HealthLooseRate) * Time.deltaTime);
+		}
+
+		private void UpdateCriticalHealthState()
+		{
+			if (Health < CriticalHealthThreshold && !_criticalHealthEventFired)
+			{
+				UnityEvents.Instance.CriticalHealthStart.Invoke();
+				_criticalHealthEventFired = true;
+			}
+			else if (Health >= CriticalHealthThreshold && _criticalHealthEventFired)
+			{
+				UnityEvents.Instance.CriticalHealthEnd.Invoke();
+				_criticalHealthEventFired = false;
+			}
+		}
+
+		private void SetHealthBarScale(float scaleX)
+		{
+			_playerHealthUI.transform.localScale = new Vector3(scaleX, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
+		}
+
+		private void TriggerGameOver()
+		{
+			_gameStateController.ChangeState(typeof(GameOverState));
+			_gameOver = true;
+		}
+
+		private int GetDamageFromDistance()
+		{
+			foreach (int distance in _assoDistanceWithDamage.Keys)
+			{
+				if (StatsController.Score <= distance)
+					return _assoDistanceWithDamage[distance];
+			}
+			return 0;
+		}
+
+		#region Event Handlers
+
 		private void OnHealthGain(int? amount = 0)
 		{
-			if (amount > 0)
-				Health += amount.Value;
-			else
-				Health += _playerConfig.HealthGainPerTrashCollect;
-
+			Health += amount > 0 ? amount.Value : _playerConfig.HealthGainPerTrashCollect;
 			Health = Mathf.Min(Health, _playerConfig.MaxHealth);
 		}
 
@@ -116,28 +134,21 @@ namespace Assets.Components.InGame.Player.Scripts
 			if (_gameStateController.GetCurrentState() is InvincibleState)
 				return;
 
-			if (amount == null || amount <= 0)
-			{
-				foreach (int distance in _assoDistanceWithDamage.Keys)
-				{
-					if (StatsController.Score > distance)
-						continue;
+			int damage = (amount == null || amount <= 0) ? GetDamageFromDistance() : amount.Value;
+			float reduction = _statsController.GetPlayerDamageReduction();
+			Health = Mathf.Max(_playerConfig.MinHealth, Health - damage * (1f - reduction));
 
-					amount = _assoDistanceWithDamage[distance];
-					break;
-				}
-			}
+			Debug.Log($"Player lost {damage} hp");
 
-			Health = Mathf.Max(_playerConfig.MinHealth, Health - (amount.Value - (_statsController.GetPlayerDamageReduction() * amount.Value)));
-			Debug.Log($"Player lost {amount.Value} hp");
-
-			if (Health <= _playerConfig.MinHealth)
-				_gameStateController.ChangeState(typeof(GameOverState));
+			if (Health <= _playerConfig.MinHealth && !_gameOver)
+				TriggerGameOver();
 			else
 				_gameStateController.ChangeState(typeof(InvincibleState));
 		}
 
 		private void OnGameOver()
-			=> _playerHealthUI.transform.localScale = new Vector3(0f, _playerHealthUI.transform.localScale.y, _playerHealthUI.transform.localScale.z);
+			=> SetHealthBarScale(0f);
+
+		#endregion Event Handlers
 	}
 }

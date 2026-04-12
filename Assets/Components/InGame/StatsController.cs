@@ -19,6 +19,8 @@ namespace Assets.Components.Game
 		private SaveData _saveData;
 		[SerializeField] private StatsConfig _statsConfig;
 
+		#region Unity Lifecycle
+
 		private void Awake()
 		{
 			_saveData = SaveServiceController.Load();
@@ -34,6 +36,8 @@ namespace Assets.Components.Game
 		{
 			RevokeEvents();
 		}
+
+		#endregion Unity Lifecycle
 
 		#region Unity Events
 
@@ -53,15 +57,41 @@ namespace Assets.Components.Game
 			UnityEvents.OnComponentCollected -= OnComponentCollected;
 		}
 
+		#endregion UnityEvents
+
+		#region Event Handlers
+
 		private static void OnTrashCollected()
 			=> TrashCollected++;
 
 		private static void OnComponentCollected()
 			=> MoneyEarned++;
 
-		#endregion UnityEvents
+		private void OnNewGame()
+		{
+			Score = 0;
+			TrashCollected = 0;
+			MoneyEarned = 0;
+			InGameTime = 0;
+		}
 
-		#region Static Helpers
+		private void OnGameOver()
+		{
+			_saveData.RunScore = Score;
+			_saveData.RunCount++;
+			_saveData.TrashCollected = TrashCollected;
+			_saveData.ComponentsCollected = MoneyEarned;
+			_saveData.LastRunTime = InGameTime;
+
+			_saveData.PlayerComponentTotal += MoneyEarned;
+			_saveData.PlayerBestScore = Mathf.Max(_saveData.PlayerBestScore, Score);
+			_saveData.PlayerBestRunTime = Mathf.Max(_saveData.PlayerBestRunTime, InGameTime);
+			_saveData.PlayerBestTrashCollected = Mathf.Max(_saveData.PlayerBestTrashCollected, TrashCollected);
+
+			SaveServiceController.Save(_saveData);
+		}
+
+		#endregion Event Handlers
 
 		public static void AddScore(int score)
 		{
@@ -108,35 +138,5 @@ namespace Assets.Components.Game
 			}
 			return basePlayerHealthLooseRatio;
 		}
-
-		#endregion Static Helpers
-
-		#region Private Methods
-
-		private void OnNewGame()
-		{
-			Score = 0;
-			TrashCollected = 0;
-			MoneyEarned = 0;
-			InGameTime = 0;
-		}
-
-		private void OnGameOver()
-		{
-			_saveData.RunScore = Score;
-			_saveData.RunCount++;
-			_saveData.TrashCollected = TrashCollected;
-			_saveData.ComponentsCollected = MoneyEarned;
-			_saveData.LastRunTime = InGameTime;
-
-			_saveData.PlayerComponentTotal += MoneyEarned;
-			_saveData.PlayerBestScore = Mathf.Max(_saveData.PlayerBestScore, Score);
-			_saveData.PlayerBestRunTime = Mathf.Max(_saveData.PlayerBestRunTime, InGameTime);
-			_saveData.PlayerBestTrashCollected = Mathf.Max(_saveData.PlayerBestTrashCollected, TrashCollected);
-
-			SaveServiceController.Save(_saveData);
-		}
-
-		#endregion Private Methods
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Helpers;
+using Assets.Settings.Chunks;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,8 +33,8 @@ namespace Assets.Components.Game
 		#region Public Methods
 
 		/// <summary>
-		/// Récupère une instance depuis le pool.
-		/// Si le pool est vide, une nouvelle instance est créée.
+		/// Gets an instance of a gameObject from the pool
+		/// If the pool is empty, we instance a new one
 		/// </summary>
 		public GameObject Get(bool shuffle = false)
 		{
@@ -56,19 +57,25 @@ namespace Assets.Components.Game
 		}
 
 		/// <summary>
-		/// Retourne une instance au pool.
+		/// Returns a gameObject instance to the pool
 		/// </summary>
 		public void Release(GameObject instance)
 		{
+			if (!instance)
+				return;
+
 			if (instance == null || _isQuitting)
 				return;
 
 			if (!_active.Contains(instance))
 			{
 				Debug.LogWarning($"[ObjectPoolManager] Instance inconnue du pool : {instance.name}");
-				Destroy(instance);
+				if (instance) Destroy(instance);
 				return;
 			}
+
+			if (poolParent == null || !poolParent)
+				return;
 
 			instance.transform.SetParent(poolParent.transform, true);
 			instance.SetActive(false);
@@ -84,7 +91,7 @@ namespace Assets.Components.Game
 		{
 			for (int i = 0; i < poolSettings.initialSize; i++)
 			{
-				int index = i % poolSettings.lstObject.Count; // Permet de répartir les instances entre les différents types d'objets
+				int index = i % poolSettings.lstObject.Count; // Allows instances to be distributed among different types of objects
 				GameObject instance = Instantiate(poolSettings.lstObject[index], poolParent.transform);
 				instance.SetActive(false);
 				Pool.Push(instance);

@@ -31,11 +31,6 @@ namespace Assets.Components.Game
 
 		#endregion Unity Lifecycle
 
-		#region Private Helpers
-
-		private void OnGenerateNewChunk()
-			=> AddChunk(_startPoint.transform.position);
-
 		private void AddChunk(Vector3 position)
 		{
 			if (!_inGameState)
@@ -55,21 +50,6 @@ namespace Assets.Components.Game
 			chunk.Spawn(new Vector3(position.x, _chunkYPos, position.z), _chunkParent);
 		}
 
-		private void OnChunkDestroyed(Chunk chunk)
-		{
-			if (_chunkPool != null && !chunk.IsDefinedInScene)
-				_chunkPool.Release(chunk.gameObject);
-
-			UnityEvents.GenerateNewChunk.Invoke();
-		}
-
-		private void OnStateChanged(State newState)
-		{
-			_inGameState = newState is not GameOverState;
-		}
-
-		#endregion Private Helpers
-
 		#region UnityEvents
 
 		private void InitEvents()
@@ -87,5 +67,25 @@ namespace Assets.Components.Game
 		}
 
 		#endregion UnityEvents
+
+		#region Event Handlers
+
+		private void OnGenerateNewChunk()
+			=> AddChunk(_startPoint.transform.position);
+
+		private void OnChunkDestroyed(Chunk chunk)
+		{
+			if (_chunkPool != null && !chunk.IsDefinedInScene)
+				_chunkPool.Release(chunk.gameObject);
+
+			UnityEvents.GenerateNewChunk.Invoke();
+		}
+
+		private void OnStateChanged(State newState)
+		{
+			_inGameState = newState is not GameOverState;
+		}
+
+		#endregion Event Handlers
 	}
 }

@@ -6,6 +6,9 @@ using UnityEngine.Events;
 [CustomEditor(typeof(MonoBehaviour), true)]
 public class UnityEventInvokerEditor : Editor
 {
+	/// <summary>
+	/// For every defined Unity Events, add a button in the editor so we can trigger them manually during DEBUG
+	/// </summary>
 	public override void OnInspectorGUI()
 	{
 		DrawDefaultInspector();

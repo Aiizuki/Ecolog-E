@@ -86,7 +86,7 @@ namespace Assets.Components.InGame.Player.Scripts
 					if (_fallCoroutine != null)
 						StopCoroutine(_fallCoroutine);
 
-					_fallCoroutine = StartCoroutine(FallCoroutine(speedFall: true));
+					_fallCoroutine = StartCoroutine(FallCoroutine());
 				}
 			}
 			else
@@ -165,7 +165,11 @@ namespace Assets.Components.InGame.Player.Scripts
 			_fallCoroutine = StartCoroutine(FallCoroutine());
 		}
 
-		private IEnumerator FallCoroutine(bool speedFall = false)
+		/// <summary>
+		/// Makes the player fall down to the ground
+		/// </summary>
+		/// <remarks> Automatically called in <see cref="JumpCoroutine"/>, but can also be triggered if player press <see cref="CROUCH_INPUT_NAME"/> while in-air</remarks>
+		private IEnumerator FallCoroutine()
 		{
 			_canFall = false;
 			float timer = 0f;

@@ -12,12 +12,15 @@ namespace Assets.Components.Singletons
 	/// </summary>
 	public class UnityEvents : MonoBehaviour
 	{
+		[Header("Debug")]
+		[Tooltip("If true, every event Invoke will be logged")][SerializeField] private bool debugEvents = false;
+		[Tooltip("If true, every UI event Invoke will be logged")][SerializeField] private bool debugUIEvents = false;
+		[Tooltip("If true, every Animator event Invoke will be logged")][SerializeField] private bool debugAnimatorEvents = false;
+
 		public static UnityEvents Instance { get; private set; }
 
 		[HideInInspector] public UnityEvent NewGame;
 		[HideInInspector] public UnityEvent GameOver;
-		[HideInInspector] public UnityEvent GamePause;
-		[HideInInspector] public UnityEvent GameResume;
 
 		#region UI
 
@@ -67,6 +70,8 @@ namespace Assets.Components.Singletons
 
 		#endregion Player Animator
 
+		#region Unity Lifecycle
+
 		void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -79,17 +84,73 @@ namespace Assets.Components.Singletons
 			DontDestroyOnLoad(gameObject);
 
 			InitializeEvents();
+			if (debugEvents)
+				InitListeners();
 		}
+
+		#endregion Unity Lifecycle
 
 		private void InitializeEvents()
 		{
 			GameOver ??= new UnityEvent();
-
-			GameResume ??= new UnityEvent();
 			NewGame ??= new UnityEvent();
 
 			CriticalHealthStart ??= new UnityEvent();
 			CriticalHealthEnd ??= new UnityEvent();
 		}
+
+		#region Debug
+
+		private void InitListeners()
+		{
+			NewGame.AddListener(() => DebugEventInvoke(nameof(NewGame)));
+			GameOver.AddListener(() => DebugEventInvoke(nameof(GameOver)));
+
+			if (debugUIEvents)
+			{
+				GameOverTransition += () => DebugEventInvoke(nameof(GameOverTransition));
+				ReturnToHome += () => DebugEventInvoke(nameof(ReturnToHome));
+				ScoreUpdate += _ => DebugEventInvoke(nameof(ScoreUpdate));
+				UpgradeStat += _ => DebugEventInvoke(nameof(UpgradeStat));
+				FillStatPanel += _ => DebugEventInvoke(nameof(FillStatPanel));
+				UpdateStatText += (EnumUpgradableStat _, int _) => DebugEventInvoke(nameof(UpdateStatText));
+			}
+
+			GenerateNewChunk += () => DebugEventInvoke(nameof(GenerateNewChunk));
+			GenerateNewInteractibles += _ => DebugEventInvoke(nameof(GenerateNewInteractibles));
+			ChunkDestroyed += _ => DebugEventInvoke(nameof(ChunkDestroyed));
+			InteractibleDestroyed += _ => DebugEventInvoke(nameof(InteractibleDestroyed));
+
+			HealthGain += _ => DebugEventInvoke(nameof(HealthGain));
+			HealthLoose += _ => DebugEventInvoke(nameof(HealthLoose));
+			CriticalHealthStart.AddListener(() => DebugEventInvoke(nameof(CriticalHealthStart)));
+			CriticalHealthEnd.AddListener(() => DebugEventInvoke(nameof(CriticalHealthEnd)));
+
+			OnTrashCollected += () => DebugEventInvoke(nameof(OnTrashCollected));
+			OnComponentCollected += () => DebugEventInvoke(nameof(OnComponentCollected));
+			OnObstacleCollision += () => DebugEventInvoke(nameof(OnObstacleCollision));
+
+			OnPlayerStrafe += () => DebugEventInvoke(nameof(OnPlayerStrafe));
+			OnPlayerJump += () => DebugEventInvoke(nameof(OnPlayerJump));
+			OnPlayerFall += () => DebugEventInvoke(nameof(OnPlayerFall));
+			OnPlayerCrouch += () => DebugEventInvoke(nameof(OnPlayerCrouch));
+
+			StateChanged += _ => DebugEventInvoke(nameof(StateChanged));
+			SpeedIncreaseEvent += _ => DebugEventInvoke(nameof(SpeedIncreaseEvent));
+
+			if (debugAnimatorEvents)
+			{
+				PlayRunAnimation += () => DebugEventInvoke(nameof(PlayRunAnimation));
+				PlayDodgeAnimation += _ => DebugEventInvoke(nameof(PlayDodgeAnimation));
+				PlayDeathAnimation += () => DebugEventInvoke(nameof(PlayDeathAnimation));
+				PlayCrouchAnimation += () => DebugEventInvoke(nameof(PlayCrouchAnimation));
+				NotifyDeathAnimationFinishedEvent += () => DebugEventInvoke(nameof(NotifyDeathAnimationFinishedEvent));
+			}
+		}
+
+		private void DebugEventInvoke(string eventName)
+			=> Debug.Log($"[UNITY EVENTS] Event {eventName} has been invoked");
+
+		#endregion Debug
 	}
 }

@@ -1,3 +1,4 @@
+using Assets.Components.Audio;
 using Assets.Components.SaveService;
 using Assets.Components.SaveService.Components.SaveService;
 using Assets.Components.Singletons;
@@ -67,6 +68,10 @@ namespace Assets.Components.PlayerStats
 			closeButton.onClick.RemoveListener(ClosePanel);
 		}
 
+		#endregion Unity Events
+
+		#region Event Handlers
+
 		private void OnFillStatPanel(EnumUpgradableStat statName)
 		{
 			if (!IsStatValid(statName, out PlayerStat baseStat))
@@ -91,37 +96,37 @@ namespace Assets.Components.PlayerStats
 				return;
 
 			KeyValuePair<PlayerStat, int> stat = _playerStats.FirstOrDefault(x => x.Key.StatName == statName);
-			if (!stat.Equals(default(KeyValuePair<PlayerStat, int>)))
+			bool isNewStat = stat.Equals(default(KeyValuePair<PlayerStat, int>));
+
+			PlayerStat key = isNewStat ? baseStat : stat.Key;
+			int currentLevel = isNewStat ? 0 : stat.Value;
+			int statCost = key.GetUpgradeCost(isNewStat ? 1 : currentLevel);
+
+			if (!PlayerMoneyController.HasMoney(_saveData.PlayerComponentTotal, statCost))
 			{
-				int statCost = stat.Key.GetUpgradeCost(stat.Value);
-				if (_playerMoneyController.HasMoney(_saveData.PlayerComponentTotal, statCost))
-				{
-					_playerStats[stat.Key]++;
-					UnityEvents.UpdateStatText.Invoke(statName, _playerStats[stat.Key]);
-					_saveData.PlayerComponentTotal = _playerMoneyController.Pay(_saveData.PlayerComponentTotal, statCost);
-					UnityEvents.FillStatPanel.Invoke(statName);
-				}
-				else
-				{
-					ToastNotification.Show("You don't have enought money", 3f);
-				}
+				AudioManager.PlayInstanceOneTime(FMODEvents.Instance.NotificationFailure);
+				ToastNotification.Show("You don't have enought money", 3f);
+				return;
+			}
+
+			AudioManager.PlayInstanceOneTime(FMODEvents.Instance.NotificationSuccess);
+			_saveData.PlayerComponentTotal = _playerMoneyController.Pay(_saveData.PlayerComponentTotal, statCost);
+
+			if (isNewStat)
+			{
+				_playerStats.Add(baseStat, 1);
+				UnityEvents.UpdateStatText.Invoke(statName, 1);
 			}
 			else
 			{
-				int statCost = baseStat.GetUpgradeCost(1);
-				if (_playerMoneyController.HasMoney(_saveData.PlayerComponentTotal, statCost))
-				{
-					_playerStats.Add(baseStat, 1);
-					UnityEvents.UpdateStatText.Invoke(statName, 1);
-					_saveData.PlayerComponentTotal = _playerMoneyController.Pay(_saveData.PlayerComponentTotal, statCost);
-					UnityEvents.FillStatPanel.Invoke(statName);
-				}
-				else
-				{
-					ToastNotification.Show("You don't have enought money", 3f);
-				}
+				_playerStats[stat.Key]++;
+				UnityEvents.UpdateStatText.Invoke(statName, _playerStats[stat.Key]);
 			}
+
+			UnityEvents.FillStatPanel.Invoke(statName);
 		}
+
+		#endregion Event Handlers
 
 		private bool IsStatValid(EnumUpgradableStat statName, out PlayerStat baseStat)
 		{
@@ -133,13 +138,6 @@ namespace Assets.Components.PlayerStats
 			}
 			return true;
 		}
-
-		private void OnReturnToHome()
-		{
-			SaveStats();
-		}
-
-		#endregion Unity Events
 
 		public void ClosePanel()
 		{

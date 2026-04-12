@@ -1,17 +1,21 @@
-﻿using Assets.Components.InGame.Chunks.Interactables;
+﻿using Assets.Components.Game.Chunks;
+using Assets.Components.InGame.Chunks.Interactables;
 using Assets.Components.InGame.Ennemy;
 using UnityEngine;
 
-namespace Assets.Components.Game.Chunks.Lanes
+namespace Assets.Components.InGame.Chunks.Lanes
 {
 	public class Lane : MonoBehaviour
 	{
 		[SerializeField] private int side; //0 = left, 1= middle, 2=right
 		[SerializeField] private Transform spawnPos;
 
+		/// <summary>
+		/// Spawns an interacible at a position on a lane
+		/// </summary>
+		/// <remarks> We use localPosition and rotation because the lane is a plane, so the mesh multiplies per 10 every coords</remarks>
 		public void SpawnInteractible(AInteractable interactible, int position)
 		{
-			// position en local, centré sur le mesh
 			float localZ = -(GetLaneLength() / 2f) + position;
 
 			interactible.transform.SetParent(this.transform, true);
@@ -20,11 +24,14 @@ namespace Assets.Components.Game.Chunks.Lanes
 			interactible.gameObject.SetActive(true);
 		}
 
+		/// <summary>
+		/// Spawns an interacible at a position on a lane
+		/// </summary>
+		/// <remarks> We use localPosition and rotation because the lane is a plane, so the mesh multiplies per 10 every coords</remarks>
 		internal void SpawnEnnemy(EnnemyController ennemy)
 		{
 			ennemy.transform.SetParent(this.transform, true);
 
-			// Convertit la position monde du spawnPoint en local du parent
 			Vector3 localPos = this.transform.InverseTransformPoint(spawnPos.position);
 			ennemy.transform.localPosition = localPos;
 			ennemy.SetParent(GetComponentInParent<Chunk>());

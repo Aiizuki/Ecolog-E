@@ -126,6 +126,13 @@ MonoBehaviour:
       Data3: 1814161539
       Data4: -765990729
     Path: event:/UI/NotificationFailure
+  <NotificationSuccess>k__BackingField:
+    Guid:
+      Data1: -596558259
+      Data2: 1258544031
+      Data3: -1482183003
+      Data4: -2062514051
+    Path: event:/UI/NotificationSuccess
   <ObstacleCollision>k__BackingField:
     Guid:
       Data1: 1412589151
