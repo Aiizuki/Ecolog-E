@@ -107,7 +107,9 @@ namespace Assets.Components.Audio
 
 		public static void PlayInstanceOneTime(EventReference fmodEvent)
 		{
+#if UNITY_EDITOR
 			Debug.Log($"[AUDIOMANAGER] PlayInstanceOneTime: {fmodEvent.Path}");
+#endif
 			EventInstance instance = RuntimeManager.CreateInstance(fmodEvent);
 			instance.set3DAttributes(RuntimeUtils.To3DAttributes(Vector3.zero));
 			FMOD.RESULT result = instance.start();
