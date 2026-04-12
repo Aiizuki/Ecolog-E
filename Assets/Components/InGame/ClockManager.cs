@@ -61,18 +61,9 @@ namespace Assets.Components.Game
 				yield return new WaitForSeconds(_timerSettings.SpeedIncreaseDelay);
 				_currentSpeed = Mathf.Min(_currentSpeed + _timerSettings.SpeedIncreaseRate, _timerSettings.MaxSpeed);
 				UnityEvents.SpeedIncreaseEvent.Invoke(_currentSpeed);
-				//Debug.Log($"[SpeedRoutine] currentSpeed={_currentSpeed} | maxSpeed={_timerSettings.MaxSpeed} | gamePause={_gamePause}");
+				Debug.Log($"[SpeedRoutine] currentSpeed={_currentSpeed} | maxSpeed={_timerSettings.MaxSpeed} | gamePause={_gamePause}");
 			}
 		}
-
-		private void OnGameResume()
-		{
-			_speedRoutine ??= StartCoroutine(SpeedRoutine());
-			_gamePause = false;
-		}
-
-		private void OnGamePause()
-			=> Pause();
 
 		private void OnGameOver()
 			=> Pause();
@@ -97,16 +88,12 @@ namespace Assets.Components.Game
 
 		private void InitEvents()
 		{
-			UnityEvents.Instance.GameResume.AddListener(OnGameResume);
 			UnityEvents.Instance.GameOver.AddListener(OnGameOver);
-			UnityEvents.Instance.GamePause.AddListener(OnGamePause);
 		}
 
 		private void RevokeEvents()
 		{
-			UnityEvents.Instance.GameResume.RemoveListener(OnGameResume);
 			UnityEvents.Instance.GameOver.RemoveListener(OnGameOver);
-			UnityEvents.Instance.GamePause.RemoveListener(OnGamePause);
 		}
 
 		#endregion Unity Events

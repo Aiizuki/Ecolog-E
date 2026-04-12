@@ -1,4 +1,3 @@
-using Assets.Components.Audio;
 using UnityEngine;
 
 /// <summary>
@@ -35,8 +34,6 @@ public class ToastNotificationMessage : MonoBehaviour
 		timerRectTransform.anchoredPosition = Vector3.zero;
 
 		initialWidth = timerRectTransform.sizeDelta.x;
-
-		AudioManager.Instance.PlayOneShot(FMODEvents.Instance.NotificationFailure, transform.position);
 	}
 
 

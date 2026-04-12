@@ -14,6 +14,7 @@ namespace Assets.Components.Audio
 		[Header("UI sounds")]
 		[field: SerializeField] public EventReference ButtonClick { get; private set; }
 		[field: SerializeField] public EventReference NotificationFailure { get; private set; }
+		[field: SerializeField] public EventReference NotificationSuccess { get; private set; }
 
 		[Header("Player sounds")]
 		[field: SerializeField] public EventReference ObstacleCollision { get; private set; }

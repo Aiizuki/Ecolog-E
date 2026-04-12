@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Assets.Components.UI.Game
+namespace Assets.Components.UI.InGame
 {
 	public class ScoreUpdater : MonoBehaviour
 	{
@@ -36,9 +36,13 @@ namespace Assets.Components.UI.Game
 
 		#endregion Unity Events
 
+		#region Event Handlers
+
 		private void OnScoreUpdate(int score)
 		{
 			_scoreText.text = score.ToString();
 		}
+
+		#endregion Event Handlers
 	}
 }

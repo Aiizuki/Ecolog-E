@@ -3132,10 +3132,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5643cf066af4a744a790aaab618d4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.Player.PlayerInvincibleController
-  _playerCollider: {fileID: 0}
   _playerConfig: {fileID: 11400000, guid: 96e6ff38ce422c148ab3804ac5083d26, type: 2}
   _gameStateController: {fileID: 1348506392}
   _statsController: {fileID: 334075608}
+  _blinkInterval: 0.025
+  _lstSkinnedMeshRenderer:
+  - {fileID: 8738074000327482594}
+  - {fileID: 9171478858843061339}
+  - {fileID: 7866258742682666658}
+  - {fileID: 8155572331946748848}
+  - {fileID: 220905165687763150}
+  - {fileID: 7739181496980919529}
 --- !u!114 &7418832788298229424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3201,6 +3208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bffffe03ac3c6404faac5f27e674fc01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAudioController
+  _gameStateController: {fileID: 1348506392}
 --- !u!137 &7739181496980919529
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

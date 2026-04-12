@@ -6,7 +6,6 @@ using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static OptionsManager;
 
 namespace Assets.Components.Audio
 {
@@ -62,8 +61,7 @@ namespace Assets.Components.Audio
 
 		private void InitEvents()
 		{
-			UnityEvents.Instance.GameOver.AddListener(GameOverAmbiance);
-			UnityEvents.ReturnToHome += HomeMenuAmbiance;
+			UnityEvents.ReturnToHome += () => HomeMenuAmbiance();
 			UnityEvents.Instance.CriticalHealthStart.AddListener(CriticalAmbianceStart);
 			UnityEvents.Instance.CriticalHealthEnd.AddListener(CriticalAmbianceEnd);
 		}
@@ -77,29 +75,45 @@ namespace Assets.Components.Audio
 				yield return null;
 			}
 
-			foreach (BankVolumeControl bank in Banks)
+			try
 			{
-				try
+				foreach (BankVolumeControl bank in Banks)
 				{
-					bank.bus = RuntimeManager.GetBus(bank.busPath);
-				}
-				catch (BusNotFoundException)
-				{
-					Debug.LogWarning($"[AudioManager] Bus introuvable : '{bank.busPath}'");
-					continue;
-				}
+					try
+					{
+						bank.bus = RuntimeManager.GetBus(bank.busPath);
+					}
+					catch (BusNotFoundException)
+					{
+						Debug.LogWarning($"[AUDIOMANAGER] Bus introuvable : '{bank.busPath}'");
+						continue;
+					}
 
-				float volume = _saveData.LstSoundSettings.ContainsKey($"Volume_{bank.bankName}") ? _saveData.LstSoundSettings[$"Volume_{bank.bankName}"] : 0.5f;
-				bank.bus.setVolume(volume);
-				HomeMenuAmbiance();
+					float volume = _saveData.LstSoundSettings.ContainsKey($"Volume_{bank.bankName}") ? _saveData.LstSoundSettings[$"Volume_{bank.bankName}"] : 0.5f;
+					bank.bus.setVolume(volume);
+				}
+			}
+			finally
+			{
+				HomeMenuAmbiance(stopPreviousInstance: false);
 			}
 		}
 
 		/// <summary>
 		/// Play a one-shot sound at a specific position in the world
 		/// </summary>
-		public void PlayOneShot(EventReference sound, Vector2 pos)
+		public static void PlayOneShot(EventReference sound, Vector2 pos)
 			=> RuntimeManager.PlayOneShot(sound, pos);
+
+		public static void PlayInstanceOneTime(EventReference fmodEvent)
+		{
+			Debug.Log($"[AUDIOMANAGER] PlayInstanceOneTime: {fmodEvent.Path}");
+			EventInstance instance = RuntimeManager.CreateInstance(fmodEvent);
+			instance.set3DAttributes(RuntimeUtils.To3DAttributes(Vector3.zero));
+			FMOD.RESULT result = instance.start();
+			Debug.Log($"[AUDIOMANAGER] start() result: {result}");
+			instance.release();
+		}
 
 		/// <summary>
 		/// Creates a new event instance from the specified event reference.
@@ -120,49 +134,33 @@ namespace Assets.Components.Audio
 		/// <summary>
 		/// Setups the ambiance for the HomeMenu screen
 		/// </summary>
-		private void HomeMenuAmbiance()
-		{
-			CleanSounds();
-			MusicEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-			MusicEventInstance = CreateEventInstance(FMODEvents.Instance.MainMusic, intouchable: true);
-
-			// V�rifier que l'instance est valide
-			if (MusicEventInstance.isValid())
-			{
-				FMOD.RESULT result = MusicEventInstance.start();
-				Debug.Log($"[FMOD] Music started with result: {result}");
-			}
-			else
-			{
-				Debug.LogError("[FMOD] MusicEventInstance is not valid!");
-			}
-		}
+		private void HomeMenuAmbiance(bool stopPreviousInstance = true)
+			=> TransitionMusic(ref MusicEventInstance, FMODEvents.Instance.MainMusic, stopPreviousInstance);
 
 		/// <summary>
-		/// Setups the ambiance for the GameOver screen
-		/// </summary>
-		private void GameOverAmbiance()
-		{
-			CleanSounds();
-
-		}
-
-		/// <summary>
-		/// Setups the ambiance for the GameOver screen
+		/// Setups the ambiance for the Game scene
 		/// </summary>
 		public void GameAmbiance()
 		{
-			CleanSounds();
-			MusicEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+			CriticalAmbianceEnd(); // We do this to reset the parameter when restarting a game after death
+			TransitionMusic(ref MusicEventInstance, FMODEvents.Instance.GameMusic);
+		}
 
-			//RuntimeManager.StudioSystem.setParameterByName(FMODEvents.GameOverEvent, 0f);
-
-			MusicEventInstance = CreateEventInstance(FMODEvents.Instance.GameMusic, intouchable: true);
-
-			// V�rifier que l'instance est valide
-			if (MusicEventInstance.isValid())
+		private void TransitionMusic(ref EventInstance currentInstance, EventReference newMusic, bool stopPreviousInstance = true)
+		{
+			if (stopPreviousInstance)
 			{
-				FMOD.RESULT result = MusicEventInstance.start();
+				CleanSounds();
+				EventInstance previousMusic = currentInstance;
+				previousMusic.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+				previousMusic.release();
+			}
+
+			currentInstance = CreateEventInstance(newMusic, intouchable: true);
+			if (currentInstance.isValid())
+			{
+				currentInstance.set3DAttributes(RuntimeUtils.To3DAttributes(Vector3.zero));
+				FMOD.RESULT result = currentInstance.start();
 				Debug.Log($"[FMOD] Music started with result: {result}");
 			}
 			else
@@ -177,6 +175,10 @@ namespace Assets.Components.Audio
 		private void CriticalAmbianceEnd()
 			=> StartCoroutine(TransitionToCritical(false));
 
+		/// <summary>
+		/// Make a smooth SFX when the player enters/exits a critical health situation
+		/// </summary>
+		/// <param name="start">If true, means the the player enters in a critical health situation</param>
 		private IEnumerator TransitionToCritical(bool start)
 		{
 			while (true)

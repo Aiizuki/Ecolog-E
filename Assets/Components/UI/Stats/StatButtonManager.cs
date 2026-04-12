@@ -22,7 +22,7 @@ namespace Assets.Components.UI
 
 		private void Start()
 		{
-			UnityEvents.UpdateStatText += OnUpdateStatText;
+			InitEvents();
 		}
 
 		private new void OnEnable()
@@ -45,15 +45,29 @@ namespace Assets.Components.UI
 			}
 		}
 
+		private new void OnDisable()
+		{
+			base.OnDisable();
+			RevokeEvents();
+		}
+
 		#endregion Unity Lifecycle
 
-		private void UpdateStats()
-		{
-			SaveData data = SaveServiceController.Load();
+		#region Unity Events
 
-			_savedPlayerStat = data.GetPlayerStatData(statName);
-			_baseStat = statsConfig.GetStat(statName);
+		private void InitEvents()
+		{
+			UnityEvents.UpdateStatText += OnUpdateStatText;
 		}
+
+		private void RevokeEvents()
+		{
+			UnityEvents.UpdateStatText -= OnUpdateStatText;
+		}
+
+		#endregion Unity Events
+
+		#region Event Handlers
 
 		private void OnUpdateStatText(EnumUpgradableStat targetStatName, int level)
 		{
@@ -62,6 +76,16 @@ namespace Assets.Components.UI
 
 			UpdateStats();
 			statLevelText.text = $"{level}/{_baseStat.MaxLevel}";
+		}
+
+		#endregion Event Handlers
+
+		private void UpdateStats()
+		{
+			SaveData data = SaveServiceController.Load();
+
+			_savedPlayerStat = data.GetPlayerStatData(statName);
+			_baseStat = statsConfig.GetStat(statName);
 		}
 
 		public void FireDisplayStatPanel()

@@ -49,19 +49,13 @@ namespace Assets.Components.InGame.FX
 		private IEnumerator GameOver()
 		{
 			yield return StartCoroutine(PlayPlayerDeathAnimation());
-			yield return StartCoroutine(PlayCameraAnimation());
+			UnityEvents.GameOverTransition.Invoke();
 		}
 
 		private IEnumerator PlayPlayerDeathAnimation()
 		{
 			UnityEvents.PlayDeathAnimation.Invoke();
 			yield return new WaitUntil(() => _deathAnimationDone);
-		}
-
-		private IEnumerator PlayCameraAnimation()
-		{
-			UnityEvents.GameOverTransition.Invoke();
-			yield return null;
 		}
 	}
 }

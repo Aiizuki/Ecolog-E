@@ -21,6 +21,8 @@ namespace Assets.Components.UI.Stats
 
 		[SerializeField] private TextMeshProUGUI _moneyCollectedText;
 
+		#region Unity Events
+
 		private void Start()
 		{
 			SaveData data = SaveServiceController.Load();
@@ -48,5 +50,7 @@ namespace Assets.Components.UI.Stats
 			_newRecordGameTimeFX.gameObject.SetActive(false);
 			_newRecordTrashCollectedFX.gameObject.SetActive(false);
 		}
+
+		#endregion Unity Events
 	}
 }

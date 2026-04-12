@@ -47,7 +47,7 @@ namespace Assets.Components.InGame.Chunks.Interactables
 
 			if (_pool == null)
 			{
-				Debug.LogError("Obstacle should return to pool but it is null !");
+				Debug.LogError("Interactable should return to pool but it is null !");
 				return;
 			}
 

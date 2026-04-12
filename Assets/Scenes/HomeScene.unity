@@ -620,6 +620,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5068774511200879430, guid: 66c5119e04c8ecb4bbfd1ec83e14e7fe, type: 3}
+      propertyPath: debugEvents
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -809,7 +813,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v_0.5.1
+  m_text: v_0.6.1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1023,6 +1027,10 @@ PrefabInstance:
     - target: {fileID: 6771655288602231455, guid: c8e6bbc4ee690a743bf8b6bf64418336, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7929922888079758168, guid: c8e6bbc4ee690a743bf8b6bf64418336, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayForward
       objectReference: {fileID: 0}
     - target: {fileID: 8298515122249220845, guid: c8e6bbc4ee690a743bf8b6bf64418336, type: 3}
       propertyPath: m_AnchorMax.y

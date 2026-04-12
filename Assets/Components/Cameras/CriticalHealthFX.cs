@@ -5,11 +5,16 @@ using UnityEngine.Rendering.Universal;
 
 namespace Assets.Components.Cameras
 {
+	/// <summary>
+	/// When the player enters/exits the critical health situation, we add/remove VFX for feedback
+	/// </summary>
 	public class CriticalHealthFX : MonoBehaviour
 	{
 		[SerializeField] private Volume _volume;
 
 		private Vignette _vignette;
+
+		#region Unity Lifecycle
 
 		private void Start()
 		{
@@ -21,6 +26,8 @@ namespace Assets.Components.Cameras
 		{
 			RevokeEvents();
 		}
+
+		#endregion Unity Lifecycle
 
 		#region UnityEvents
 

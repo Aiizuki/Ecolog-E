@@ -1,14 +1,18 @@
 using Assets.Components.Audio;
 using Assets.Components.Singletons;
+using Assets.Components.StateMachines;
+using Assets.Components.StateMachines.States;
 using UnityEngine;
 
 namespace Assets.Components.InGame.Player.Scripts
 {
 	public class PlayerAudioController : MonoBehaviour
 	{
+		[SerializeField] private GameStateController _gameStateController;
+
 		#region Unity Lifecycle
 
-		void Start()
+		private void Start()
 		{
 			InitEvents();
 			AudioManager.Instance.GameAmbiance();
@@ -47,28 +51,29 @@ namespace Assets.Components.InGame.Player.Scripts
 
 		#endregion Unity Events
 
+		#region Event Handlers
+
 		private void PlayStrafeSound()
-		{
-			AudioManager.Instance.PlayOneShot(FMODEvents.Instance.PlayerMovement, this.transform.position);
-		}
+			=> AudioManager.PlayOneShot(FMODEvents.Instance.PlayerMovement, this.transform.position);
 
 		private void PlayJumpSound()
-		{
-			AudioManager.Instance.PlayOneShot(FMODEvents.Instance.PlayerMovement, this.transform.position);
-		}
+			=> AudioManager.PlayOneShot(FMODEvents.Instance.PlayerMovement, this.transform.position);
 
 		private void PlayCrouchSound()
-		{
-			AudioManager.Instance.PlayOneShot(FMODEvents.Instance.Crouch, this.transform.position);
-		}
+			=> AudioManager.PlayOneShot(FMODEvents.Instance.Crouch, this.transform.position);
 
 		private void PlayComponentCollisionSound()
-			=> AudioManager.Instance.PlayOneShot(FMODEvents.Instance.ComponentCollision, this.transform.position);
+			=> AudioManager.PlayOneShot(FMODEvents.Instance.ComponentCollision, this.transform.position);
 
 		private void PlayObstacleCollisionSound()
-			=> AudioManager.Instance.PlayOneShot(FMODEvents.Instance.ObstacleCollision, this.transform.position);
+		{
+			if (_gameStateController.GetCurrentState() is not InvincibleState)
+				AudioManager.PlayOneShot(FMODEvents.Instance.ObstacleCollision, this.transform.position);
+		}
 
 		private void PlayTrashCollisionSound()
-			=> AudioManager.Instance.PlayOneShot(FMODEvents.Instance.TrashCollision, this.transform.position);
+			=> AudioManager.PlayOneShot(FMODEvents.Instance.TrashCollision, this.transform.position);
+
+		#endregion Event Handlers
 	}
 }

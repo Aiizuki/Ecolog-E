@@ -31,7 +31,7 @@ namespace Assets.Components.InGame.Ennemy
 
 		#region Unity Lifecycle
 
-		private new void Start()
+		private void Start()
 		{
 			_player = GameObject.FindGameObjectWithTag("Player");
 			if (_player == null)
@@ -147,20 +147,16 @@ namespace Assets.Components.InGame.Ennemy
 		private void InitEvents()
 		{
 			UnityEvents.Instance.GameOver.AddListener(() => _isPlaying = false);
-			UnityEvents.Instance.GamePause.AddListener(() => _isPlaying = false);
-			UnityEvents.Instance.GameResume.AddListener(() => _isPlaying = true);
 			UnityEvents.InteractibleDestroyed += this.ReturnToPool;
 		}
 
 		private void RevokeEvents()
 		{
 			UnityEvents.Instance.GameOver.RemoveListener(() => _isPlaying = false);
-			UnityEvents.Instance.GamePause.RemoveListener(() => _isPlaying = false);
-			UnityEvents.Instance.GameResume.AddListener(() => _isPlaying = true);
 			UnityEvents.InteractibleDestroyed -= this.ReturnToPool;
 		}
 
-		protected new void ReturnToPool(Chunk chunkParent)
+		protected void ReturnToPool(Chunk chunkParent)
 		{
 			if (_chunkParent != chunkParent)
 				return;

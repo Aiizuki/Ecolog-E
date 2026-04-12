@@ -1,22 +1,25 @@
 using TMPro;
 using UnityEngine;
 
-public class PlayerMoneyController : MonoBehaviour
+namespace Assets.Components.PlayerStats
 {
-	[SerializeField] private TextMeshProUGUI _moneyText;
-
-	public void Init(int playerMoney)
+	public class PlayerMoneyController : MonoBehaviour
 	{
-		_moneyText.text = playerMoney.ToString();
-	}
+		[SerializeField] private TextMeshProUGUI _moneyText;
 
-	public bool HasMoney(int playerMoney, int statUpgradeCost)
-		=> playerMoney >= statUpgradeCost;
+		public void Init(int playerMoney)
+		{
+			_moneyText.text = playerMoney.ToString();
+		}
 
-	public int Pay(int playerMoney, int statUpgradeCost)
-	{
-		int newPlayerMoney = playerMoney - statUpgradeCost;
-		_moneyText.text = newPlayerMoney.ToString();
-		return newPlayerMoney;
+		public static bool HasMoney(int playerMoney, int statUpgradeCost)
+			=> playerMoney >= statUpgradeCost;
+
+		public int Pay(int playerMoney, int statUpgradeCost)
+		{
+			int newPlayerMoney = playerMoney - statUpgradeCost;
+			_moneyText.text = newPlayerMoney.ToString();
+			return newPlayerMoney;
+		}
 	}
 }

@@ -18,5 +18,5 @@ MonoBehaviour:
   - 10
   - 25
   - 50
-  Description: Increases the player's maximum health
+  Description: Increases Stuffy's maximum health
   StatIcon: {fileID: 21300000, guid: 342a7eb0381153e48ac080ea6a262050, type: 3}

@@ -17,7 +17,6 @@ namespace Assets.Components.StateMachines.States
 
 			if (!_newGame)
 			{
-				UnityEvents.Instance.GameResume.Invoke();
 				_newGame = true;
 			}
 		}
