@@ -3,6 +3,7 @@ using Assets.Components.Singletons;
 using FMOD.Studio;
 using FMODUnity;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,6 +40,17 @@ public class ButtonsManager : MonoBehaviour
 
 	public void PlayForward(bool preventSpam = true)
 		=> PlayButtonClick(preventSpam, false);
+
+	public void QuitGame()
+	{
+		PlayForward();
+
+#if UNITY_EDITOR
+		EditorApplication.isPlaying = false;
+#else
+        Application.Quit(); // Quitte l'application compilée
+#endif
+	}
 
 	private void PlayButtonClick(bool preventSpam, bool isBackButton)
 	{
