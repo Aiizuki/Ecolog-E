@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3168004954176665384}
   - component: {fileID: -7393013308949268701}
   - component: {fileID: 8613675666132972689}
+  - component: {fileID: 4422995890814714314}
   m_Layer: 0
   m_Name: Component_Base
   m_TagString: Untagged
@@ -154,3 +155,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Components.InGame.Chunks.Interactables.Collectibles.Component
   _pool: {fileID: 0}
+--- !u!95 &4422995890814714314
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6886741291294649447}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9a0995aa35be6cf40bbbae26bdc6b3bb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

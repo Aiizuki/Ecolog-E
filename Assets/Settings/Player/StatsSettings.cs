@@ -9,6 +9,7 @@ namespace Assets.Settings.Player
 	{
 		public List<PlayerStat> LstAvailableStats;
 
+#nullable enable
 		public PlayerStat? GetStat(EnumUpgradableStat statName)
 			=> LstAvailableStats.Find(s => s.StatName.Equals(statName));
 
@@ -22,5 +23,6 @@ namespace Assets.Settings.Player
 
 			return value;
 		}
+#nullable disable
 	}
 }

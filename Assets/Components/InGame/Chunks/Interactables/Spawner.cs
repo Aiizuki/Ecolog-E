@@ -115,6 +115,7 @@ namespace Assets.Components.InGame.Chunks.Interactables
 			lstInteractables.Add(component);
 		}
 
+#nullable enable
 		private EnnemyController? SpawnEnnemy(Chunk chunk)
 		{
 			if (_lastEnnemySpawnZPos != 0 && _lastEnnemySpawnZPos < chunk.transform.position.z + chunk.GetDistanceBetweenEnnemies())
@@ -129,4 +130,5 @@ namespace Assets.Components.InGame.Chunks.Interactables
 			return ennemy;
 		}
 	}
+#nullable disable
 }

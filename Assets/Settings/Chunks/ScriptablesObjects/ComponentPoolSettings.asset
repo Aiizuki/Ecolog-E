@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ComponentPoolSettings
   m_EditorClassIdentifier: Assembly-CSharp::PoolSettings
   lstObject:
-  - {fileID: 6886741291294649447, guid: dbd1455301775a843b2f03c21b9e7095, type: 3}
+  - {fileID: 2038045833323365272, guid: 3df9ed81c84ad8b4dbcbb99b80d2af2d, type: 3}
   initialSize: 6
   maxSize: 10

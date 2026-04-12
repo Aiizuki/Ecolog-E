@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: CollectiblePoolSettings
   m_EditorClassIdentifier: Assembly-CSharp::PoolSettings
   lstObject:
-  - {fileID: 6886741291294649447, guid: ab34542dc67425d408f1f8197019f96a, type: 3}
+  - {fileID: 2148135525307218507, guid: 81958ba6e3bd48540a189c6fa03877e4, type: 3}
+  - {fileID: 2148135525307218507, guid: b07b033d40bf31647a7a473d1d1917b3, type: 3}
+  - {fileID: 2148135525307218507, guid: ad7d1cce0b3caf44c99c56d708df4b72, type: 3}
+  - {fileID: 2148135525307218507, guid: daac790ffc02ec6499a6c1caa97d79a8, type: 3}
   initialSize: 36
   maxSize: 108

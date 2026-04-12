@@ -1121,8 +1121,11 @@ MonoBehaviour:
   - {fileID: 6543252432731486041}
   - {fileID: 1237082869518279467}
   _length: 180
-  derivationPourcent: 0.4
   IsDefinedInScene: 0
+  IgnoreEnnemySpawn: 0
+  derivationPourcent: 0.4
+  _debug: 1
+  _debugObstacleGeneration: 1
   _matrice:
     _rows: []
 --- !u!1 &9129414246763595777

@@ -19,7 +19,7 @@ namespace Assets.Components.InGame.Chunks.Lanes
 			float localZ = -(GetLaneLength() / 2f) + position;
 
 			interactible.transform.SetParent(this.transform, true);
-			interactible.transform.localPosition = new Vector3(0f, 0.5f, localZ / transform.localScale.z);
+			interactible.transform.localPosition = new Vector3(0f, interactible.transform.localPosition.y + 0.5f, localZ / transform.localScale.z);
 			interactible.transform.localRotation = Quaternion.identity;
 			interactible.gameObject.SetActive(true);
 		}

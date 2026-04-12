@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: ChunkPoolSettings
   m_EditorClassIdentifier: Assembly-CSharp::PoolSettings
   lstObject:
-  - {fileID: 8412430471239706557, guid: 7a6b33353933c834da0cab5492eb3408, type: 3}
+  - {fileID: 4018185261864309633, guid: 8602d6d74511d6840acc05b9a30eb465, type: 3}
+  - {fileID: 4018185261864309633, guid: c854c70bb9d0dcd408abcc27b1e82449, type: 3}
+  - {fileID: 4018185261864309633, guid: 890e97fcf06c51648922e3ee8daf89d0, type: 3}
   initialSize: 6
   maxSize: 6
