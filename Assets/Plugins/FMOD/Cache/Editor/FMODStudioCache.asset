@@ -1,6 +1,231 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7312951860802814000
+--- !u!114 &-8583091657669139468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/NotificationFailure
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/UI/NotificationFailure
+  Guid:
+    Data1: 40112337
+    Data2: 1103853683
+    Data3: 1814161539
+    Data4: -765990729
+  Banks:
+  - {fileID: 3675855403034571857}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-8572145181483038248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/ButtonClick
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/UI/ButtonClick
+  Guid:
+    Data1: -553922212
+    Data2: 1164073050
+    Data3: 324949418
+    Data4: -2119243081
+  Banks:
+  - {fileID: 3675855403034571857}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 1993200200583453068}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-8387295748810392617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Interactibles/ObstacleCollision
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Interactibles/ObstacleCollision
+  Guid:
+    Data1: 1412589151
+    Data2: 1222257223
+    Data3: 1634369435
+    Data4: -1372335541
+  Banks:
+  - {fileID: 3634326853730419840}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-7865769269988417013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: FMOD/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 639115951095081639
+  FileSizes: []
+  Exists: 1
+--- !u!114 &-7628740599720825931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: FMOD/Desktop/Music.bank
+  Name: Music
+  StudioPath: bank:/Music
+  lastModified: 639115965224938886
+  FileSizes: []
+  Exists: 1
+--- !u!114 &-7476226399945714140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player/Crouch
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Player/Crouch
+  Guid:
+    Data1: -951181334
+    Data2: 1185831580
+    Data3: 2090792113
+    Data4: 130084770
+  Banks:
+  - {fileID: 3634326853730419840}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-6692911731213282858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/GameMusic
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Music/GameMusic
+  Guid:
+    Data1: 381236501
+    Data2: 1164411983
+    Data3: 1857393063
+    Data4: -2049978087
+  Banks:
+  - {fileID: -7628740599720825931}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -4355994540499406567}
+  - {fileID: 6546700097573005312}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 58740
+--- !u!114 &-5579853430849509468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player/Movement
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Player/Movement
+  Guid:
+    Data1: -1173536522
+    Data2: 1184804521
+    Data3: 1770153393
+    Data4: -1553087329
+  Banks:
+  - {fileID: 3634326853730419840}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-4355994540499406567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/GameMusic/CriticalHealth
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: CriticalHealth
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 1847416721
+    data2: 1045118247
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-3643067868704077672
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24,7 +249,7 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &-6155417014796169330
+--- !u!114 &-3467825417631376455
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -33,52 +258,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Interactibles/TrashCollision
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/Interactibles/TrashCollision
-  Guid:
-    Data1: -1021141565
-    Data2: 1305539706
-    Data3: 19849145
-    Data4: -541427882
-  Banks:
-  - {fileID: -2714601346077123428}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &-4528271889746367527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Player/Movement
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/Player/Movement
-  Guid:
-    Data1: -1173536522
-    Data2: 1184804521
-    Data3: 1770153393
-    Data4: -1553087329
-  Banks:
-  - {fileID: -2714601346077123428}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &-4448860306023086210
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: FMOD/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 639115951095096737
+  FileSizes:
+  - Name: 
+    Value: 1804
+  Exists: 1
+--- !u!114 &-3384402537163596874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,50 +279,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/GameMusic/PitchBySpeed
+  m_Name: parameter:/CriticalHealth
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
-  Name: PitchBySpeed
-  StudioPath: 
-  Min: 1
-  Max: 3
-  Default: 1
+  Name: CriticalHealth
+  StudioPath: parameter:/CriticalHealth
+  Min: 0
+  Max: 1
+  Default: 0
   ID:
-    data1: 2964573792
-    data2: 594871136
+    data1: 1847416721
+    data2: 1045118247
   Type: 0
-  IsGlobal: 0
+  IsGlobal: 1
   Labels: []
   Exists: 1
---- !u!114 &-4142007186337380183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Music/GameMusic
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/Music/GameMusic
-  Guid:
-    Data1: 381236501
-    Data2: 1164411983
-    Data3: 1857393063
-    Data4: -2049978087
-  Banks:
-  - {fileID: 2370795656467241586}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 0
-  Parameters:
-  - {fileID: 6155874032404135217}
-  - {fileID: -4448860306023086210}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 58740
---- !u!114 &-3713498689508330979
+--- !u!114 &-2194710221487385387
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,7 +312,7 @@ MonoBehaviour:
     Data3: 85036166
     Data4: 1075995749
   Banks:
-  - {fileID: 4413150706913649472}
+  - {fileID: 3675855403034571857}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -158,7 +320,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &-2860611294487322394
+--- !u!114 &-740999539154653039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,62 +330,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/UI/ButtonClick
+  m_Name: event:/UI/NotificationSuccess
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/UI/ButtonClick
+  Path: event:/UI/NotificationSuccess
   Guid:
-    Data1: -553922212
-    Data2: 1164073050
-    Data3: 324949418
-    Data4: -2119243081
+    Data1: -596558259
+    Data2: 1258544031
+    Data3: -1482183003
+    Data4: -2062514051
   Banks:
-  - {fileID: 4413150706913649472}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters:
-  - {fileID: 147028508544949945}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &-2714601346077123428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/SFX.bank
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: FMOD/Desktop/SFX.bank
-  Name: SFX
-  StudioPath: bank:/SFX
-  lastModified: 639115951095779120
-  FileSizes: []
-  Exists: 1
---- !u!114 &-2662687689975746022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Ennemy/Spawn
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/Ennemy/Spawn
-  Guid:
-    Data1: -1041296253
-    Data2: 1128568112
-    Data3: -501495891
-    Data4: 657454995
-  Banks:
-  - {fileID: -2714601346077123428}
+  - {fileID: 3675855403034571857}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -244,32 +360,32 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EventCache
   EditorBanks:
-  - {fileID: 1921513722047290420}
-  - {fileID: 289355863802951995}
-  - {fileID: 2370795656467241586}
-  - {fileID: -2714601346077123428}
-  - {fileID: 4413150706913649472}
+  - {fileID: -3467825417631376455}
+  - {fileID: -7865769269988417013}
+  - {fileID: -7628740599720825931}
+  - {fileID: 3634326853730419840}
+  - {fileID: 3675855403034571857}
   EditorEvents:
-  - {fileID: -4142007186337380183}
-  - {fileID: 994861168724811331}
-  - {fileID: 657747207674151673}
-  - {fileID: -2662687689975746022}
-  - {fileID: -6155417014796169330}
-  - {fileID: 3849038959656655068}
-  - {fileID: 5160695543613605964}
-  - {fileID: -4528271889746367527}
-  - {fileID: 8335936070201583175}
-  - {fileID: -2860611294487322394}
-  - {fileID: -3713498689508330979}
-  - {fileID: 8586893674864066841}
+  - {fileID: -6692911731213282858}
+  - {fileID: 1549254510474642600}
+  - {fileID: -8387295748810392617}
+  - {fileID: 6386465035294820132}
+  - {fileID: 5657149880949319734}
+  - {fileID: 4425261130020060475}
+  - {fileID: -7476226399945714140}
+  - {fileID: -5579853430849509468}
+  - {fileID: -740999539154653039}
+  - {fileID: -8572145181483038248}
+  - {fileID: -2194710221487385387}
+  - {fileID: -8583091657669139468}
   EditorParameters:
-  - {fileID: 6962465262227787259}
+  - {fileID: -3384402537163596874}
   MasterBanks:
-  - {fileID: 289355863802951995}
+  - {fileID: -7865769269988417013}
   StringsBanks:
-  - {fileID: 1921513722047290420}
+  - {fileID: -3467825417631376455}
   cacheVersion: 131858
-  cacheTime: 639115962851457000
+  cacheTime: 639115965224948950
   SerializableEventsDict:
   - key: event:/Music/GameMusic
     index: 0
@@ -295,7 +411,35 @@ MonoBehaviour:
     index: 10
   - key: event:/UI/NotificationFailure
     index: 11
---- !u!114 &147028508544949945
+--- !u!114 &1549254510474642600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/MainMusic
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Music/MainMusic
+  Guid:
+    Data1: -1137423452
+    Data2: 1132041733
+    Data3: 393681316
+    Data4: -1500091614
+  Banks:
+  - {fileID: -7628740599720825931}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -3643067868704077672}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 28444
+--- !u!114 &1993200200583453068
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,7 +465,7 @@ MonoBehaviour:
   - GoForward
   - GoBack
   Exists: 1
---- !u!114 &289355863802951995
+--- !u!114 &3634326853730419840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -331,70 +475,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
+  m_Name: bank:/SFX.bank
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: FMOD/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 639115951095081639
+  Path: FMOD/Desktop/SFX.bank
+  Name: SFX
+  StudioPath: bank:/SFX
+  lastModified: 639115951095779120
   FileSizes: []
   Exists: 1
---- !u!114 &657747207674151673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Interactibles/ObstacleCollision
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/Interactibles/ObstacleCollision
-  Guid:
-    Data1: 1412589151
-    Data2: 1222257223
-    Data3: 1634369435
-    Data4: -1372335541
-  Banks:
-  - {fileID: -2714601346077123428}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &994861168724811331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Music/MainMusic
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/Music/MainMusic
-  Guid:
-    Data1: -1137423452
-    Data2: 1132041733
-    Data3: 393681316
-    Data4: -1500091614
-  Banks:
-  - {fileID: 2370795656467241586}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 0
-  Parameters:
-  - {fileID: -7312951860802814000}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 28444
---- !u!114 &1921513722047290420
+--- !u!114 &3675855403034571857
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -404,35 +493,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
+  m_Name: bank:/UI.bank
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: FMOD/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 639115951095096737
-  FileSizes:
-  - Name: 
-    Value: 1804
-  Exists: 1
---- !u!114 &2370795656467241586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Music.bank
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: FMOD/Desktop/Music.bank
-  Name: Music
-  StudioPath: bank:/Music
-  lastModified: 639115962851457000
+  Path: FMOD/Desktop/UI.bank
+  Name: UI
+  StudioPath: bank:/UI
+  lastModified: 639115965224948950
   FileSizes: []
   Exists: 1
---- !u!114 &3849038959656655068
+--- !u!114 &4425261130020060475
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -451,7 +520,7 @@ MonoBehaviour:
     Data3: 1304672419
     Data4: 484333949
   Banks:
-  - {fileID: -2714601346077123428}
+  - {fileID: 3634326853730419840}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -459,25 +528,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &4413150706913649472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/UI.bank
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: FMOD/Desktop/UI.bank
-  Name: UI
-  StudioPath: bank:/UI
-  lastModified: 639115953970802484
-  FileSizes: []
-  Exists: 1
---- !u!114 &5160695543613605964
+--- !u!114 &5657149880949319734
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -487,16 +538,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Player/Crouch
+  m_Name: event:/SFX/Interactibles/TrashCollision
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/Player/Crouch
+  Path: event:/SFX/Interactibles/TrashCollision
   Guid:
-    Data1: -951181334
-    Data2: 1185831580
-    Data3: 2090792113
-    Data4: 130084770
+    Data1: -1021141565
+    Data2: 1305539706
+    Data3: 19849145
+    Data4: -541427882
   Banks:
-  - {fileID: -2714601346077123428}
+  - {fileID: 3634326853730419840}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -504,7 +555,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &6155874032404135217
+--- !u!114 &6386465035294820132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Ennemy/Spawn
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Ennemy/Spawn
+  Guid:
+    Data1: -1041296253
+    Data2: 1128568112
+    Data3: -501495891
+    Data4: 657454995
+  Banks:
+  - {fileID: 3634326853730419840}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &6546700097573005312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -514,95 +592,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/GameMusic/CriticalHealth
+  m_Name: parameter:/GameMusic/PitchBySpeed
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
-  Name: CriticalHealth
+  Name: PitchBySpeed
   StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
+  Min: 1
+  Max: 3
+  Default: 1
   ID:
-    data1: 1847416721
-    data2: 1045118247
+    data1: 2964573792
+    data2: 594871136
   Type: 0
-  IsGlobal: 1
+  IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &6962465262227787259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/CriticalHealth
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
-  Name: CriticalHealth
-  StudioPath: parameter:/CriticalHealth
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 1847416721
-    data2: 1045118247
-  Type: 0
-  IsGlobal: 1
-  Labels: []
-  Exists: 1
---- !u!114 &8335936070201583175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/UI/NotificationSuccess
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/UI/NotificationSuccess
-  Guid:
-    Data1: -596558259
-    Data2: 1258544031
-    Data3: -1482183003
-    Data4: -2062514051
-  Banks:
-  - {fileID: 4413150706913649472}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &8586893674864066841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/UI/NotificationFailure
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/UI/NotificationFailure
-  Guid:
-    Data1: 40112337
-    Data2: 1103853683
-    Data3: 1814161539
-    Data4: -765990729
-  Banks:
-  - {fileID: 4413150706913649472}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
