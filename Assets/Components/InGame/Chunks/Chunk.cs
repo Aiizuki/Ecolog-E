@@ -256,9 +256,13 @@ namespace Assets.Components.Game.Chunks
 			if (lstComponents.Count == 0)
 				return;
 
+			if (_debug)
+				_matrice.DebugPrint();
+
 			foreach (Component component in lstComponents)
 			{
 				(int row, int col) = _matrice.GetFarthestPositionFromCollectibles(_chunkSettings.MinDistanceBeforeCollectibleSpawn);
+				Debug.Log($"[Component] Placement : row={row}, col={col}, valeur matrice={_matrice.Get(row, col)}");
 
 				if (row == -1 || col == -1)
 				{
@@ -269,7 +273,7 @@ namespace Assets.Components.Game.Chunks
 				}
 
 				_matrice.Set(row, col, 3);
-				_lanes[col].SpawnInteractible(component, row);
+				_lanes[col].SpawnInteractible(component, row, true);
 			}
 		}
 

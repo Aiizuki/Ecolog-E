@@ -82,18 +82,14 @@ namespace Assets.Components.InGame.Chunks
 				for (int col = 0; col < NbCols; col++)
 				{
 					if (_rows[row].cols[col] == 1 || row < minRow)
-					{
 						dist[row, col] = -2;
-					}
-					else if (_rows[row].cols[col] == 2 || _rows[row].cols[col] == 3)
+					else if (_rows[row].cols[col] == 2)
 					{
 						dist[row, col] = 0;
 						queue.Enqueue((row, col));
 					}
 					else
-					{
 						dist[row, col] = -1;
-					}
 				}
 			}
 
@@ -106,35 +102,41 @@ namespace Assets.Components.InGame.Chunks
 						continue;
 					if (dist[nr, nc] != -1)
 						continue;
-
 					dist[nr, nc] = dist[r, c] + 1;
 					queue.Enqueue((nr, nc));
 				}
 			}
-
 			return dist;
 		}
 
 		public (int row, int col) GetFarthestPositionFromCollectibles(int minRow)
 		{
 			int[,] dist = BuildCollectibleDistanceMap(minRow);
-
 			(int row, int col) best = (-1, -1);
 			int bestDist = -1;
 
 			for (int r = 0; r < NbRows; r++)
-			{
 				for (int c = 0; c < NbCols; c++)
-				{
 					if (_rows[r].cols[c] == 0 && dist[r, c] > bestDist)
 					{
 						bestDist = dist[r, c];
 						best = (r, c);
 					}
-				}
-			}
 
 			return best;
+		}
+
+		public void DebugPrint()
+		{
+			string result = "";
+			for (int r = 0; r < NbRows; r++)
+			{
+				string line = "";
+				for (int c = 0; c < NbCols; c++)
+					line += _rows[r].cols[c] + " ";
+				result += line + "\n";
+			}
+			Debug.Log($"[Matrice]\n{result}");
 		}
 	}
 }

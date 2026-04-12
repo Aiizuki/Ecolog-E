@@ -14,9 +14,10 @@ namespace Assets.Components.InGame.Chunks.Lanes
 		/// Spawns an interacible at a position on a lane
 		/// </summary>
 		/// <remarks> We use localPosition and rotation because the lane is a plane, so the mesh multiplies per 10 every coords</remarks>
-		public void SpawnInteractible(AInteractable interactible, int position)
+		/// <remarks><paramref name="multiply"/> Is used for spawning <see cref="Component"/>, as it coords are defined in <see cref="ChunkMatrix"/>, which scales with the lane</remarks>
+		public void SpawnInteractible(AInteractable interactible, int position, bool multiply = false)
 		{
-			float localZ = -(GetLaneLength() / 2f) + position;
+			float localZ = -(GetLaneLength() / 2f) + (multiply ? position * 10 : position);
 
 			interactible.transform.SetParent(this.transform, true);
 			interactible.transform.localPosition = new Vector3(0f, interactible.transform.localPosition.y + 0.5f, localZ / transform.localScale.z);
