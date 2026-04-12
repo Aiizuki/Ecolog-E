@@ -290,7 +290,6 @@ MonoBehaviour:
   - {fileID: -960263127762528871}
   - {fileID: -7295746384743893396}
   - {fileID: -6439756523065167597}
-  - {fileID: 6133538881420994547}
   - {fileID: 6465258480782089059}
   - {fileID: -8207494876260356272}
   - {fileID: 3746366274524272801}
@@ -307,7 +306,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 2960579098603199505}
   cacheVersion: 131858
-  cacheTime: 639115899958059864
+  cacheTime: 639115951658899130
   SerializableEventsDict:
   - key: event:/Music/MainMusic
     index: 0
@@ -350,7 +349,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 639115899957452818
+  lastModified: 639115951095779120
   FileSizes: []
   Exists: 1
 --- !u!114 &2960579098603199505
@@ -368,7 +367,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639115899955848720
+  lastModified: 639115951095096737
   FileSizes:
   - Name: 
     Value: 1804
@@ -442,7 +441,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 639115899956724650
+  lastModified: 639115951095421110
   FileSizes: []
   Exists: 1
 --- !u!114 &6022187300839976996
@@ -469,33 +468,6 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &6133538881420994547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Ennemy/Despawn
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/Ennemy/Despawn
-  Guid:
-    Data1: -899954302
-    Data2: 1252326242
-    Data3: -1981423487
-    Data4: -273706744
-  Banks:
-  - {fileID: 1170872420562846831}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
 --- !u!114 &6141632823570925448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,7 +510,7 @@ MonoBehaviour:
   Path: FMOD/Desktop/UI.bank
   Name: UI
   StudioPath: bank:/UI
-  lastModified: 639115899958059864
+  lastModified: 639115951658899130
   FileSizes: []
   Exists: 1
 --- !u!114 &6465258480782089059
@@ -633,6 +605,6 @@ MonoBehaviour:
   Path: FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639115899955838671
+  lastModified: 639115951095081639
   FileSizes: []
   Exists: 1
