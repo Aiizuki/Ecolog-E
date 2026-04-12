@@ -197,3 +197,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OutlineController
   _outlineColor: {r: 0.16470584, g: 0.6588787, b: 0.8862745, a: 1}
   _outlineWidth: 0.05
+  _outlineShader: {fileID: 4800000, guid: 2a99400d890c79f4eb3c29ec5307395f, type: 3}

@@ -103,6 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OutlineController
   _outlineColor: {r: 0.22352941, g: 0.81960785, b: 0.02745098, a: 1}
   _outlineWidth: 0.05
+  _outlineShader: {fileID: 4800000, guid: 2a99400d890c79f4eb3c29ec5307395f, type: 3}
 --- !u!1 &5281673359889777613 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4992081982860199658, guid: aa7a5e6f5619e454cbf84bede35b40f5, type: 3}
@@ -122,6 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OutlineController
   _outlineColor: {r: 0.22486448, g: 0.8207547, b: 0.027100407, a: 1}
   _outlineWidth: 0.05
+  _outlineShader: {fileID: 4800000, guid: 2a99400d890c79f4eb3c29ec5307395f, type: 3}
 --- !u!1001 &4782026029935138348
 PrefabInstance:
   m_ObjectHideFlags: 0
