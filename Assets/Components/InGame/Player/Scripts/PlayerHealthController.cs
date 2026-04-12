@@ -126,7 +126,7 @@ namespace Assets.Components.InGame.Player.Scripts
 		private void OnHealthGain(int? amount = 0)
 		{
 			Health += amount > 0 ? amount.Value : _playerConfig.HealthGainPerTrashCollect;
-			Health = Mathf.Min(Health, _playerConfig.MaxHealth);
+			Health = Mathf.Min(Health, BaseHealth);
 		}
 
 		private void OnHealthLoose(int? amount = 0)
